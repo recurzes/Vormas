@@ -30,9 +30,19 @@ namespace Vormas.Services
             return _repo.GetUserById(userId);
         }
 
-        public void UpdateUser(int userId, User e)
+        public User GetUserByUsername(string username)
         {
-            _repo.UpdateUser(userId, e);
+            return _repo.GetUserByUsername(username);
+        }
+
+        public void UpdateUser(User e)
+        {
+            _repo.UpdateUser(e);
+        }
+
+        public void UpdatePassword(int userId, string newPasswordHash)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void DeleteUser(int userId)
