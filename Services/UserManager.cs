@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Vormas.Database;
 using Vormas.Interfaces;
 using Vormas.Models;
 
@@ -6,9 +7,9 @@ namespace Vormas.Services
 {
     public class UserManager: IUserManager
     {
-        private readonly IUserManager _repo;
+        private readonly UserDbContext _repo;
 
-        public UserManager(IUserManager repo)
+        public UserManager(UserDbContext repo)
         {
             _repo = repo;
         }
@@ -21,22 +22,22 @@ namespace Vormas.Services
 
         public List<User> GetAllUsers()
         {
-            throw new System.NotImplementedException();
+            return _repo.GetAllUsers();
         }
 
-        public User GetUserById()
+        public User GetUserById(int userId)
         {
-            throw new System.NotImplementedException();
+            return _repo.GetUserById(userId);
         }
 
-        public void UpdateUser(int userId)
+        public void UpdateUser(int userId, User e)
         {
-            throw new System.NotImplementedException();
+            _repo.UpdateUser(userId, e);
         }
 
         public void DeleteUser(int userId)
         {
-            throw new System.NotImplementedException();
+            _repo.DeleteUser(userId);
         }
     }
 }

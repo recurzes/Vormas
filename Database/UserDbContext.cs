@@ -42,12 +42,12 @@ namespace Vormas.Database
             throw new System.NotImplementedException();
         }
 
-        public User GetUserById()
+        public User GetUserById(int userId)
         {
             throw new System.NotImplementedException();
         }
 
-        public void UpdateUser(int userId)
+        public void UpdateUser(int userId, User e)
         {
             throw new System.NotImplementedException();
         }
