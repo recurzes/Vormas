@@ -42,7 +42,7 @@ namespace Vormas.Services
 
         public void UpdatePassword(int userId, string newPasswordHash)
         {
-            throw new System.NotImplementedException();
+            _repo.UpdatePassword(userId, newPasswordHash);
         }
 
         public void DeleteUser(int userId)
