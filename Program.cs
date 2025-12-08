@@ -25,7 +25,7 @@ namespace Vormas
             IUserManager userManager = new UserManager(dbContext);
             IAuthService authService = new AuthManager(userManager);
             
-            Application.Run(new UserLoginForm(authService));
+            Application.Run(new UserRegisterForm(userManager));
         }
     }
 }
