@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace Vormas.Forms
 {
@@ -7,6 +8,11 @@ namespace Vormas.Forms
         public UserRegisterForm()
         {
             InitializeComponent();
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
