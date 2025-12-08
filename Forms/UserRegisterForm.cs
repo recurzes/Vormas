@@ -1,7 +1,12 @@
-﻿namespace Vormas.Forms
+﻿using System.Windows.Forms;
+
+namespace Vormas.Forms
 {
-    public class UserRegisterForm
+    public partial class UserRegisterForm : Form
     {
-        
+        public UserRegisterForm()
+        {
+            InitializeComponent();
+        }
     }
 }
