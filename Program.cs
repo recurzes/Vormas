@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Vormas.Database;
+using Vormas.Forms;
+using Vormas.Interfaces;
+using Vormas.Services;
 
 namespace Vormas
 {
@@ -16,7 +20,12 @@ namespace Vormas
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            var dbContext = new UserDbContext();
+            IUserManager userManager = new UserManager(dbContext);
+            IAuthService authService = new AuthManager(userManager);
+            
+            Application.Run(new LoginForm(authService));
         }
     }
 }
