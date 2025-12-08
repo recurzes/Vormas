@@ -13,224 +13,145 @@ namespace Vormas.Database
 
         public void Create(User e)
         {
-            using (MySqlConnection conn = new MySqlConnection(_connStr))
+            DbCommandHelper.ExecuteNonQuery(_connStr, "prcAddUser", cmd =>
             {
-                using (MySqlCommand command = new MySqlCommand("prcAddUser", conn))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    command.Parameters.AddWithValue("pFname", e.FirstName);
-                    command.Parameters.AddWithValue("pLname", e.LastName);
-                    command.Parameters.AddWithValue("pUsername", e.UserName);
-                    command.Parameters.AddWithValue("pPasswordHash", e.PasswordHash);
-                    command.Parameters.AddWithValue("pEmail", e.Email);
-                    command.Parameters.AddWithValue("pPhone", e.Phone);
-                    command.Parameters.AddWithValue("pRoleId", e.RoleId);
-                    command.Parameters.AddWithValue("pIsActive", e.IsActive);
-
-                    conn.Open();
-                    command.ExecuteNonQuery();
-
-                    MessageBox.Show("User Added.", "New Employee", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    conn.Close();
-                }
-            }
+                cmd.Parameters.AddWithValue("pFname", e.FirstName);
+                cmd.Parameters.AddWithValue("pLname", e.LastName);
+                cmd.Parameters.AddWithValue("pUsername", e.UserName);
+                cmd.Parameters.AddWithValue("pPasswordHash", e.PasswordHash);
+                cmd.Parameters.AddWithValue("pEmail", e.Email);
+                cmd.Parameters.AddWithValue("pPhone", e.Phone);
+                cmd.Parameters.AddWithValue("pRoleId", e.RoleId);
+                cmd.Parameters.AddWithValue("pIsActive", e.IsActive);
+            });
         }
 
         public List<User> GetAllUsers()
         {
-            List<User> users = new List<User>();
-            using (MySqlConnection conn = new MySqlConnection(_connStr))
+            
+            return DbCommandHelper.ExecuteReader(_connStr, "prcGetAllUsers", cmd =>
             {
-                using (MySqlCommand command = new MySqlCommand("prcGetAllUsers", conn))
+
+            }, reader =>
+            {
+                List<User> users = new List<User>();
+                while (reader.Read())
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    conn.Open();
-
-                    using (MySqlDataReader reader = command.ExecuteReader())
+                    User user = new User
                     {
-                        while (reader.Read())
-                        {
-                            User user = new User
-                            {
-                                UserId = reader.GetInt32("UserId"),
-                                FirstName = reader.GetString("FirstName"),
-                                LastName = reader.GetString("LastName"),
-                                UserName = reader.GetString("Username"),
-                                Email = reader.GetString("Email"),
-                                Phone = reader.GetString("Phone"),
-                                RoleId = reader.GetInt32("RoleId"),
-                                IsActive = reader.GetBoolean("IsActive"),
-                                CreatedAt = reader.GetDateTime("CreatedAt")
-                            };
+                        UserId = reader.GetInt32("UserId"),
+                        FirstName = reader.GetString("FirstName"),
+                        LastName = reader.GetString("LastName"),
+                        UserName = reader.GetString("Username"),
+                        Email = reader.GetString("Email"),
+                        Phone = reader.GetString("Phone"),
+                        RoleId = reader.GetInt32("RoleId"),
+                        IsActive = reader.GetBoolean("IsActive"),
+                        CreatedAt = reader.GetDateTime("CreatedAt")
+                    };
 
-                            users.Add(user);
-                        }
-                    }
-
-                    conn.Close();
+                    users.Add(user);
                 }
-            }
-
-            return users;
+                return users;
+            });
         }
 
         public User GetUserById(int userId)
         {
-            User user = null;
-            using (MySqlConnection conn = new MySqlConnection(_connStr))
+            return DbCommandHelper.ExecuteReader(_connStr, "prcGetUserById", command =>
             {
-                using (MySqlCommand command = new MySqlCommand("prcGetUserById", conn))
+                command.Parameters.AddWithValue("pUserId", userId);
+            }, reader =>
+            {
+                if (reader.Read())
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("pUserId", userId);
-
-                    conn.Open();
-
-                    using (MySqlDataReader reader = command.ExecuteReader())
+                    return new User
                     {
-                        if (reader.Read())
-                        {
-                            user = new User
-                            {
-                                UserId = reader.GetInt32("UserId"),
-                                FirstName = reader.GetString("FirstName"),
-                                LastName = reader.GetString("LastName"),
-                                UserName = reader.GetString("UserName"),
-                                PasswordHash = reader.GetString("PasswordHash"),
-                                Email = reader.GetString("Email"),
-                                Phone = reader.GetString("Phone"),
-                                Address = reader.IsDBNull(reader.GetOrdinal("Address"))
-                                    ? null
-                                    : reader.GetString("Address"),
-                                RoleId = reader.GetInt32("RoleId"),
-                                IsActive = reader.GetBoolean("IsActive"),
-                                CreatedAt = reader.GetDateTime("CreatedAt"),
-                                UpdatedAt = reader.GetDateTime("UpdatedAt")
-                            };
-                        }
-                    }
-
-                    conn.Close();
+                        UserId = reader.GetInt32("UserId"),
+                        FirstName = reader.GetString("FirstName"),
+                        LastName = reader.GetString("LastName"),
+                        UserName = reader.GetString("UserName"),
+                        PasswordHash = reader.GetString("PasswordHash"),
+                        Email = reader.GetString("Email"),
+                        Phone = reader.GetString("Phone"),
+                        Address = reader.IsDBNull(reader.GetOrdinal("Address"))
+                            ? null
+                            : reader.GetString("Address"),
+                        RoleId = reader.GetInt32("RoleId"),
+                        IsActive = reader.GetBoolean("IsActive"),
+                        CreatedAt = reader.GetDateTime("CreatedAt"),
+                        UpdatedAt = reader.GetDateTime("UpdatedAt")
+                    };
                 }
-            }
 
-            return user;
+                return null;
+            });
         }
 
         public User GetUserByUsername(string username)
         {
-            User user = null;
-            using (MySqlConnection conn = new MySqlConnection(_connStr))
+            return DbCommandHelper.ExecuteReader(_connStr, "prcGetUserByUsername", cmd =>
             {
-                using (MySqlCommand command = new MySqlCommand("prcGetUserByUsername", conn))
+                cmd.Parameters.AddWithValue("pUsername", username);
+            }, reader =>
+            {
+                if (reader.Read())
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("pUsername", username);
-                    
-                    conn.Open();
-
-                    using (MySqlDataReader reader = command.ExecuteReader())
+                    return new User
                     {
-                        if (reader.Read())
-                        {
-                            user = new User
-                            {
-                                UserId = reader.GetInt32("UserId"),
-                                FirstName = reader.GetString("FirstName"),
-                                LastName = reader.GetString("LastName"),
-                                UserName = reader.GetString("Username"),
-                                PasswordHash = reader.GetString("PasswordHash"),
-                                Email = reader.GetString("Email"),
-                                Phone = reader.GetString("Phone"),
-                                RoleId = reader.GetInt32("RoleId"),
-                                IsActive = reader.GetBoolean("IsActive")
-                            };
-                        }
-                    }
+                        UserId = reader.GetInt32("UserId"),
+                        FirstName = reader.GetString("FirstName"),
+                        LastName = reader.GetString("LastName"),
+                        UserName = reader.GetString("Username"),
+                        PasswordHash = reader.GetString("PasswordHash"),
+                        Email = reader.GetString("Email"),
+                        Phone = reader.GetString("Phone"),
+                        RoleId = reader.GetInt32("RoleId"),
+                        IsActive = reader.GetBoolean("IsActive")
+                    };
                 }
-            }
-            
-            return user;
+
+                return null;
+            });
         }
 
-        public void UpdateUser(User e)
+        public int UpdateUser(User e)
         {
-            using (MySqlConnection conn = new MySqlConnection(_connStr))
+            int rowsAffected = DbCommandHelper.ExecuteNonQuery(_connStr, "prcUpdateUser", command =>
             {
-                using (MySqlCommand command = new MySqlCommand("prcUpdateUser", conn))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    
-                    command.Parameters.AddWithValue("pUserId", e.UserId);
-                    command.Parameters.AddWithValue("pFname", e.FirstName);
-                    command.Parameters.AddWithValue("pLname", e.LastName);
-                    command.Parameters.AddWithValue("pUsername", e.UserName);
-                    command.Parameters.AddWithValue("pEmail", e.Email);
-                    command.Parameters.AddWithValue("pPhone", e.Phone);
-                    command.Parameters.AddWithValue("pAddress", e.Address);
-                    command.Parameters.AddWithValue("pRoleId", e.RoleId);
-                    command.Parameters.AddWithValue("pIsActive", e.IsActive);
-                    
-                    conn.Open();
-                    int rowsAffected = command.ExecuteNonQuery();
-                    conn.Close();
+                command.Parameters.AddWithValue("pUserId", e.UserId);
+                command.Parameters.AddWithValue("pFname", e.FirstName);
+                command.Parameters.AddWithValue("pLname", e.LastName);
+                command.Parameters.AddWithValue("pUsername", e.UserName);
+                command.Parameters.AddWithValue("pEmail", e.Email);
+                command.Parameters.AddWithValue("pPhone", e.Phone);
+                command.Parameters.AddWithValue("pAddress", e.Address);
+                command.Parameters.AddWithValue("pRoleId", e.RoleId);
+                command.Parameters.AddWithValue("pIsActive", e.IsActive);
+            });
 
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("User Updated Successfully.", "Update User", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("User not found.", "Update User", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-            }
+            return rowsAffected;
         }
 
-        public void UpdatePassword(int userId, string newPasswordHash)
+        public int UpdatePassword(int userId, string newPasswordHash)
         {
-            using (MySqlConnection conn = new MySqlConnection(_connStr))
+            int rowsAffected = DbCommandHelper.ExecuteNonQuery(_connStr, "prcUpdateUserPassword", command =>
             {
-                using (MySqlCommand command = new MySqlCommand("prcUpdateUserPassword", conn))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("pUserId", userId);
-                    command.Parameters.AddWithValue("pPasswordHash", newPasswordHash);
-                    
-                    conn.Open();
-                    command.ExecuteNonQuery();
-                    conn.Close();
-                    
-                    MessageBox.Show("Password Updated.", "Update Password", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+                command.Parameters.AddWithValue("pUserId", userId);
+                command.Parameters.AddWithValue("pPasswordHash", newPasswordHash);
+            });
+
+            return rowsAffected;
         }
 
-        public void DeleteUser(int userId)
+        public int DeleteUser(int userId)
         {
-            using (MySqlConnection conn = new MySqlConnection(_connStr))
+            int rowsAffected = DbCommandHelper.ExecuteNonQuery(_connStr, "prcDeleteUser", command =>
             {
-                using (MySqlCommand command = new MySqlCommand("prcDeleteUser", conn))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("pUserId", userId);
-                    
-                    conn.Open();
-                    int rowsAffected = command.ExecuteNonQuery();
-                    conn.Close();
+                command.Parameters.AddWithValue("pUserId", userId);
+            });
 
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("User Deactivated.", "Delete User", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("User not found.", "Delete User", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-            }
+            return rowsAffected;
         }
     }
 }
