@@ -9,8 +9,8 @@ namespace Vormas.Interfaces
         List<User> GetAllUsers();
         User GetUserById(int userId);
         User GetUserByUsername(string username);
-        void UpdateUser(User e);
-        void UpdatePassword(int userId, string newPasswordHash);
-        void DeleteUser(int userId);
+        int UpdateUser(User e);
+        int UpdatePassword(int userId, string newPasswordHash);
+        int DeleteUser(int userId);
     }
 }
