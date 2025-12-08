@@ -35,19 +35,19 @@ namespace Vormas.Services
             return _repo.GetUserByUsername(username);
         }
 
-        public void UpdateUser(User e)
+        public int UpdateUser(User e)
         {
-            _repo.UpdateUser(e);
+            return _repo.UpdateUser(e);
         }
 
-        public void UpdatePassword(int userId, string newPasswordHash)
+        public int UpdatePassword(int userId, string newPasswordHash)
         {
-            _repo.UpdatePassword(userId, newPasswordHash);
+            return _repo.UpdatePassword(userId, newPasswordHash);
         }
 
-        public void DeleteUser(int userId)
+        public int DeleteUser(int userId)
         {
-            _repo.DeleteUser(userId);
+            return _repo.DeleteUser(userId);
         }
     }
 }
