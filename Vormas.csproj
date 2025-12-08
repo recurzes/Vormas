@@ -101,12 +101,13 @@
   <ItemGroup>
     <Compile Include="Database\DbCommandHelper.cs" />
     <Compile Include="Database\UserDbContext.cs" />
-    <Compile Include="Forms\LoginForm.cs">
+    <Compile Include="Forms\UserLoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\LoginForm.Designer.cs">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <Compile Include="Forms\UserLoginForm.Designer.cs">
+      <DependentUpon>UserLoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\UserRegisterForm.cs" />
     <Compile Include="Helpers\MySqlHelper.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -123,8 +124,8 @@
     <Compile Include="Services\AuthManager.cs" />
     <Compile Include="Services\UserManager.cs" />
     <Compile Include="Test\Something.cs" />
-    <EmbeddedResource Include="Forms\LoginForm.resx">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\UserLoginForm.resx">
+      <DependentUpon>UserLoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
