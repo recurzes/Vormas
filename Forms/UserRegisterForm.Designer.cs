@@ -53,6 +53,8 @@ namespace Vormas.Forms
             this.cmbIsActive = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.btnRegister = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.dtmBirthDate = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // label1
@@ -103,7 +105,7 @@ namespace Vormas.Forms
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(419, 135);
+            this.label6.Location = new System.Drawing.Point(418, 160);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(100, 23);
             this.label6.TabIndex = 5;
@@ -112,7 +114,7 @@ namespace Vormas.Forms
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(419, 167);
+            this.label7.Location = new System.Drawing.Point(418, 192);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(100, 23);
             this.label7.TabIndex = 6;
@@ -121,7 +123,7 @@ namespace Vormas.Forms
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(419, 197);
+            this.label8.Location = new System.Drawing.Point(418, 222);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(100, 23);
             this.label8.TabIndex = 7;
@@ -130,7 +132,7 @@ namespace Vormas.Forms
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(419, 227);
+            this.label9.Location = new System.Drawing.Point(418, 252);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(100, 23);
             this.label9.TabIndex = 8;
@@ -174,7 +176,7 @@ namespace Vormas.Forms
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(419, 259);
+            this.label10.Location = new System.Drawing.Point(418, 284);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(100, 23);
             this.label10.TabIndex = 14;
@@ -183,21 +185,21 @@ namespace Vormas.Forms
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(515, 169);
+            this.txtPassword.Location = new System.Drawing.Point(514, 194);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(214, 20);
             this.txtPassword.TabIndex = 15;
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(515, 137);
+            this.txtUsername.Location = new System.Drawing.Point(514, 162);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(214, 20);
             this.txtUsername.TabIndex = 16;
             // 
             // txtVerifyPassword
             // 
-            this.txtVerifyPassword.Location = new System.Drawing.Point(515, 199);
+            this.txtVerifyPassword.Location = new System.Drawing.Point(514, 224);
             this.txtVerifyPassword.Name = "txtVerifyPassword";
             this.txtVerifyPassword.Size = new System.Drawing.Size(214, 20);
             this.txtVerifyPassword.TabIndex = 17;
@@ -205,7 +207,8 @@ namespace Vormas.Forms
             // cmbRole
             // 
             this.cmbRole.FormattingEnabled = true;
-            this.cmbRole.Location = new System.Drawing.Point(515, 229);
+            this.cmbRole.Items.AddRange(new object[] { "1", "2" });
+            this.cmbRole.Location = new System.Drawing.Point(514, 254);
             this.cmbRole.Name = "cmbRole";
             this.cmbRole.Size = new System.Drawing.Size(214, 21);
             this.cmbRole.TabIndex = 18;
@@ -213,7 +216,8 @@ namespace Vormas.Forms
             // cmbIsActive
             // 
             this.cmbIsActive.FormattingEnabled = true;
-            this.cmbIsActive.Location = new System.Drawing.Point(515, 261);
+            this.cmbIsActive.Items.AddRange(new object[] { "Yes", "No" });
+            this.cmbIsActive.Location = new System.Drawing.Point(514, 286);
             this.cmbIsActive.Name = "cmbIsActive";
             this.cmbIsActive.Size = new System.Drawing.Size(214, 21);
             this.cmbIsActive.TabIndex = 19;
@@ -230,7 +234,7 @@ namespace Vormas.Forms
             // 
             // btnRegister
             // 
-            this.btnRegister.Location = new System.Drawing.Point(337, 334);
+            this.btnRegister.Location = new System.Drawing.Point(349, 368);
             this.btnRegister.Name = "btnRegister";
             this.btnRegister.Size = new System.Drawing.Size(102, 39);
             this.btnRegister.TabIndex = 21;
@@ -238,11 +242,29 @@ namespace Vormas.Forms
             this.btnRegister.UseVisualStyleBackColor = true;
             this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
             // 
+            // label12
+            // 
+            this.label12.Location = new System.Drawing.Point(418, 133);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(100, 23);
+            this.label12.TabIndex = 22;
+            this.label12.Text = "BirthDate:";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // dtmBirthDate
+            // 
+            this.dtmBirthDate.Location = new System.Drawing.Point(514, 133);
+            this.dtmBirthDate.Name = "dtmBirthDate";
+            this.dtmBirthDate.Size = new System.Drawing.Size(214, 20);
+            this.dtmBirthDate.TabIndex = 23;
+            // 
             // UserRegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dtmBirthDate);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.btnRegister);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.cmbIsActive);
@@ -270,6 +292,9 @@ namespace Vormas.Forms
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.DateTimePicker dtmBirthDate;
 
         private System.Windows.Forms.Button btnRegister;
 
