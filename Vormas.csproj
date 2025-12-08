@@ -96,6 +96,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\DbCommandHelper.cs" />
     <Compile Include="Database\UserDbContext.cs" />
     <Compile Include="Helpers\MySqlHelper.cs" />
     <Compile Include="Form1.cs">
