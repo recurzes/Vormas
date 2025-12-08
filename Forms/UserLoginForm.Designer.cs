@@ -2,7 +2,7 @@
 
 namespace Vormas.Forms
 {
-    partial class LoginForm
+    partial class UserLoginForm
     {
         /// <summary>
         /// Required designer variable.
@@ -90,7 +90,7 @@ namespace Vormas.Forms
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // LoginForm
+            // UserLoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -101,8 +101,8 @@ namespace Vormas.Forms
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.label1);
-            this.Name = "LoginForm";
-            this.Text = "LoginForm";
+            this.Name = "UserLoginForm";
+            this.Text = "UserLoginForm";
             this.ResumeLayout(false);
             this.PerformLayout();
         }

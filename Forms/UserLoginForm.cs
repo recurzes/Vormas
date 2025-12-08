@@ -4,10 +4,10 @@ using Vormas.Interfaces;
 
 namespace Vormas.Forms
 {
-    public partial class LoginForm : Form
+    public partial class UserLoginForm : Form
     {
         private readonly IAuthService _authService;
-        public LoginForm(IAuthService authService)
+        public UserLoginForm(IAuthService authService)
         {
             InitializeComponent();
             _authService = authService;
