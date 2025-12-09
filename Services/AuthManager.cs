@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using Vormas.Interfaces;
 using Vormas.Models;
 
@@ -7,10 +8,12 @@ namespace Vormas.Services
     public class AuthManager: IAuthService
     {
         private readonly IUserManager _userManager;
+        private readonly ISessionService _sessionService;
 
-        public AuthManager(IUserManager userManager)
+        public AuthManager(IUserManager userManager, ISessionService sessionService)
         {
             _userManager = userManager;
+            _sessionService = sessionService;
         }
         
         public void RegisterUser(User user)
@@ -30,10 +33,24 @@ namespace Vormas.Services
 
         public bool LoginUser(string username, string password)
         {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                return false;
             var user = _userManager.GetUserByUsername(username);
             if (user == null) return false;
 
-            return BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
+            if (string.IsNullOrWhiteSpace(user.PasswordHash))
+                throw new InvalidOperationException("User data is incomplete - PasswordHash is null");
+
+            if (!user.IsActive)
+                return false;
+
+            if (BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+            {
+                _sessionService.SetCurrentUser(user);
+                return true;
+            }
+
+            return false;
         }
 
         public bool ValidateUser(int userId)
