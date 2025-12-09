@@ -20,12 +20,14 @@ namespace Vormas
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            
             var dbContext = new UserDbContext();
             IUserManager userManager = new UserManager(dbContext);
-            IAuthService authService = new AuthManager(userManager);
+            ISessionService sessionService = new SessionService();
+            IAuthService authService = new AuthManager(userManager, sessionService);
             
-            Application.Run(new UserRegisterForm(userManager));
+            
+            Application.Run(new UserLoginForm(authService, sessionService));
         }
     }
 }
