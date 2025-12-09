@@ -8,10 +8,12 @@ namespace Vormas.Forms
     public partial class UserRegisterForm : Form
     {
         private readonly IUserManager _userManager;
-        public UserRegisterForm(IUserManager userManager)
+        private readonly IAuthService _authService;
+        public UserRegisterForm(IUserManager userManager, IAuthService authService)
         {
             InitializeComponent();
             _userManager = userManager;
+            _authService = authService;
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -68,7 +70,7 @@ namespace Vormas.Forms
                     IsActive = cmbIsActive.SelectedItem?.ToString() == "Yes" ||
                                cmbIsActive.SelectedItem?.ToString() == "True"
                 };
-                _userManager.Create(user);
+                _authService.RegisterUser(user);
 
                 MessageBox.Show("Registration successful!", "Success", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
