@@ -45,7 +45,7 @@ namespace Vormas.Forms
                     if (dashboardForm != null)
                     {
                         this.Hide();
-                        dashboardForm.FormClosed += (s, args) => this.Close();
+                        // dashboardForm.FormClosed += (s, args) => this.Close();
                         dashboardForm.Show();
                     }
                     
