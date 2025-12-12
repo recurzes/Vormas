@@ -27,7 +27,7 @@ namespace Vormas
             IAuthService authService = new AuthManager(userManager, sessionService);
             
             
-            Application.Run(new UserLoginForm(authService, sessionService));
+            Application.Run(new Form1());
         }
     }
 }
