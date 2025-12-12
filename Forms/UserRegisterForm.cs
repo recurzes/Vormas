@@ -2,10 +2,11 @@
 using System.Windows.Forms;
 using Vormas.Interfaces;
 using Vormas.Models;
+using Vormas.Navigation;
 
 namespace Vormas.Forms
 {
-    public partial class UserRegisterForm : Form
+    public partial class UserRegisterForm : PageControl
     {
         private readonly IUserManager _userManager;
         private readonly IAuthService _authService;

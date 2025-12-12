@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using Vormas.Interfaces;
+using Vormas.Navigation;
 
 namespace Vormas.Forms
 {
-    public partial class UserLoginForm : Form
+    public partial class UserLoginForm : PageControl
     {
         private readonly IAuthService _authService;
         private readonly ISessionService _session;
@@ -34,7 +35,7 @@ namespace Vormas.Forms
                     MessageBox.Show("Login successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     var currentUser = _session.CurrentUser;
                     
-                    Form dashboardForm = currentUser.RoleId switch
+                    PageControl dashboardForm = currentUser.RoleId switch
                     {
                         1 => new AdminDashboard(),
                         2 => new RentalAgentDashboard(),
