@@ -28,11 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.contentHost = new System.Windows.Forms.Panel();
+            this.SuspendLayout();
+            // 
+            // contentHost
+            // 
+            this.contentHost.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contentHost.Location = new System.Drawing.Point(0, 0);
+            this.contentHost.Name = "contentHost";
+            this.contentHost.Size = new System.Drawing.Size(800, 450);
+            this.contentHost.TabIndex = 0;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.contentHost);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Panel contentHost;
 
         #endregion
     }
