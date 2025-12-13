@@ -126,6 +126,7 @@
     <Compile Include="Forms\UserRegisterForm.Designer.cs">
       <DependentUpon>UserRegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DataReaderMapper.cs" />
     <Compile Include="Helpers\MySqlHelper.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -187,8 +188,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="plan-fixNavigationIntegration.prompt.md" />
-    <Content Include="plan-navigationDiRefactor.prompt.md" />
     <Content Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
