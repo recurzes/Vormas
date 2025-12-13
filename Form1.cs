@@ -31,18 +31,18 @@ namespace Vormas
             // Phase A: create mutable routes registry and register routes that don't need INavigationService
             var routes = new Dictionary<string, Func<PageControl>>
             {
-                { "user_register", () => new UserRegisterForm(_userManager, _authService) },
-                { "rental_agent_dashboard", () => new RentalAgentDashboard(_sessionService) },
-                { "admin_dashboard", () => new AdminDashboard(_sessionService) },
+                { Routes.UserRegister, () => new UserRegisterForm(_userManager, _authService) },
+                { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService) },
+                { Routes.AdminDashboard, () => new AdminDashboard(_sessionService) },
             };
 
             
             _navigation = new NavigationService(contentHost, routes);
 
             
-            routes["user_login"] = () => new UserLoginForm(_authService, _sessionService, _navigation);
+            routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             
-            _navigation.Navigate("user_login");
+            _navigation.Navigate(Routes.UserLogin);
         }
 
         public INavigationService Navigator => _navigation;
