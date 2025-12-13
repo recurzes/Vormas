@@ -9,11 +9,13 @@ namespace Vormas.Forms
     {
         private readonly IAuthService _authService;
         private readonly ISessionService _session;
-        public UserLoginForm(IAuthService authService, ISessionService session)
+        private readonly INavigationService _navigation;
+        public UserLoginForm(IAuthService authService, ISessionService session, INavigationService navigation)
         {
             InitializeComponent();
             _authService = authService;
             _session = session;
+            _navigation = navigation;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -34,26 +36,21 @@ namespace Vormas.Forms
                 {
                     MessageBox.Show("Login successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     var currentUser = _session.CurrentUser;
-                    
-                    PageControl dashboardForm = currentUser.RoleId switch
+
+                    // Navigate to dashboards using the navigation service
+                    switch (currentUser.RoleId)
                     {
-                        1 => new AdminDashboard(),
-                        2 => new RentalAgentDashboard(),
-                        _ => null
-                    };
-                    
-                    if (dashboardForm != null)
-                    {
-                        this.Hide();
-                        // dashboardForm.FormClosed += (s, args) => this.Close();
-                        dashboardForm.Show();
-                    }
-                    
-                    else
-                    {
-                        MessageBox.Show("Invalid role assigned to user", "Error", MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
-                        _session.ClearSession();
+                        case 1:
+                            _navigation.Navigate(Routes.AdminDashboard);
+                            break;
+                        case 2:
+                            _navigation.Navigate(Routes.RentalAgentDashboard);
+                            break;
+                        default:
+                            MessageBox.Show("Invalid role assigned to user", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                            _session.ClearSession();
+                            break;
                     }
                 }
                 else
@@ -68,9 +65,5 @@ namespace Vormas.Forms
             }
         }
 
-        private void ApplyRoleToMenu()
-        {
-            
-        }
     }
 }
