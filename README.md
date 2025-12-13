@@ -1,5 +1,5 @@
 
-# Vehicle Rental Management System
+# VORMAS
 
 A C# WinForms application for managing vehicle rentals, including fleet management, customer management, reservations, rentals/returns, billing, and basic reporting.
 
