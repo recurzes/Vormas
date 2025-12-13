@@ -12,27 +12,35 @@ namespace Vormas
     public partial class Form1 : Form
     {
         private INavigationService _navigation;
-        public Form1()
+        private readonly IUserManager _userManager;
+        private readonly IAuthService _authService;
+        private readonly ISessionService _sessionService;
+
+        public Form1(IUserManager userManager, IAuthService authService, ISessionService sessionService)
         {
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _authService = authService ?? throw new ArgumentNullException(nameof(authService));
+            _sessionService = sessionService ?? throw new ArgumentNullException(nameof(sessionService));
+
             InitializeComponent();
             InitializeNavigation();
         }
 
         private void InitializeNavigation()
         {
-            var dbContext = new UserDbContext();
-            IUserManager userManager = new UserManager(dbContext);
-            ISessionService sessionService = new SessionService();
-            IAuthService authService = new AuthManager(userManager, sessionService);
+            // Phase A: create mutable routes registry and register routes that don't need INavigationService
             var routes = new Dictionary<string, Func<PageControl>>
             {
-                { "user_login", () => new UserLoginForm(authService, sessionService) },
-                {"user_register", () => new UserRegisterForm(userManager, authService)},
-                {"rental_agent_dashboard", () => new RentalAgentDashboard()},
-                {"admin_dashboard", () => new AdminDashboard()},
+                { "user_register", () => new UserRegisterForm(_userManager, _authService) },
+                { "rental_agent_dashboard", () => new RentalAgentDashboard(_sessionService) },
+                { "admin_dashboard", () => new AdminDashboard(_sessionService) },
             };
 
+            
             _navigation = new NavigationService(contentHost, routes);
+
+            
+            routes["user_login"] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             
             _navigation.Navigate("user_login");
         }
