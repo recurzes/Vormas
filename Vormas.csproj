@@ -189,6 +189,7 @@
   <ItemGroup>
     <Content Include="plan-fixNavigationIntegration.prompt.md" />
     <Content Include="plan-navigationDiRefactor.prompt.md" />
+    <Content Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
