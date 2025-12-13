@@ -4,7 +4,7 @@ using MySql.Data.MySqlClient;
 
 namespace Vormas.Database
 {
-    public class DbCommandHelper
+    public static class DbCommandHelper
     {
         public static int ExecuteNonQuery(string connectionString, string procedureName,
             Action<MySqlCommand> configureCommand)
