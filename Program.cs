@@ -21,13 +21,14 @@ namespace Vormas
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
+            // Manual composition / DI
             var dbContext = new UserDbContext();
             IUserManager userManager = new UserManager(dbContext);
             ISessionService sessionService = new SessionService();
             IAuthService authService = new AuthManager(userManager, sessionService);
             
-            
-            Application.Run(new Form1());
+            // Instantiate the main form with injected services
+            Application.Run(new Form1(userManager, authService, sessionService));
         }
     }
 }
