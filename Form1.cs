@@ -28,17 +28,14 @@ namespace Vormas
 
         private void InitializeNavigation()
         {
-            // Phase A: create mutable routes registry and register routes that don't need INavigationService
             var routes = new Dictionary<string, Func<PageControl>>
             {
                 { Routes.UserRegister, () => new UserRegisterForm(_userManager, _authService) },
                 { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService) },
                 { Routes.AdminDashboard, () => new AdminDashboard(_sessionService) },
             };
-
             
             _navigation = new NavigationService(contentHost, routes);
-
             
             routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             
