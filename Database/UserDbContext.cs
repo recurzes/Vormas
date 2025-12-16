@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using Vormas.Helpers;
 using Vormas.Interfaces;
 using Vormas.Models;
 
@@ -35,26 +36,7 @@ namespace Vormas.Database
 
             }, reader =>
             {
-                List<User> users = new List<User>();
-                while (reader.Read())
-                {
-                    User user = new User
-                    {
-                        UserId = reader.GetInt32("UserId"),
-                        FirstName = reader.GetString("FirstName"),
-                        LastName = reader.GetString("LastName"),
-                        UserName = reader.GetString("Username"),
-                        Email = reader.GetString("Email"),
-                        Phone = reader.GetString("Phone"),
-                        BirthDate = reader.GetDateTime("BirthDate"),
-                        RoleId = reader.GetInt32("RoleId"),
-                        IsActive = reader.GetBoolean("IsActive"),
-                        CreatedAt = reader.GetDateTime("CreatedAt")
-                    };
-
-                    users.Add(user);
-                }
-                return users;
+                return DataReaderMapper.MapToList<User>(reader);
             });
         }
 
@@ -67,24 +49,7 @@ namespace Vormas.Database
             {
                 if (reader.Read())
                 {
-                    return new User
-                    {
-                        UserId = reader.GetInt32("UserId"),
-                        FirstName = reader.GetString("FirstName"),
-                        LastName = reader.GetString("LastName"),
-                        UserName = reader.GetString("UserName"),
-                        PasswordHash = reader.GetString("PasswordHash"),
-                        Email = reader.GetString("Email"),
-                        Phone = reader.GetString("Phone"),
-                        BirthDate = reader.GetDateTime("BirthDate"),
-                        Address = reader.IsDBNull(reader.GetOrdinal("Address"))
-                            ? null
-                            : reader.GetString("Address"),
-                        RoleId = reader.GetInt32("RoleId"),
-                        IsActive = reader.GetBoolean("IsActive"),
-                        CreatedAt = reader.GetDateTime("CreatedAt"),
-                        UpdatedAt = reader.GetDateTime("UpdatedAt")
-                    };
+                    return DataReaderMapper.MapToModel<User>(reader);
                 }
 
                 return null;
@@ -100,19 +65,7 @@ namespace Vormas.Database
             {
                 if (reader.Read())
                 {
-                    return new User
-                    {
-                        UserId = reader.GetInt32("UserId"),
-                        FirstName = reader.GetString("FirstName"),
-                        LastName = reader.GetString("LastName"),
-                        UserName = reader.GetString("Username"),
-                        PasswordHash = reader.GetString("PasswordHash"),
-                        Email = reader.GetString("Email"),
-                        Phone = reader.GetString("Phone"),
-                        BirthDate = reader.GetDateTime("BirthDate"),
-                        RoleId = reader.GetInt32("RoleId"),
-                        IsActive = reader.GetBoolean("IsActive")
-                    };
+                    return DataReaderMapper.MapToModel<User>(reader);
                 }
 
                 return null;
