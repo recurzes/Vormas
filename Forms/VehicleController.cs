@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Vormas.Interfaces;
 using Vormas.Models;
@@ -39,6 +40,13 @@ namespace Vormas.Forms
             try
             {
                 var vehicles = _service.GetAllVehicles();
+                if (vehicles == null || !vehicles.Any())
+                {
+                    MessageBox.Show("No vehicles found in the database.", "Information", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    _bindingSource.DataSource = new List<Vehicle>();
+                    return;
+                }
                 _bindingSource.DataSource = vehicles;
                 _view.SetVehicleListBinding(_bindingSource);
             }
