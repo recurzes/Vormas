@@ -17,72 +17,72 @@ namespace Vormas.Services
         // Methods
         public void CreateCustomer(Customer customer)
         {
-            
+            _repo.CreateCustomer(customer);
         }
 
         public List<Customer> GetALlCustomers()
         {
-            throw new System.NotImplementedException();
+            return _repo.GetALlCustomers();
         }
 
         public Customer GetCustomerById(int customerId)
         {
-            throw new System.NotImplementedException();
+            return _repo.GetCustomerById(customerId);
         }
 
         public Customer GetCustomerByPhone(string phoneNumber)
         {
-            throw new System.NotImplementedException();
+            return _repo.GetCustomerByPhone(phoneNumber);
         }
 
         public Customer GetCustomerByEmail(string email)
         {
-            throw new System.NotImplementedException();
+            return _repo.GetCustomerByEmail(email);
         }
 
         public int UpdateCustomer(Customer customer)
         {
-            throw new System.NotImplementedException();
+            return _repo.UpdateCustomer(customer);
         }
 
         public int DeleteCustomer(int customerId)
         {
-            throw new System.NotImplementedException();
+            return _repo.DeactivateCustomer(customerId);
         }
 
         public bool CustomerExists(int customerId)
         {
-            throw new System.NotImplementedException();
+            return _repo.CustomerExists(customerId);
         }
 
         public bool IsPhoneNumberTaken(string phoneNumber)
         {
-            throw new System.NotImplementedException();
+            return _repo.IsPhoneNumberTaken(phoneNumber);
         }
 
         public bool IsEmailTaken(string email)
         {
-            throw new System.NotImplementedException();
+            return _repo.IsEmailTaken(email);
         }
 
         public List<Customer> SearchCustomers(string searchTerm)
         {
-            throw new System.NotImplementedException();
+            return _repo.SearchCustomers(searchTerm);
         }
 
         public List<Customer> GetCustomerByStatus()
         {
-            throw new System.NotImplementedException();
+            return _repo.GetCustomerByStatus();
         }
 
         public int DeactivateCustomer(int customerId)
         {
-            throw new System.NotImplementedException();
+            return _repo.DeactivateCustomer(customerId);
         }
 
         public int ActivateCustomer(int customerId)
         {
-            throw new System.NotImplementedException();
+            return _repo.ActivateCustomer(customerId);
         }
     }
 }
