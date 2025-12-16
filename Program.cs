@@ -27,8 +27,7 @@ namespace Vormas
             ISessionService sessionService = new SessionService();
             IAuthService authService = new AuthManager(userManager, sessionService);
             
-            // Instantiate the main form with injected services
-            Application.Run(new Form1(userManager, authService, sessionService));
+            Application.Run(new VehicleForm());
         }
     }
 }
