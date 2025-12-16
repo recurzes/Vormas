@@ -1,0 +1,27 @@
+﻿using System.Collections.Generic;
+using Vormas.Models;
+
+namespace Vormas.Interfaces
+{
+    public interface ICustomerManager
+    {
+        void CreateCustomer(Customer customer);
+        List<Customer> GetALlCustomers();
+        Customer GetCustomerById(int customerId);
+        Customer GetCustomerByPhone(string phoneNumber);
+        Customer GetCustomerByEmail(string email);
+        
+        int UpdateCustomer(Customer customer);
+        int DeleteCustomer(int customerId);
+        bool CustomerExists(int customerId);
+        bool IsPhoneNumberTaken(string phoneNumber);
+        bool IsEmailTaken(string email);
+        
+        // Search and Filtering
+        List<Customer> SearchCustomers(string searchTerm);
+        List<Customer> GetCustomerByStatus();
+
+        int DeactivateCustomer(int customerId);
+        int ActivateCustomer(int customerId);
+    }
+}
