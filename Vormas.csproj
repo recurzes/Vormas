@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\CustomerDbContext.cs" />
     <Compile Include="Database\DbCommandHelper.cs" />
     <Compile Include="Database\UserDbContext.cs" />
     <Compile Include="Database\VehicleDbContext.cs" />
@@ -142,10 +143,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IAuthService.cs" />
+    <Compile Include="Interfaces\ICustomerManager.cs" />
     <Compile Include="Interfaces\ISessionService.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
     <Compile Include="Interfaces\IVehicleRepository.cs" />
     <Compile Include="Interfaces\IVehicleService.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Vehicle.cs" />
@@ -156,6 +159,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthManager.cs" />
+    <Compile Include="Services\CustomerManager.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\UserManager.cs" />
     <Compile Include="Services\VehicleService.cs" />
