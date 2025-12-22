@@ -6,5 +6,6 @@
         public const string UserRegister = "user_register";
         public const string AdminDashboard = "admin_dashboard";
         public const string RentalAgentDashboard = "rental_agent_dashboard";
+        public const string Vehicles = "vehicles";
     }
 }

@@ -7,9 +7,9 @@ using Vormas.Helpers;
 
 namespace Vormas.Database
 {
-    public class VehicleRepository : IVehicleRepository
+    public class VehicleDbContext : IVehicleRepository
     {
-        private string _connStr = Helpers.MySqlHelper.GetConnectionString();
+        private readonly string _connStr = Helpers.MySqlHelper.GetConnectionString();
 
         public void AddVehicle(Vehicle vehicle)
         {

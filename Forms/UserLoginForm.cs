@@ -27,14 +27,14 @@ namespace Vormas.Forms
                 
                 if (string.IsNullOrWhiteSpace(username))
                 {
-                    MessageBox.Show("Username and password are required", "Validation Error", MessageBoxButtons.OK,
+                    MessageBox.Show(@"Username and password are required", "Validation Error", MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                     return;
                 }
 
                 if (_authService.LoginUser(username, password))
                 {
-                    MessageBox.Show("Login successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(@"Login successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     var currentUser = _session.CurrentUser;
 
                     // Navigate to dashboards using the navigation service
@@ -47,7 +47,7 @@ namespace Vormas.Forms
                             _navigation.Navigate(Routes.RentalAgentDashboard);
                             break;
                         default:
-                            MessageBox.Show("Invalid role assigned to user", "Error", MessageBoxButtons.OK,
+                            MessageBox.Show(@"Invalid role assigned to user", "Error", MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
                             _session.ClearSession();
                             break;
@@ -55,13 +55,13 @@ namespace Vormas.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButtons.OK,
+                    MessageBox.Show(@"Invalid username or password", "Login Failed", MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
             }
             catch (Exception exception)
             {
-                MessageBox.Show($"Error: {exception.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"Error: {exception.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
