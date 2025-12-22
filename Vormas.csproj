@@ -100,9 +100,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\VehicleController.cs" />
     <Compile Include="Database\DbCommandHelper.cs" />
     <Compile Include="Database\UserDbContext.cs" />
-    <Compile Include="Database\VehicleRepository.cs" />
+    <Compile Include="Database\VehicleDbContext.cs" />
     <Compile Include="Forms\AdminDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,7 +128,6 @@
     <Compile Include="Forms\UserRegisterForm.Designer.cs">
       <DependentUpon>UserRegisterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\VehicleController.cs" />
     <Compile Include="Forms\VehicleForm.cs">
       <SubType>Form</SubType>
     </Compile>
