@@ -33,13 +33,14 @@ namespace Vormas
                 { Routes.UserRegister, () => new UserRegisterForm(_userManager, _authService) },
                 { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService) },
                 { Routes.AdminDashboard, () => new AdminDashboard(_sessionService) },
+                { Routes.Vehicles, () => new VehicleForm()}
             };
             
             _navigation = new NavigationService(contentHost, routes);
             
             routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             
-            _navigation.Navigate(Routes.UserLogin);
+            _navigation.Navigate(Routes.Vehicles);
         }
 
         public INavigationService Navigator => _navigation;
