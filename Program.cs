@@ -27,7 +27,7 @@ namespace Vormas
             ISessionService sessionService = new SessionService();
             IAuthService authService = new AuthManager(userManager, sessionService);
             
-            Application.Run(new VehicleForm());
+            Application.Run(new Form1(userManager, authService, sessionService));
         }
     }
 }
