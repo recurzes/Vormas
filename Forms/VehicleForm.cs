@@ -15,7 +15,7 @@ namespace Vormas.Forms
     {
         private readonly IVehicleService _service;
         private Vehicle _selectedVehicle;
-        private BindingSource _bindingSource;
+        private readonly BindingSource _bindingSource;
 
         public VehicleForm(IVehicleService service)
         {
@@ -28,8 +28,7 @@ namespace Vormas.Forms
             ConfigureGrid();
             InitializeData();
         }
-        
-        public VehicleForm(): this(null) {}
+
 
         private void InitializeData()
         {
@@ -78,25 +77,21 @@ namespace Vormas.Forms
         {
         }
 
-        public void SetCategories(IEnumerable<string> categories)
+        private void SetCategories(IEnumerable<string> categories)
         {
             cmbCategory.DataSource = categories;
         }
 
-        public void SetStatuses(IEnumerable<string> statuses)
+        private void SetStatuses(IEnumerable<string> statuses)
         {
             cmbStatus.DataSource = statuses;
         }
 
         private void DgvVehicles_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvVehicles.CurrentRow != null)
+            if (dgvVehicles.CurrentRow?.DataBoundItem is Vehicle vehicle)
             {
-                var vehicle = dgvVehicles.CurrentRow.DataBoundItem as Vehicle;
-                if (vehicle != null)
-                {
-                    PopulateFields(vehicle);
-                }
+                PopulateFields(vehicle);
             }
         }
 
@@ -178,25 +173,22 @@ namespace Vormas.Forms
 
         private void btnDelete_Click_1(object sender, EventArgs e)
         {
-            if (_selectedVehicle.VehicleId > 0)
+            if (_selectedVehicle.VehicleId <= 0) return;
+            if (MessageBox.Show(@"Are you sure you want to delete this vehicle?", @"Confirm Delete",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
+            try
             {
-                if (MessageBox.Show(@"Are you sure you want to delete this vehicle?", @"Confirm Delete",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    try
-                    {
-                        _service.DeleteVehicle(_selectedVehicle.VehicleId);
-                        LoadVehicles();
-                        ClearInputs();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($@"Error deleting vehicle: {ex.Message}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                _service.DeleteVehicle(_selectedVehicle.VehicleId);
+                LoadVehicles();
+                ClearInputs();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($@"Error deleting vehicle: {ex.Message}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        public void ClearInputs()
+
+        private void ClearInputs()
         {
             _selectedVehicle = new Vehicle(); 
             txtModel.Text = "";
@@ -220,19 +212,16 @@ namespace Vormas.Forms
 
         private void btnBrowseImage_Click_1(object sender, EventArgs e)
         {
-            
-            if (ofdImage.ShowDialog() == DialogResult.OK)
+            if (ofdImage.ShowDialog() != DialogResult.OK) return;
+            try
             {
-                try
-                {
-                    string filePath = ofdImage.FileName;
-                    pbVehicleImage.Image = Image.FromFile(filePath);
-                    pbVehicleImage.Tag = filePath; // Store path in Tag
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($@"Error loading image: {ex.Message}");
-                }
+                string filePath = ofdImage.FileName;
+                pbVehicleImage.Image = Image.FromFile(filePath);
+                pbVehicleImage.Tag = filePath; // Store path in Tag
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($@"Error loading image: {ex.Message}");
             }
         }
 
@@ -243,22 +232,22 @@ namespace Vormas.Forms
 
         private void SearchVehicles(string query)
         {
-            if (_bindingSource.DataSource is List<Vehicle> allVehicles)
+            var allVehicles = _service.GetAllVehicles();
+
+            if (string.IsNullOrWhiteSpace(query))
             {
-                if (string.IsNullOrWhiteSpace(query))
-                {
-                    _bindingSource.DataSource = _service.GetAllVehicles();
-                }
-                else
-                {
-                    var filtered = allVehicles.FindAll(v => 
-                        (v.Make != null && v.Make.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                        (v.Model != null && v.Model.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                        (v.LicensePlate != null && v.LicensePlate.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0));
-                    _bindingSource.DataSource = filtered;
-                }
-                _bindingSource.ResetBindings(false);
+                _bindingSource.DataSource = allVehicles;
             }
+            else
+            {
+                var filtered = allVehicles.FindAll(v =>
+                    (v.Make != null && v.Make.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (v.Model != null && v.Model.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    (v.LicensePlate != null && v.LicensePlate.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0));
+                _bindingSource.DataSource = filtered;
+            }
+
+            _bindingSource.ResetBindings(false);
         }
  
 
