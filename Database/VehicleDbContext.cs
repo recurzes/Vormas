@@ -6,7 +6,7 @@ using System.Data;
 
 namespace Vormas.Database
 {
-    public class VehicleRepository : IVehicleRepository
+    public class VehicleDbContext : IVehicleRepository
     {
         private readonly string _connStr = Helpers.MySqlHelper.GetConnectionString();
 
