@@ -56,7 +56,7 @@ namespace Vormas.Forms
             }
         }
 
-    private void ConfigureGrid()
+        private void ConfigureGrid()
         {
             dgvVehicles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvVehicles.MultiSelect = false;
