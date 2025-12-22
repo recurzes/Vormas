@@ -5,11 +5,12 @@ using System.IO;
 using System.Windows.Forms;
 using Vormas.Database;
 using Vormas.Models;
+using Vormas.Navigation;
 using Vormas.Services;
 
 namespace Vormas.Forms
 {
-    public partial class VehicleForm : Form
+    public partial class VehicleForm : PageControl
     {
         private readonly VehicleController _controller;
         private Vehicle _selectedVehicle;
