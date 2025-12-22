@@ -19,7 +19,7 @@ namespace Vormas.Forms
         {
             InitializeComponent();
             
-            var repository = new VehicleRepository();
+            var repository = new VehicleDbContext();
             var service = new VehicleService(repository);
             _controller = new VehicleController(service, this);
             
