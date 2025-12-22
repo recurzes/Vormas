@@ -8,7 +8,7 @@ namespace Vormas.Database
 {
     public class VehicleRepository : IVehicleRepository
     {
-        private string _connStr = Helpers.MySqlHelper.GetConnectionString();
+        private readonly string _connStr = Helpers.MySqlHelper.GetConnectionString();
 
         public void AddVehicle(Vehicle vehicle)
         {
