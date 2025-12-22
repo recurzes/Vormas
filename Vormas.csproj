@@ -100,7 +100,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\VehicleController.cs" />
     <Compile Include="Database\DbCommandHelper.cs" />
     <Compile Include="Database\UserDbContext.cs" />
     <Compile Include="Database\VehicleDbContext.cs" />
