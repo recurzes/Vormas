@@ -35,6 +35,7 @@ namespace Vormas
                 { Routes.UserRegister, () => new UserRegisterForm(_userManager, _authService) },
                 { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService) },
                 { Routes.AdminDashboard, () => new AdminDashboard(_sessionService) },
+                { Routes.Customers, () => new CustomerForm() }
                 { Routes.Vehicles, () => new VehicleForm(_vehicleService)}
             };
             
