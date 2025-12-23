@@ -62,13 +62,15 @@ namespace Vormas.Forms
             dgvVehicles.ReadOnly = true;
             dgvVehicles.AutoGenerateColumns = false;
             
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "VehicleCode", HeaderText = @"Vehicle Code", Width = 80 });
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "VehicleId", HeaderText = @"ID", Width = 40 });
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Make", HeaderText = @"Make" });
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Model", HeaderText = @"Model" });
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Year", HeaderText = @"Year", Width = 50 });
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Category", HeaderText = @"Category" });
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Odometer", HeaderText = @"Current Mileage" });
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Status", HeaderText = @"Status" });
-            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "DailyRate", HeaderText = @"Daily Rate", DefaultCellStyle = new DataGridViewCellStyle { Format = "C2" } });
+            // dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "DailyRate", HeaderText = @"Daily Rate", DefaultCellStyle = new DataGridViewCellStyle { Format = "C2" } });
             
             dgvVehicles.SelectionChanged += DgvVehicles_SelectionChanged;
         }
@@ -98,6 +100,7 @@ namespace Vormas.Forms
         private void PopulateFields(Vehicle vehicle)
         {
             _selectedVehicle = vehicle;
+            txtVehicleCode.Text = vehicle.VehicleCode;
             txtMake.Text = vehicle.Make;
             txtModel.Text = vehicle.Model;
             txtYear.Text = vehicle.Year.ToString();
@@ -108,7 +111,7 @@ namespace Vormas.Forms
             cmbTransmission.SelectedItem = vehicle.Transmission;
             cmbFuelType.SelectedItem = vehicle.FuelType;
             txtSeatingCapacity.Text = vehicle.SeatingCapacity.ToString();
-            txtDailyRate.Text = vehicle.DailyRate.ToString();
+            txtCurrentMileage.Text = vehicle.Odometer.ToString();
             cmbStatus.SelectedItem = vehicle.Status;
             
             if (!string.IsNullOrEmpty(vehicle.ImagePath) && File.Exists(vehicle.ImagePath))
@@ -130,9 +133,10 @@ namespace Vormas.Forms
             }
 
             if (!int.TryParse(txtYear.Text, out int year)) { MessageBox.Show(@"Invalid Year"); return; }
-            if (!decimal.TryParse(txtDailyRate.Text, out decimal rate)) { MessageBox.Show(@"Invalid Rate"); return; }
             if (!int.TryParse(txtSeatingCapacity.Text, out int capacity)) { MessageBox.Show(@"Invalid Capacity"); return; }
+            if (!int.TryParse(txtCurrentMileage.Text, out int currentMileage)) { MessageBox.Show(@"Invalid Current Mileage"); return; }
 
+            _selectedVehicle.VehicleCode = txtVehicleCode.Text;
             _selectedVehicle.Make = txtMake.Text;
             _selectedVehicle.Model = txtModel.Text;
             _selectedVehicle.Year = year;
@@ -143,7 +147,7 @@ namespace Vormas.Forms
             _selectedVehicle.Transmission = cmbTransmission.SelectedItem?.ToString();
             _selectedVehicle.FuelType = cmbFuelType.SelectedItem?.ToString();
             _selectedVehicle.SeatingCapacity = capacity;
-            _selectedVehicle.DailyRate = rate;
+            _selectedVehicle.Odometer = currentMileage;
             _selectedVehicle.Status = cmbStatus.SelectedItem?.ToString();
             _selectedVehicle.ImagePath = pbVehicleImage.Tag as string ?? _selectedVehicle.ImagePath;
 
@@ -190,7 +194,8 @@ namespace Vormas.Forms
 
         private void ClearInputs()
         {
-            _selectedVehicle = new Vehicle(); 
+            _selectedVehicle = new Vehicle();
+            txtVehicleCode.Text = "";
             txtModel.Text = "";
             txtYear.Text = "";
             txtColor.Text = "";
@@ -200,7 +205,7 @@ namespace Vormas.Forms
             cmbTransmission.SelectedIndex = -1;
             cmbFuelType.SelectedIndex = -1;
             txtSeatingCapacity.Text = "";
-            txtDailyRate.Text = "";
+            txtCurrentMileage.Text = "";
             cmbStatus.SelectedIndex = -1;
             pbVehicleImage.Image = null;
         }

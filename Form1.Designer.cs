@@ -36,7 +36,7 @@
             this.contentHost.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentHost.Location = new System.Drawing.Point(0, 0);
             this.contentHost.Name = "contentHost";
-            this.contentHost.Size = new System.Drawing.Size(1055, 698);
+            this.contentHost.Size = new System.Drawing.Size(1051, 628);
             this.contentHost.TabIndex = 0;
             // 
             // Form1
