@@ -30,12 +30,14 @@
         {
             this.dgvVehicles = new System.Windows.Forms.DataGridView();
             this.pnlInputs = new System.Windows.Forms.Panel();
+            this.txtCurrentMileage = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtVehicleCode = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnBrowseImage = new System.Windows.Forms.Button();
             this.pbVehicleImage = new System.Windows.Forms.PictureBox();
             this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.txtDailyRate = new System.Windows.Forms.TextBox();
-            this.lblDailyRate = new System.Windows.Forms.Label();
             this.txtSeatingCapacity = new System.Windows.Forms.TextBox();
             this.lblSeatingCapacity = new System.Windows.Forms.Label();
             this.cmbFuelType = new System.Windows.Forms.ComboBox();
@@ -74,21 +76,23 @@
             // 
             this.dgvVehicles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVehicles.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dgvVehicles.Location = new System.Drawing.Point(350, 60);
+            this.dgvVehicles.Location = new System.Drawing.Point(367, 60);
             this.dgvVehicles.Name = "dgvVehicles";
-            this.dgvVehicles.Size = new System.Drawing.Size(634, 480);
+            this.dgvVehicles.Size = new System.Drawing.Size(634, 571);
             this.dgvVehicles.TabIndex = 1;
             this.dgvVehicles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVehicles_CellContentClick);
             // 
             // pnlInputs
             // 
             this.pnlInputs.AutoScroll = true;
+            this.pnlInputs.Controls.Add(this.txtCurrentMileage);
+            this.pnlInputs.Controls.Add(this.label2);
+            this.pnlInputs.Controls.Add(this.txtVehicleCode);
+            this.pnlInputs.Controls.Add(this.label1);
             this.pnlInputs.Controls.Add(this.btnBrowseImage);
             this.pnlInputs.Controls.Add(this.pbVehicleImage);
             this.pnlInputs.Controls.Add(this.cmbStatus);
             this.pnlInputs.Controls.Add(this.lblStatus);
-            this.pnlInputs.Controls.Add(this.txtDailyRate);
-            this.pnlInputs.Controls.Add(this.lblDailyRate);
             this.pnlInputs.Controls.Add(this.txtSeatingCapacity);
             this.pnlInputs.Controls.Add(this.lblSeatingCapacity);
             this.pnlInputs.Controls.Add(this.cmbFuelType);
@@ -115,12 +119,44 @@
             this.pnlInputs.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlInputs.Location = new System.Drawing.Point(0, 60);
             this.pnlInputs.Name = "pnlInputs";
-            this.pnlInputs.Size = new System.Drawing.Size(340, 480);
+            this.pnlInputs.Size = new System.Drawing.Size(340, 571);
             this.pnlInputs.TabIndex = 0;
+            // 
+            // txtCurrentMileage
+            // 
+            this.txtCurrentMileage.Location = new System.Drawing.Point(120, 285);
+            this.txtCurrentMileage.Name = "txtCurrentMileage";
+            this.txtCurrentMileage.Size = new System.Drawing.Size(200, 20);
+            this.txtCurrentMileage.TabIndex = 31;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 285);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(84, 13);
+            this.label2.TabIndex = 30;
+            this.label2.Text = "Current Mileage:";
+            // 
+            // txtVehicleCode
+            // 
+            this.txtVehicleCode.Location = new System.Drawing.Point(120, 10);
+            this.txtVehicleCode.Name = "txtVehicleCode";
+            this.txtVehicleCode.Size = new System.Drawing.Size(200, 20);
+            this.txtVehicleCode.TabIndex = 28;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 13);
+            this.label1.TabIndex = 29;
+            this.label1.Text = "Vehicle Code:";
             // 
             // btnBrowseImage
             // 
-            this.btnBrowseImage.Location = new System.Drawing.Point(120, 390);
+            this.btnBrowseImage.Location = new System.Drawing.Point(120, 457);
             this.btnBrowseImage.Name = "btnBrowseImage";
             this.btnBrowseImage.Size = new System.Drawing.Size(100, 23);
             this.btnBrowseImage.TabIndex = 24;
@@ -131,7 +167,7 @@
             // pbVehicleImage
             // 
             this.pbVehicleImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbVehicleImage.Location = new System.Drawing.Point(120, 280);
+            this.pbVehicleImage.Location = new System.Drawing.Point(120, 347);
             this.pbVehicleImage.Name = "pbVehicleImage";
             this.pbVehicleImage.Size = new System.Drawing.Size(200, 100);
             this.pbVehicleImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -143,7 +179,7 @@
             // 
             this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Location = new System.Drawing.Point(120, 250);
+            this.cmbStatus.Location = new System.Drawing.Point(120, 257);
             this.cmbStatus.Name = "cmbStatus";
             this.cmbStatus.Size = new System.Drawing.Size(200, 21);
             this.cmbStatus.TabIndex = 22;
@@ -151,31 +187,15 @@
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(10, 253);
+            this.lblStatus.Location = new System.Drawing.Point(10, 260);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(40, 13);
             this.lblStatus.TabIndex = 21;
             this.lblStatus.Text = "Status:";
             // 
-            // txtDailyRate
-            // 
-            this.txtDailyRate.Location = new System.Drawing.Point(120, 226);
-            this.txtDailyRate.Name = "txtDailyRate";
-            this.txtDailyRate.Size = new System.Drawing.Size(200, 20);
-            this.txtDailyRate.TabIndex = 20;
-            // 
-            // lblDailyRate
-            // 
-            this.lblDailyRate.AutoSize = true;
-            this.lblDailyRate.Location = new System.Drawing.Point(10, 229);
-            this.lblDailyRate.Name = "lblDailyRate";
-            this.lblDailyRate.Size = new System.Drawing.Size(59, 13);
-            this.lblDailyRate.TabIndex = 19;
-            this.lblDailyRate.Text = "Daily Rate:";
-            // 
             // txtSeatingCapacity
             // 
-            this.txtSeatingCapacity.Location = new System.Drawing.Point(120, 202);
+            this.txtSeatingCapacity.Location = new System.Drawing.Point(120, 230);
             this.txtSeatingCapacity.Name = "txtSeatingCapacity";
             this.txtSeatingCapacity.Size = new System.Drawing.Size(200, 20);
             this.txtSeatingCapacity.TabIndex = 18;
@@ -183,17 +203,17 @@
             // lblSeatingCapacity
             // 
             this.lblSeatingCapacity.AutoSize = true;
-            this.lblSeatingCapacity.Location = new System.Drawing.Point(10, 205);
+            this.lblSeatingCapacity.Location = new System.Drawing.Point(10, 233);
             this.lblSeatingCapacity.Name = "lblSeatingCapacity";
-            this.lblSeatingCapacity.Size = new System.Drawing.Size(51, 13);
+            this.lblSeatingCapacity.Size = new System.Drawing.Size(90, 13);
             this.lblSeatingCapacity.TabIndex = 17;
-            this.lblSeatingCapacity.Text = "Capacity:";
+            this.lblSeatingCapacity.Text = "Seating Capacity:";
             // 
             // cmbFuelType
             // 
             this.cmbFuelType.FormattingEnabled = true;
             this.cmbFuelType.Items.AddRange(new object[] { "Gasoline", "Diesel", "Electric", "Hybrid" });
-            this.cmbFuelType.Location = new System.Drawing.Point(120, 177);
+            this.cmbFuelType.Location = new System.Drawing.Point(120, 205);
             this.cmbFuelType.Name = "cmbFuelType";
             this.cmbFuelType.Size = new System.Drawing.Size(200, 21);
             this.cmbFuelType.TabIndex = 16;
@@ -201,7 +221,7 @@
             // lblFuelType
             // 
             this.lblFuelType.AutoSize = true;
-            this.lblFuelType.Location = new System.Drawing.Point(10, 180);
+            this.lblFuelType.Location = new System.Drawing.Point(10, 208);
             this.lblFuelType.Name = "lblFuelType";
             this.lblFuelType.Size = new System.Drawing.Size(57, 13);
             this.lblFuelType.TabIndex = 15;
@@ -211,7 +231,7 @@
             // 
             this.cmbTransmission.FormattingEnabled = true;
             this.cmbTransmission.Items.AddRange(new object[] { "Automatic", "Manual" });
-            this.cmbTransmission.Location = new System.Drawing.Point(120, 153);
+            this.cmbTransmission.Location = new System.Drawing.Point(120, 181);
             this.cmbTransmission.Name = "cmbTransmission";
             this.cmbTransmission.Size = new System.Drawing.Size(200, 21);
             this.cmbTransmission.TabIndex = 14;
@@ -220,7 +240,7 @@
             // lblTransmission
             // 
             this.lblTransmission.AutoSize = true;
-            this.lblTransmission.Location = new System.Drawing.Point(10, 156);
+            this.lblTransmission.Location = new System.Drawing.Point(10, 184);
             this.lblTransmission.Name = "lblTransmission";
             this.lblTransmission.Size = new System.Drawing.Size(71, 13);
             this.lblTransmission.TabIndex = 13;
@@ -231,7 +251,7 @@
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategory.FormattingEnabled = true;
             this.cmbCategory.Items.AddRange(new object[] { "Hatchback ", "Sedan", "SUV ", "Pickup ", "Van/Minibus " });
-            this.cmbCategory.Location = new System.Drawing.Point(120, 129);
+            this.cmbCategory.Location = new System.Drawing.Point(120, 157);
             this.cmbCategory.Name = "cmbCategory";
             this.cmbCategory.Size = new System.Drawing.Size(200, 21);
             this.cmbCategory.TabIndex = 12;
@@ -240,7 +260,7 @@
             // lblCategory
             // 
             this.lblCategory.AutoSize = true;
-            this.lblCategory.Location = new System.Drawing.Point(10, 132);
+            this.lblCategory.Location = new System.Drawing.Point(10, 160);
             this.lblCategory.Name = "lblCategory";
             this.lblCategory.Size = new System.Drawing.Size(52, 13);
             this.lblCategory.TabIndex = 11;
@@ -248,7 +268,7 @@
             // 
             // txtVin
             // 
-            this.txtVin.Location = new System.Drawing.Point(120, 105);
+            this.txtVin.Location = new System.Drawing.Point(120, 133);
             this.txtVin.Name = "txtVin";
             this.txtVin.Size = new System.Drawing.Size(200, 20);
             this.txtVin.TabIndex = 10;
@@ -256,7 +276,7 @@
             // lblVin
             // 
             this.lblVin.AutoSize = true;
-            this.lblVin.Location = new System.Drawing.Point(10, 108);
+            this.lblVin.Location = new System.Drawing.Point(10, 136);
             this.lblVin.Name = "lblVin";
             this.lblVin.Size = new System.Drawing.Size(28, 13);
             this.lblVin.TabIndex = 9;
@@ -264,7 +284,7 @@
             // 
             // txtLicensePlate
             // 
-            this.txtLicensePlate.Location = new System.Drawing.Point(120, 81);
+            this.txtLicensePlate.Location = new System.Drawing.Point(120, 109);
             this.txtLicensePlate.Name = "txtLicensePlate";
             this.txtLicensePlate.Size = new System.Drawing.Size(200, 20);
             this.txtLicensePlate.TabIndex = 8;
@@ -272,7 +292,7 @@
             // lblLicensePlate
             // 
             this.lblLicensePlate.AutoSize = true;
-            this.lblLicensePlate.Location = new System.Drawing.Point(10, 84);
+            this.lblLicensePlate.Location = new System.Drawing.Point(10, 112);
             this.lblLicensePlate.Name = "lblLicensePlate";
             this.lblLicensePlate.Size = new System.Drawing.Size(74, 13);
             this.lblLicensePlate.TabIndex = 7;
@@ -280,7 +300,7 @@
             // 
             // txtColor
             // 
-            this.txtColor.Location = new System.Drawing.Point(230, 57);
+            this.txtColor.Location = new System.Drawing.Point(230, 85);
             this.txtColor.Name = "txtColor";
             this.txtColor.Size = new System.Drawing.Size(90, 20);
             this.txtColor.TabIndex = 6;
@@ -288,7 +308,7 @@
             // lblColor
             // 
             this.lblColor.AutoSize = true;
-            this.lblColor.Location = new System.Drawing.Point(190, 60);
+            this.lblColor.Location = new System.Drawing.Point(190, 88);
             this.lblColor.Name = "lblColor";
             this.lblColor.Size = new System.Drawing.Size(34, 13);
             this.lblColor.TabIndex = 5;
@@ -296,7 +316,7 @@
             // 
             // txtYear
             // 
-            this.txtYear.Location = new System.Drawing.Point(120, 57);
+            this.txtYear.Location = new System.Drawing.Point(120, 85);
             this.txtYear.Name = "txtYear";
             this.txtYear.Size = new System.Drawing.Size(60, 20);
             this.txtYear.TabIndex = 4;
@@ -304,7 +324,7 @@
             // lblYear
             // 
             this.lblYear.AutoSize = true;
-            this.lblYear.Location = new System.Drawing.Point(10, 60);
+            this.lblYear.Location = new System.Drawing.Point(10, 88);
             this.lblYear.Name = "lblYear";
             this.lblYear.Size = new System.Drawing.Size(32, 13);
             this.lblYear.TabIndex = 3;
@@ -312,7 +332,7 @@
             // 
             // txtModel
             // 
-            this.txtModel.Location = new System.Drawing.Point(120, 33);
+            this.txtModel.Location = new System.Drawing.Point(120, 61);
             this.txtModel.Name = "txtModel";
             this.txtModel.Size = new System.Drawing.Size(200, 20);
             this.txtModel.TabIndex = 2;
@@ -320,7 +340,7 @@
             // lblModel
             // 
             this.lblModel.AutoSize = true;
-            this.lblModel.Location = new System.Drawing.Point(10, 36);
+            this.lblModel.Location = new System.Drawing.Point(10, 64);
             this.lblModel.Name = "lblModel";
             this.lblModel.Size = new System.Drawing.Size(39, 13);
             this.lblModel.TabIndex = 1;
@@ -328,7 +348,7 @@
             // 
             // txtMake
             // 
-            this.txtMake.Location = new System.Drawing.Point(120, 9);
+            this.txtMake.Location = new System.Drawing.Point(120, 37);
             this.txtMake.Name = "txtMake";
             this.txtMake.Size = new System.Drawing.Size(200, 20);
             this.txtMake.TabIndex = 0;
@@ -336,7 +356,7 @@
             // lblMake
             // 
             this.lblMake.AutoSize = true;
-            this.lblMake.Location = new System.Drawing.Point(10, 12);
+            this.lblMake.Location = new System.Drawing.Point(10, 40);
             this.lblMake.Name = "lblMake";
             this.lblMake.Size = new System.Drawing.Size(37, 13);
             this.lblMake.TabIndex = 0;
@@ -344,7 +364,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(245, 435);
+            this.btnClear.Location = new System.Drawing.Point(245, 502);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 30);
             this.btnClear.TabIndex = 27;
@@ -355,7 +375,7 @@
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.IndianRed;
-            this.btnDelete.Location = new System.Drawing.Point(135, 435);
+            this.btnDelete.Location = new System.Drawing.Point(135, 502);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 30);
             this.btnDelete.TabIndex = 26;
@@ -366,7 +386,7 @@
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnSave.Location = new System.Drawing.Point(25, 435);
+            this.btnSave.Location = new System.Drawing.Point(25, 502);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 30);
             this.btnSave.TabIndex = 25;
@@ -382,7 +402,7 @@
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(984, 60);
+            this.pnlTop.Size = new System.Drawing.Size(1001, 60);
             this.pnlTop.TabIndex = 2;
             // 
             // btnSearch
@@ -421,12 +441,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 540);
             this.Controls.Add(this.dgvVehicles);
             this.Controls.Add(this.pnlInputs);
             this.Controls.Add(this.pnlTop);
             this.Name = "VehicleForm";
-            this.Text = "Vehicle Fleet Management";
+            this.Size = new System.Drawing.Size(1001, 631);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVehicles)).EndInit();
             this.pnlInputs.ResumeLayout(false);
             this.pnlInputs.PerformLayout();
@@ -435,6 +454,14 @@
             this.pnlTop.PerformLayout();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.TextBox txtCurrentMileage;
+
+        private System.Windows.Forms.ComboBox t;
+        private System.Windows.Forms.Label label2;
+
+        private System.Windows.Forms.TextBox txtVehicleCode;
+        private System.Windows.Forms.Label label1;
 
         #endregion
 
@@ -461,8 +488,6 @@
         private System.Windows.Forms.Label lblFuelType;
         private System.Windows.Forms.TextBox txtSeatingCapacity;
         private System.Windows.Forms.Label lblSeatingCapacity;
-        private System.Windows.Forms.TextBox txtDailyRate;
-        private System.Windows.Forms.Label lblDailyRate;
         private System.Windows.Forms.ComboBox cmbStatus;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.PictureBox pbVehicleImage;
