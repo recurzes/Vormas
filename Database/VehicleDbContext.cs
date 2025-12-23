@@ -15,6 +15,7 @@ namespace Vormas.Database
         {
             DbCommandHelper.ExecuteNonQuery(_connStr, "prcAddVehicle", cmd =>
             {
+                cmd.Parameters.AddWithValue("pVehicleCode", vehicle.VehicleCode);
                 cmd.Parameters.AddWithValue("pMake", vehicle.Make);
                 cmd.Parameters.AddWithValue("pModel", vehicle.Model);
                 cmd.Parameters.AddWithValue("pYear", vehicle.Year);
@@ -25,7 +26,7 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("pTransmission", vehicle.Transmission);
                 cmd.Parameters.AddWithValue("pFuelType", vehicle.FuelType);
                 cmd.Parameters.AddWithValue("pSeatingCapacity", vehicle.SeatingCapacity);
-                cmd.Parameters.AddWithValue("pDailyRate", vehicle.DailyRate);
+                cmd.Parameters.AddWithValue("pOdometer", vehicle.Odometer);
                 cmd.Parameters.AddWithValue("pStatus", vehicle.Status);
                 cmd.Parameters.AddWithValue("pImagePath", vehicle.ImagePath);
             });
@@ -35,7 +36,7 @@ namespace Vormas.Database
         {
             DbCommandHelper.ExecuteNonQuery(_connStr, "prcUpdateVehicle", cmd =>
             {
-                cmd.Parameters.AddWithValue("pVehicleId", vehicle.VehicleId);
+                cmd.Parameters.AddWithValue("pVehicleCode", vehicle.VehicleCode);
                 cmd.Parameters.AddWithValue("pMake", vehicle.Make);
                 cmd.Parameters.AddWithValue("pModel", vehicle.Model);
                 cmd.Parameters.AddWithValue("pYear", vehicle.Year);
@@ -46,7 +47,7 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("pTransmission", vehicle.Transmission);
                 cmd.Parameters.AddWithValue("pFuelType", vehicle.FuelType);
                 cmd.Parameters.AddWithValue("pSeatingCapacity", vehicle.SeatingCapacity);
-                cmd.Parameters.AddWithValue("pDailyRate", vehicle.DailyRate);
+                cmd.Parameters.AddWithValue("pOdometer", vehicle.Odometer);
                 cmd.Parameters.AddWithValue("pStatus", vehicle.Status);
                 cmd.Parameters.AddWithValue("pImagePath", vehicle.ImagePath);
             });
