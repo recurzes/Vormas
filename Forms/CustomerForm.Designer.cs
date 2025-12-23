@@ -31,8 +31,13 @@ namespace Vormas.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvVehicles = new System.Windows.Forms.DataGridView();
+            this.dgvCustomers = new System.Windows.Forms.DataGridView();
             this.pnlInputs = new System.Windows.Forms.Panel();
+            this.btnDriversLicense = new System.Windows.Forms.Button();
+            this.txtEmergencyContactPhone = new System.Windows.Forms.TextBox();
+            this.chkIsBlacklisted = new System.Windows.Forms.CheckBox();
+            this.txtEmergencyContactName = new System.Windows.Forms.TextBox();
+            this.dtpBirthdate = new System.Windows.Forms.DateTimePicker();
             this.lblSeatingCapacity = new System.Windows.Forms.Label();
             this.lblFuelType = new System.Windows.Forms.Label();
             this.lblTransmission = new System.Windows.Forms.Label();
@@ -56,27 +61,25 @@ namespace Vormas.Forms
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
-            this.dtpBirthdate = new System.Windows.Forms.DateTimePicker();
-            this.txtEmergencyContactName = new System.Windows.Forms.TextBox();
-            this.chkIsBlacklisted = new System.Windows.Forms.CheckBox();
-            this.txtEmergencyContactPhone = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVehicles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             this.pnlInputs.SuspendLayout();
             this.pnlTop.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dgvVehicles
+            // dgvCustomers
             // 
-            this.dgvVehicles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVehicles.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dgvVehicles.Location = new System.Drawing.Point(386, 60);
-            this.dgvVehicles.Name = "dgvVehicles";
-            this.dgvVehicles.Size = new System.Drawing.Size(634, 393);
-            this.dgvVehicles.TabIndex = 4;
+            this.dgvCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCustomers.Dock = System.Windows.Forms.DockStyle.Right;
+            this.dgvCustomers.Location = new System.Drawing.Point(386, 60);
+            this.dgvCustomers.Name = "dgvCustomers";
+            this.dgvCustomers.Size = new System.Drawing.Size(634, 393);
+            this.dgvCustomers.TabIndex = 4;
+            this.dgvCustomers.SelectionChanged += new System.EventHandler(this.dgvCustomers_SelectionChanged);
             // 
             // pnlInputs
             // 
             this.pnlInputs.AutoScroll = true;
+            this.pnlInputs.Controls.Add(this.btnDriversLicense);
             this.pnlInputs.Controls.Add(this.txtEmergencyContactPhone);
             this.pnlInputs.Controls.Add(this.chkIsBlacklisted);
             this.pnlInputs.Controls.Add(this.txtEmergencyContactName);
@@ -105,6 +108,44 @@ namespace Vormas.Forms
             this.pnlInputs.Name = "pnlInputs";
             this.pnlInputs.Size = new System.Drawing.Size(375, 393);
             this.pnlInputs.TabIndex = 3;
+            // 
+            // btnDriversLicense
+            // 
+            this.btnDriversLicense.Location = new System.Drawing.Point(10, 265);
+            this.btnDriversLicense.Name = "btnDriversLicense";
+            this.btnDriversLicense.Size = new System.Drawing.Size(134, 22);
+            this.btnDriversLicense.TabIndex = 32;
+            this.btnDriversLicense.Text = "Add Driver\'s License";
+            this.btnDriversLicense.UseVisualStyleBackColor = true;
+            // 
+            // txtEmergencyContactPhone
+            // 
+            this.txtEmergencyContactPhone.Location = new System.Drawing.Point(158, 208);
+            this.txtEmergencyContactPhone.Name = "txtEmergencyContactPhone";
+            this.txtEmergencyContactPhone.Size = new System.Drawing.Size(200, 20);
+            this.txtEmergencyContactPhone.TabIndex = 31;
+            // 
+            // chkIsBlacklisted
+            // 
+            this.chkIsBlacklisted.Location = new System.Drawing.Point(158, 233);
+            this.chkIsBlacklisted.Name = "chkIsBlacklisted";
+            this.chkIsBlacklisted.Size = new System.Drawing.Size(104, 24);
+            this.chkIsBlacklisted.TabIndex = 30;
+            this.chkIsBlacklisted.UseVisualStyleBackColor = true;
+            // 
+            // txtEmergencyContactName
+            // 
+            this.txtEmergencyContactName.Location = new System.Drawing.Point(158, 184);
+            this.txtEmergencyContactName.Name = "txtEmergencyContactName";
+            this.txtEmergencyContactName.Size = new System.Drawing.Size(200, 20);
+            this.txtEmergencyContactName.TabIndex = 29;
+            // 
+            // dtpBirthdate
+            // 
+            this.dtpBirthdate.Location = new System.Drawing.Point(158, 60);
+            this.dtpBirthdate.Name = "dtpBirthdate";
+            this.dtpBirthdate.Size = new System.Drawing.Size(200, 20);
+            this.dtpBirthdate.TabIndex = 28;
             // 
             // lblSeatingCapacity
             // 
@@ -306,51 +347,24 @@ namespace Vormas.Forms
             this.lblSearch.TabIndex = 0;
             this.lblSearch.Text = "Search:";
             // 
-            // dtpBirthdate
-            // 
-            this.dtpBirthdate.Location = new System.Drawing.Point(158, 60);
-            this.dtpBirthdate.Name = "dtpBirthdate";
-            this.dtpBirthdate.Size = new System.Drawing.Size(200, 20);
-            this.dtpBirthdate.TabIndex = 28;
-            // 
-            // txtEmergencyContactName
-            // 
-            this.txtEmergencyContactName.Location = new System.Drawing.Point(158, 184);
-            this.txtEmergencyContactName.Name = "txtEmergencyContactName";
-            this.txtEmergencyContactName.Size = new System.Drawing.Size(200, 20);
-            this.txtEmergencyContactName.TabIndex = 29;
-            // 
-            // chkIsBlacklisted
-            // 
-            this.chkIsBlacklisted.Location = new System.Drawing.Point(158, 236);
-            this.chkIsBlacklisted.Name = "chkIsBlacklisted";
-            this.chkIsBlacklisted.Size = new System.Drawing.Size(104, 24);
-            this.chkIsBlacklisted.TabIndex = 30;
-            this.chkIsBlacklisted.UseVisualStyleBackColor = true;
-            // 
-            // txtEmergencyContactPhone
-            // 
-            this.txtEmergencyContactPhone.Location = new System.Drawing.Point(158, 208);
-            this.txtEmergencyContactPhone.Name = "txtEmergencyContactPhone";
-            this.txtEmergencyContactPhone.Size = new System.Drawing.Size(200, 20);
-            this.txtEmergencyContactPhone.TabIndex = 31;
-            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.dgvVehicles);
+            this.Controls.Add(this.dgvCustomers);
             this.Controls.Add(this.pnlInputs);
             this.Controls.Add(this.pnlTop);
             this.Name = "CustomerForm";
             this.Size = new System.Drawing.Size(1020, 453);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVehicles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).EndInit();
             this.pnlInputs.ResumeLayout(false);
             this.pnlInputs.PerformLayout();
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Button btnDriversLicense;
 
         private System.Windows.Forms.TextBox txtEmergencyContactPhone;
 
@@ -359,7 +373,7 @@ namespace Vormas.Forms
 
         private System.Windows.Forms.DateTimePicker dtpBirthdate;
 
-        private System.Windows.Forms.DataGridView dgvVehicles;
+        private System.Windows.Forms.DataGridView dgvCustomers;
         private System.Windows.Forms.Panel pnlInputs;
         private System.Windows.Forms.Label lblSeatingCapacity;
         private System.Windows.Forms.Label lblFuelType;
