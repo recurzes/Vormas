@@ -33,29 +33,21 @@ namespace Vormas.Forms
         {
             this.dgvVehicles = new System.Windows.Forms.DataGridView();
             this.pnlInputs = new System.Windows.Forms.Panel();
-            this.cmbStatus = new System.Windows.Forms.ComboBox();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.txtDailyRate = new System.Windows.Forms.TextBox();
-            this.lblDailyRate = new System.Windows.Forms.Label();
-            this.txtSeatingCapacity = new System.Windows.Forms.TextBox();
             this.lblSeatingCapacity = new System.Windows.Forms.Label();
-            this.cmbFuelType = new System.Windows.Forms.ComboBox();
             this.lblFuelType = new System.Windows.Forms.Label();
-            this.cmbTransmission = new System.Windows.Forms.ComboBox();
             this.lblTransmission = new System.Windows.Forms.Label();
-            this.cmbCategory = new System.Windows.Forms.ComboBox();
+            this.cmbCustomerType = new System.Windows.Forms.ComboBox();
             this.lblCategory = new System.Windows.Forms.Label();
-            this.txtVin = new System.Windows.Forms.TextBox();
+            this.txtPhone = new System.Windows.Forms.TextBox();
             this.lblVin = new System.Windows.Forms.Label();
-            this.txtLicensePlate = new System.Windows.Forms.TextBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
             this.lblLicensePlate = new System.Windows.Forms.Label();
-            this.txtColor = new System.Windows.Forms.TextBox();
+            this.txtAddress = new System.Windows.Forms.TextBox();
             this.lblColor = new System.Windows.Forms.Label();
-            this.txtYear = new System.Windows.Forms.TextBox();
             this.lblYear = new System.Windows.Forms.Label();
-            this.txtModel = new System.Windows.Forms.TextBox();
+            this.txtLastName = new System.Windows.Forms.TextBox();
             this.lblModel = new System.Windows.Forms.Label();
-            this.txtMake = new System.Windows.Forms.TextBox();
+            this.txtFirstName = new System.Windows.Forms.TextBox();
             this.lblMake = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
@@ -64,6 +56,10 @@ namespace Vormas.Forms
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
+            this.dtpBirthdate = new System.Windows.Forms.DateTimePicker();
+            this.txtEmergencyContactName = new System.Windows.Forms.TextBox();
+            this.chkIsBlacklisted = new System.Windows.Forms.CheckBox();
+            this.txtEmergencyContactPhone = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVehicles)).BeginInit();
             this.pnlInputs.SuspendLayout();
             this.pnlTop.SuspendLayout();
@@ -73,37 +69,33 @@ namespace Vormas.Forms
             // 
             this.dgvVehicles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVehicles.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dgvVehicles.Location = new System.Drawing.Point(350, 60);
+            this.dgvVehicles.Location = new System.Drawing.Point(386, 60);
             this.dgvVehicles.Name = "dgvVehicles";
-            this.dgvVehicles.Size = new System.Drawing.Size(634, 480);
+            this.dgvVehicles.Size = new System.Drawing.Size(634, 393);
             this.dgvVehicles.TabIndex = 4;
             // 
             // pnlInputs
             // 
             this.pnlInputs.AutoScroll = true;
-            this.pnlInputs.Controls.Add(this.cmbStatus);
-            this.pnlInputs.Controls.Add(this.lblStatus);
-            this.pnlInputs.Controls.Add(this.txtDailyRate);
-            this.pnlInputs.Controls.Add(this.lblDailyRate);
-            this.pnlInputs.Controls.Add(this.txtSeatingCapacity);
+            this.pnlInputs.Controls.Add(this.txtEmergencyContactPhone);
+            this.pnlInputs.Controls.Add(this.chkIsBlacklisted);
+            this.pnlInputs.Controls.Add(this.txtEmergencyContactName);
+            this.pnlInputs.Controls.Add(this.dtpBirthdate);
             this.pnlInputs.Controls.Add(this.lblSeatingCapacity);
-            this.pnlInputs.Controls.Add(this.cmbFuelType);
             this.pnlInputs.Controls.Add(this.lblFuelType);
-            this.pnlInputs.Controls.Add(this.cmbTransmission);
             this.pnlInputs.Controls.Add(this.lblTransmission);
-            this.pnlInputs.Controls.Add(this.cmbCategory);
+            this.pnlInputs.Controls.Add(this.cmbCustomerType);
             this.pnlInputs.Controls.Add(this.lblCategory);
-            this.pnlInputs.Controls.Add(this.txtVin);
+            this.pnlInputs.Controls.Add(this.txtPhone);
             this.pnlInputs.Controls.Add(this.lblVin);
-            this.pnlInputs.Controls.Add(this.txtLicensePlate);
+            this.pnlInputs.Controls.Add(this.txtEmail);
             this.pnlInputs.Controls.Add(this.lblLicensePlate);
-            this.pnlInputs.Controls.Add(this.txtColor);
+            this.pnlInputs.Controls.Add(this.txtAddress);
             this.pnlInputs.Controls.Add(this.lblColor);
-            this.pnlInputs.Controls.Add(this.txtYear);
             this.pnlInputs.Controls.Add(this.lblYear);
-            this.pnlInputs.Controls.Add(this.txtModel);
+            this.pnlInputs.Controls.Add(this.txtLastName);
             this.pnlInputs.Controls.Add(this.lblModel);
-            this.pnlInputs.Controls.Add(this.txtMake);
+            this.pnlInputs.Controls.Add(this.txtFirstName);
             this.pnlInputs.Controls.Add(this.lblMake);
             this.pnlInputs.Controls.Add(this.btnClear);
             this.pnlInputs.Controls.Add(this.btnDelete);
@@ -111,213 +103,147 @@ namespace Vormas.Forms
             this.pnlInputs.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlInputs.Location = new System.Drawing.Point(0, 60);
             this.pnlInputs.Name = "pnlInputs";
-            this.pnlInputs.Size = new System.Drawing.Size(340, 480);
+            this.pnlInputs.Size = new System.Drawing.Size(375, 393);
             this.pnlInputs.TabIndex = 3;
-            // 
-            // cmbStatus
-            // 
-            this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Location = new System.Drawing.Point(120, 250);
-            this.cmbStatus.Name = "cmbStatus";
-            this.cmbStatus.Size = new System.Drawing.Size(200, 21);
-            this.cmbStatus.TabIndex = 22;
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(10, 253);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(40, 13);
-            this.lblStatus.TabIndex = 21;
-            this.lblStatus.Text = "Status:";
-            // 
-            // txtDailyRate
-            // 
-            this.txtDailyRate.Location = new System.Drawing.Point(120, 226);
-            this.txtDailyRate.Name = "txtDailyRate";
-            this.txtDailyRate.Size = new System.Drawing.Size(200, 20);
-            this.txtDailyRate.TabIndex = 20;
-            // 
-            // lblDailyRate
-            // 
-            this.lblDailyRate.AutoSize = true;
-            this.lblDailyRate.Location = new System.Drawing.Point(10, 229);
-            this.lblDailyRate.Name = "lblDailyRate";
-            this.lblDailyRate.Size = new System.Drawing.Size(59, 13);
-            this.lblDailyRate.TabIndex = 19;
-            this.lblDailyRate.Text = "Daily Rate:";
-            // 
-            // txtSeatingCapacity
-            // 
-            this.txtSeatingCapacity.Location = new System.Drawing.Point(120, 202);
-            this.txtSeatingCapacity.Name = "txtSeatingCapacity";
-            this.txtSeatingCapacity.Size = new System.Drawing.Size(200, 20);
-            this.txtSeatingCapacity.TabIndex = 18;
             // 
             // lblSeatingCapacity
             // 
             this.lblSeatingCapacity.AutoSize = true;
-            this.lblSeatingCapacity.Location = new System.Drawing.Point(10, 205);
+            this.lblSeatingCapacity.Location = new System.Drawing.Point(10, 236);
             this.lblSeatingCapacity.Name = "lblSeatingCapacity";
-            this.lblSeatingCapacity.Size = new System.Drawing.Size(51, 13);
+            this.lblSeatingCapacity.Size = new System.Drawing.Size(69, 13);
             this.lblSeatingCapacity.TabIndex = 17;
-            this.lblSeatingCapacity.Text = "Capacity:";
-            // 
-            // cmbFuelType
-            // 
-            this.cmbFuelType.FormattingEnabled = true;
-            this.cmbFuelType.Items.AddRange(new object[] { "Gasoline", "Diesel", "Electric", "Hybrid" });
-            this.cmbFuelType.Location = new System.Drawing.Point(120, 177);
-            this.cmbFuelType.Name = "cmbFuelType";
-            this.cmbFuelType.Size = new System.Drawing.Size(200, 21);
-            this.cmbFuelType.TabIndex = 16;
+            this.lblSeatingCapacity.Text = "Is Blacklisted";
             // 
             // lblFuelType
             // 
             this.lblFuelType.AutoSize = true;
-            this.lblFuelType.Location = new System.Drawing.Point(10, 180);
+            this.lblFuelType.Location = new System.Drawing.Point(10, 211);
             this.lblFuelType.Name = "lblFuelType";
-            this.lblFuelType.Size = new System.Drawing.Size(57, 13);
+            this.lblFuelType.Size = new System.Drawing.Size(137, 13);
             this.lblFuelType.TabIndex = 15;
-            this.lblFuelType.Text = "Fuel Type:";
-            // 
-            // cmbTransmission
-            // 
-            this.cmbTransmission.FormattingEnabled = true;
-            this.cmbTransmission.Items.AddRange(new object[] { "Automatic", "Manual" });
-            this.cmbTransmission.Location = new System.Drawing.Point(120, 153);
-            this.cmbTransmission.Name = "cmbTransmission";
-            this.cmbTransmission.Size = new System.Drawing.Size(200, 21);
-            this.cmbTransmission.TabIndex = 14;
+            this.lblFuelType.Text = "Emergency Contact Phone:";
             // 
             // lblTransmission
             // 
             this.lblTransmission.AutoSize = true;
-            this.lblTransmission.Location = new System.Drawing.Point(10, 156);
+            this.lblTransmission.Location = new System.Drawing.Point(10, 187);
             this.lblTransmission.Name = "lblTransmission";
-            this.lblTransmission.Size = new System.Drawing.Size(71, 13);
+            this.lblTransmission.Size = new System.Drawing.Size(134, 13);
             this.lblTransmission.TabIndex = 13;
-            this.lblTransmission.Text = "Transmission:";
+            this.lblTransmission.Text = "Emergency Contact Name:";
             // 
-            // cmbCategory
+            // cmbCustomerType
             // 
-            this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Items.AddRange(new object[] { "Hatchback ", "Sedan", "SUV ", "Pickup ", "Van/Minibus " });
-            this.cmbCategory.Location = new System.Drawing.Point(120, 129);
-            this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(200, 21);
-            this.cmbCategory.TabIndex = 12;
+            this.cmbCustomerType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCustomerType.FormattingEnabled = true;
+            this.cmbCustomerType.Items.AddRange(new object[] { "Hatchback ", "Sedan", "SUV ", "Pickup ", "Van/Minibus " });
+            this.cmbCustomerType.Location = new System.Drawing.Point(158, 160);
+            this.cmbCustomerType.Name = "cmbCustomerType";
+            this.cmbCustomerType.Size = new System.Drawing.Size(200, 21);
+            this.cmbCustomerType.TabIndex = 12;
             // 
             // lblCategory
             // 
             this.lblCategory.AutoSize = true;
-            this.lblCategory.Location = new System.Drawing.Point(10, 132);
+            this.lblCategory.Location = new System.Drawing.Point(10, 163);
             this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(52, 13);
+            this.lblCategory.Size = new System.Drawing.Size(81, 13);
             this.lblCategory.TabIndex = 11;
-            this.lblCategory.Text = "Category:";
+            this.lblCategory.Text = "Customer Type:";
             // 
-            // txtVin
+            // txtPhone
             // 
-            this.txtVin.Location = new System.Drawing.Point(120, 105);
-            this.txtVin.Name = "txtVin";
-            this.txtVin.Size = new System.Drawing.Size(200, 20);
-            this.txtVin.TabIndex = 10;
+            this.txtPhone.Location = new System.Drawing.Point(158, 136);
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new System.Drawing.Size(200, 20);
+            this.txtPhone.TabIndex = 10;
             // 
             // lblVin
             // 
             this.lblVin.AutoSize = true;
-            this.lblVin.Location = new System.Drawing.Point(10, 108);
+            this.lblVin.Location = new System.Drawing.Point(10, 139);
             this.lblVin.Name = "lblVin";
-            this.lblVin.Size = new System.Drawing.Size(28, 13);
+            this.lblVin.Size = new System.Drawing.Size(41, 13);
             this.lblVin.TabIndex = 9;
-            this.lblVin.Text = "VIN:";
+            this.lblVin.Text = "Phone:";
             // 
-            // txtLicensePlate
+            // txtEmail
             // 
-            this.txtLicensePlate.Location = new System.Drawing.Point(120, 81);
-            this.txtLicensePlate.Name = "txtLicensePlate";
-            this.txtLicensePlate.Size = new System.Drawing.Size(200, 20);
-            this.txtLicensePlate.TabIndex = 8;
+            this.txtEmail.Location = new System.Drawing.Point(158, 112);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(200, 20);
+            this.txtEmail.TabIndex = 8;
             // 
             // lblLicensePlate
             // 
             this.lblLicensePlate.AutoSize = true;
-            this.lblLicensePlate.Location = new System.Drawing.Point(10, 84);
+            this.lblLicensePlate.Location = new System.Drawing.Point(10, 115);
             this.lblLicensePlate.Name = "lblLicensePlate";
-            this.lblLicensePlate.Size = new System.Drawing.Size(74, 13);
+            this.lblLicensePlate.Size = new System.Drawing.Size(35, 13);
             this.lblLicensePlate.TabIndex = 7;
-            this.lblLicensePlate.Text = "License Plate:";
+            this.lblLicensePlate.Text = "Email:";
             // 
-            // txtColor
+            // txtAddress
             // 
-            this.txtColor.Location = new System.Drawing.Point(230, 57);
-            this.txtColor.Name = "txtColor";
-            this.txtColor.Size = new System.Drawing.Size(90, 20);
-            this.txtColor.TabIndex = 6;
+            this.txtAddress.Location = new System.Drawing.Point(158, 86);
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(200, 20);
+            this.txtAddress.TabIndex = 6;
             // 
             // lblColor
             // 
             this.lblColor.AutoSize = true;
-            this.lblColor.Location = new System.Drawing.Point(190, 60);
+            this.lblColor.Location = new System.Drawing.Point(11, 89);
             this.lblColor.Name = "lblColor";
-            this.lblColor.Size = new System.Drawing.Size(34, 13);
+            this.lblColor.Size = new System.Drawing.Size(48, 13);
             this.lblColor.TabIndex = 5;
-            this.lblColor.Text = "Color:";
-            // 
-            // txtYear
-            // 
-            this.txtYear.Location = new System.Drawing.Point(120, 57);
-            this.txtYear.Name = "txtYear";
-            this.txtYear.Size = new System.Drawing.Size(60, 20);
-            this.txtYear.TabIndex = 4;
+            this.lblColor.Text = "Address:";
             // 
             // lblYear
             // 
             this.lblYear.AutoSize = true;
             this.lblYear.Location = new System.Drawing.Point(10, 60);
             this.lblYear.Name = "lblYear";
-            this.lblYear.Size = new System.Drawing.Size(32, 13);
+            this.lblYear.Size = new System.Drawing.Size(69, 13);
             this.lblYear.TabIndex = 3;
-            this.lblYear.Text = "Year:";
+            this.lblYear.Text = "Date of Birth:";
             // 
-            // txtModel
+            // txtLastName
             // 
-            this.txtModel.Location = new System.Drawing.Point(120, 33);
-            this.txtModel.Name = "txtModel";
-            this.txtModel.Size = new System.Drawing.Size(200, 20);
-            this.txtModel.TabIndex = 2;
+            this.txtLastName.Location = new System.Drawing.Point(158, 33);
+            this.txtLastName.Name = "txtLastName";
+            this.txtLastName.Size = new System.Drawing.Size(200, 20);
+            this.txtLastName.TabIndex = 2;
             // 
             // lblModel
             // 
             this.lblModel.AutoSize = true;
             this.lblModel.Location = new System.Drawing.Point(10, 36);
             this.lblModel.Name = "lblModel";
-            this.lblModel.Size = new System.Drawing.Size(39, 13);
+            this.lblModel.Size = new System.Drawing.Size(61, 13);
             this.lblModel.TabIndex = 1;
-            this.lblModel.Text = "Model:";
+            this.lblModel.Text = "Last Name:";
             // 
-            // txtMake
+            // txtFirstName
             // 
-            this.txtMake.Location = new System.Drawing.Point(120, 9);
-            this.txtMake.Name = "txtMake";
-            this.txtMake.Size = new System.Drawing.Size(200, 20);
-            this.txtMake.TabIndex = 0;
+            this.txtFirstName.Location = new System.Drawing.Point(158, 9);
+            this.txtFirstName.Name = "txtFirstName";
+            this.txtFirstName.Size = new System.Drawing.Size(200, 20);
+            this.txtFirstName.TabIndex = 0;
             // 
             // lblMake
             // 
             this.lblMake.AutoSize = true;
             this.lblMake.Location = new System.Drawing.Point(10, 12);
             this.lblMake.Name = "lblMake";
-            this.lblMake.Size = new System.Drawing.Size(37, 13);
+            this.lblMake.Size = new System.Drawing.Size(60, 13);
             this.lblMake.TabIndex = 0;
-            this.lblMake.Text = "Make:";
+            this.lblMake.Text = "First Name:";
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(245, 435);
+            this.btnClear.Location = new System.Drawing.Point(245, 332);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 30);
             this.btnClear.TabIndex = 27;
@@ -327,7 +253,7 @@ namespace Vormas.Forms
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.IndianRed;
-            this.btnDelete.Location = new System.Drawing.Point(135, 435);
+            this.btnDelete.Location = new System.Drawing.Point(135, 332);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 30);
             this.btnDelete.TabIndex = 26;
@@ -337,7 +263,7 @@ namespace Vormas.Forms
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnSave.Location = new System.Drawing.Point(25, 435);
+            this.btnSave.Location = new System.Drawing.Point(25, 332);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 30);
             this.btnSave.TabIndex = 25;
@@ -352,7 +278,7 @@ namespace Vormas.Forms
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(984, 60);
+            this.pnlTop.Size = new System.Drawing.Size(1020, 60);
             this.pnlTop.TabIndex = 5;
             // 
             // btnSearch
@@ -380,6 +306,35 @@ namespace Vormas.Forms
             this.lblSearch.TabIndex = 0;
             this.lblSearch.Text = "Search:";
             // 
+            // dtpBirthdate
+            // 
+            this.dtpBirthdate.Location = new System.Drawing.Point(158, 60);
+            this.dtpBirthdate.Name = "dtpBirthdate";
+            this.dtpBirthdate.Size = new System.Drawing.Size(200, 20);
+            this.dtpBirthdate.TabIndex = 28;
+            // 
+            // txtEmergencyContactName
+            // 
+            this.txtEmergencyContactName.Location = new System.Drawing.Point(158, 184);
+            this.txtEmergencyContactName.Name = "txtEmergencyContactName";
+            this.txtEmergencyContactName.Size = new System.Drawing.Size(200, 20);
+            this.txtEmergencyContactName.TabIndex = 29;
+            // 
+            // chkIsBlacklisted
+            // 
+            this.chkIsBlacklisted.Location = new System.Drawing.Point(158, 236);
+            this.chkIsBlacklisted.Name = "chkIsBlacklisted";
+            this.chkIsBlacklisted.Size = new System.Drawing.Size(104, 24);
+            this.chkIsBlacklisted.TabIndex = 30;
+            this.chkIsBlacklisted.UseVisualStyleBackColor = true;
+            // 
+            // txtEmergencyContactPhone
+            // 
+            this.txtEmergencyContactPhone.Location = new System.Drawing.Point(158, 208);
+            this.txtEmergencyContactPhone.Name = "txtEmergencyContactPhone";
+            this.txtEmergencyContactPhone.Size = new System.Drawing.Size(200, 20);
+            this.txtEmergencyContactPhone.TabIndex = 31;
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -388,7 +343,7 @@ namespace Vormas.Forms
             this.Controls.Add(this.pnlInputs);
             this.Controls.Add(this.pnlTop);
             this.Name = "CustomerForm";
-            this.Size = new System.Drawing.Size(984, 540);
+            this.Size = new System.Drawing.Size(1020, 453);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVehicles)).EndInit();
             this.pnlInputs.ResumeLayout(false);
             this.pnlInputs.PerformLayout();
@@ -397,31 +352,30 @@ namespace Vormas.Forms
             this.ResumeLayout(false);
         }
 
+        private System.Windows.Forms.TextBox txtEmergencyContactPhone;
+
+        private System.Windows.Forms.TextBox txtEmergencyContactName;
+        private System.Windows.Forms.CheckBox chkIsBlacklisted;
+
+        private System.Windows.Forms.DateTimePicker dtpBirthdate;
+
         private System.Windows.Forms.DataGridView dgvVehicles;
         private System.Windows.Forms.Panel pnlInputs;
-        private System.Windows.Forms.ComboBox cmbStatus;
-        private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.TextBox txtDailyRate;
-        private System.Windows.Forms.Label lblDailyRate;
-        private System.Windows.Forms.TextBox txtSeatingCapacity;
         private System.Windows.Forms.Label lblSeatingCapacity;
-        private System.Windows.Forms.ComboBox cmbFuelType;
         private System.Windows.Forms.Label lblFuelType;
-        private System.Windows.Forms.ComboBox cmbTransmission;
         private System.Windows.Forms.Label lblTransmission;
-        private System.Windows.Forms.ComboBox cmbCategory;
+        private System.Windows.Forms.ComboBox cmbCustomerType;
         private System.Windows.Forms.Label lblCategory;
-        private System.Windows.Forms.TextBox txtVin;
+        private System.Windows.Forms.TextBox txtPhone;
         private System.Windows.Forms.Label lblVin;
-        private System.Windows.Forms.TextBox txtLicensePlate;
+        private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label lblLicensePlate;
-        private System.Windows.Forms.TextBox txtColor;
+        private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Label lblColor;
-        private System.Windows.Forms.TextBox txtYear;
         private System.Windows.Forms.Label lblYear;
-        private System.Windows.Forms.TextBox txtModel;
+        private System.Windows.Forms.TextBox txtLastName;
         private System.Windows.Forms.Label lblModel;
-        private System.Windows.Forms.TextBox txtMake;
+        private System.Windows.Forms.TextBox txtFirstName;
         private System.Windows.Forms.Label lblMake;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnDelete;
