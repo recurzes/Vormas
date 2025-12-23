@@ -6,7 +6,7 @@ using Vormas.Models;
 
 namespace Vormas.Database
 {
-    public class CustomerDbContext : ICustomerManager
+    public class CustomerDbContext : ICustomerRepository
     {
         private string _connStr = Helpers.MySqlHelper.GetConnectionString();
 
@@ -40,7 +40,7 @@ namespace Vormas.Database
                 });
         }
 
-        public List<Customer> GetALlCustomers()
+        public List<Customer> GetAllCustomers()
         {
             return DbCommandHelper.ExecuteReader(
                 _connStr,
@@ -225,6 +225,39 @@ namespace Vormas.Database
                 _connStr,
                 "prcActivateCustomer",
                 cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId)
+            );
+        }
+
+        public DriverLicense GetLicenseByCustomerId(int customerId)
+        {
+            return DbCommandHelper.ExecuteReader(
+                _connStr,
+                "prcGetDriverLicenseByCustomerId",
+                cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId),
+                reader =>
+                {
+                    if (!reader.Read()) return null;
+                    return DataReaderMapper.MapToModel<DriverLicense>(reader);
+                }
+            );
+        }
+
+        public int UpsertLicense(DriverLicense license)
+        {
+            return DbCommandHelper.ExecuteNonQuery(
+                _connStr,
+                "prcUpsertDriverLicense",
+                cmd =>
+                {
+                    cmd.Parameters.AddWithValue("@pCustomerId", license.CustomerId);
+                    cmd.Parameters.AddWithValue("@pLicenseNumber", license.LicenseNumber);
+                    cmd.Parameters.AddWithValue("@pIssueDate", license.IssueDate);
+                    cmd.Parameters.AddWithValue("@pExpiryDate", license.ExpiryDate);
+                    cmd.Parameters.AddWithValue("@pIssuingCountry", license.IssuingCountry);
+                    cmd.Parameters.AddWithValue("@pIssuingStateProvince", license.IssuingStateProvince);
+                    cmd.Parameters.AddWithValue("@pLicenseImagePath", license.LicenseImagePath);
+                    cmd.Parameters.AddWithValue("@IsInterNational", license.IsInternational);
+                }
             );
         }
     }
