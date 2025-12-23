@@ -15,12 +15,14 @@ namespace Vormas
         private readonly IUserManager _userManager;
         private readonly IAuthService _authService;
         private readonly ISessionService _sessionService;
+        private readonly IVehicleService _vehicleService;
 
-        public Form1(IUserManager userManager, IAuthService authService, ISessionService sessionService)
+        public Form1(IUserManager userManager, IAuthService authService, ISessionService sessionService, IVehicleService vehicleService)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _authService = authService ?? throw new ArgumentNullException(nameof(authService));
             _sessionService = sessionService ?? throw new ArgumentNullException(nameof(sessionService));
+            _vehicleService = vehicleService;
 
             InitializeComponent();
             InitializeNavigation();
@@ -34,13 +36,14 @@ namespace Vormas
                 { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService) },
                 { Routes.AdminDashboard, () => new AdminDashboard(_sessionService) },
                 { Routes.Customers, () => new CustomerForm() }
+                { Routes.Vehicles, () => new VehicleForm(_vehicleService)}
             };
             
             _navigation = new NavigationService(contentHost, routes);
             
             routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             
-            _navigation.Navigate(Routes.UserLogin);
+            _navigation.Navigate(Routes.Vehicles);
         }
 
         public INavigationService Navigator => _navigation;
