@@ -15,6 +15,7 @@ namespace Vormas.Forms
         private readonly ICustomerService _service;
         private Customer _selectedCustomer;
         private readonly BindingSource _bindingSource;
+
         public CustomerForm(ICustomerService service)
         {
             InitializeComponent();
@@ -23,10 +24,11 @@ namespace Vormas.Forms
             _bindingSource = new BindingSource();
 
             _selectedCustomer = new Customer();
-            
+
             ConfigureGrid();
             InitializeData();
         }
+
         private void dgvCustomers_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvCustomers.CurrentRow?.DataBoundItem is Customer customer)
@@ -34,12 +36,13 @@ namespace Vormas.Forms
                 PopulateFields(customer);
             }
         }
-        
+
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtFirstName.Text) || string.IsNullOrWhiteSpace(txtLastName.Text))
+            if (string.IsNullOrWhiteSpace(txtFirstName.Text) || string.IsNullOrWhiteSpace(txtLastName.Text))
             {
-                MessageBox.Show(@"First Name and Last Name are required.", @"Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(@"First Name and Last Name are required.", @"Validation Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
@@ -49,11 +52,15 @@ namespace Vormas.Forms
             _selectedCustomer.Address = txtAddress.Text;
             _selectedCustomer.Email = txtEmail.Text;
             _selectedCustomer.Phone = txtPhone.Text;
-            if (Enum.TryParse<CustomerType>(cmbCustomerType.SelectedItem?.ToString(),ignoreCase: false, out var customerType))
+            if (cmbCustomerType.SelectedItem is CustomerTypeItem selectedType &&
+                Enum.TryParse<CustomerType>(selectedType.Value, out var customerType))
+            {
                 _selectedCustomer.CustomerType = customerType;
+            }
             else
             {
-                MessageBox.Show(@"Invalid customer type.", @"Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(@"Please select a valid customer type.", @"Validation Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
@@ -81,9 +88,9 @@ namespace Vormas.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($@"Error saving customer: {ex.Message}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"Error saving customer: {ex.Message}", @"Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
-
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -102,7 +109,8 @@ namespace Vormas.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($@"Error deleting customer: {ex.Message}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"Error deleting customer: {ex.Message}", @"Error", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -119,21 +127,32 @@ namespace Vormas.Forms
             dgvCustomers.ReadOnly = true;
             dgvCustomers.AutoGenerateColumns = false;
 
-            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "CustomerId", HeaderText = @"Customer Id", Width = 60 });
-            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "FirstName", HeaderText = @"First Name", Width = 60 });
-            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "LastName", HeaderText = @"Last Name", Width = 60 });
-            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Address", HeaderText = @"Address", Width = 60 });
-            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Email", HeaderText = @"Email", Width = 60 });
-            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Phone", HeaderText = @"Phone", Width = 60 });
-            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "BirthDate", HeaderText = @"Birth Date", Width = 60 });
-            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "CustomerType", HeaderText = @"Customer Type", Width = 60 });
-            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "EmergencyContactName", HeaderText = @"Emergency Contact Name", Width = 80 });
-            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "EmergencyContactPhone", HeaderText = @"Emergency Contact Phone", Width = 80 });
-            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "IsBlacklisted", HeaderText = @"Blacklisted", Width = 60 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "CustomerId", HeaderText = @"Customer Id", Width = 60 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "FirstName", HeaderText = @"First Name", Width = 60 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "LastName", HeaderText = @"Last Name", Width = 60 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "Address", HeaderText = @"Address", Width = 60 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "Email", HeaderText = @"Email", Width = 60 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "Phone", HeaderText = @"Phone", Width = 60 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "BirthDate", HeaderText = @"Birth Date", Width = 60 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "CustomerType", HeaderText = @"Customer Type", Width = 60 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "EmergencyContactName", HeaderText = @"Emergency Contact Name", Width = 80 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "EmergencyContactPhone", HeaderText = @"Emergency Contact Phone", Width = 80 });
+            dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "IsBlacklisted", HeaderText = @"Blacklisted", Width = 60 });
 
             dgvCustomers.SelectionChanged += dgvCustomers_SelectionChanged;
         }
-        
+
         private void PopulateFields(Customer customer)
         {
             _selectedCustomer = customer;
@@ -142,10 +161,14 @@ namespace Vormas.Forms
             txtAddress.Text = _selectedCustomer.Address;
             txtEmail.Text = _selectedCustomer.Email;
             txtPhone.Text = _selectedCustomer.Phone;
-            dtpBirthdate.Value = _selectedCustomer.BirthDate;
+            dtpBirthdate.Value = _selectedCustomer.BirthDate > dtpBirthdate.MinDate 
+                ? _selectedCustomer.BirthDate 
+                : DateTime.Today;
             txtEmergencyContactName.Text = _selectedCustomer.EmergencyContactName;
             txtEmergencyContactPhone.Text = _selectedCustomer.EmergencyContactPhone;
-            cmbCustomerType.SelectedItem = _selectedCustomer.CustomerType;
+            var customerTypeItem = ((IEnumerable<CustomerTypeItem>)cmbCustomerType.DataSource)
+                ?.FirstOrDefault(ct => ct.Value == _selectedCustomer.CustomerType.ToString());
+            cmbCustomerType.SelectedItem = customerTypeItem;
             chkIsBlacklisted.Checked = _selectedCustomer.IsBlacklisted;
         }
 
@@ -153,7 +176,7 @@ namespace Vormas.Forms
         {
             if (_service == null) return;
             SetCustomerTypes(_service.GetCustomerTypes());
-            
+
             LoadCustomers();
         }
 
@@ -195,6 +218,7 @@ namespace Vormas.Forms
             cmbCustomerType.DisplayMember = "Text";
             cmbCustomerType.ValueMember = "Value";
         }
+
         private void btnDriversLicense_Click(object sender, EventArgs e)
         {
             using var licenseForm = new DriverLicenseForm();
@@ -202,7 +226,5 @@ namespace Vormas.Forms
             _pendingLicense = licenseForm.License;
             lblLicenseStatus.Text = $@"License: {_pendingLicense.LicenseNumber}";
         }
-
-        
     }
 }
