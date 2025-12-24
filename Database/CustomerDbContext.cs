@@ -18,26 +18,15 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("@pLastName", customer.LastName);
                 cmd.Parameters.AddWithValue("@pAddress", customer.Address ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pEmail", customer.Email ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@pFirstName", customer.Phone ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@pPhone", customer.Phone ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pDateOfBirth", customer.BirthDate);
-                cmd.Parameters.AddWithValue("@pCustomerType", customer.CustomerType);
+                cmd.Parameters.AddWithValue("@pCustomerType", (int)customer.CustomerType);
                 cmd.Parameters.AddWithValue("@pEmergencyContactName",
                     customer.EmergencyContactName ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pEmergencyContactPhone",
                     customer.EmergencyContactPhone ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
             });
-
-            customer.CustomerId = DbCommandHelper.ExecuteReader(_connStr,
-                "SELECT LAST_INSERT_ID() As CustomerId", cmd => { }, reader =>
-                {
-                    if (reader.Read())
-                    {
-                        return reader.GetInt32("CustomerId");
-                    }
-
-                    return 0;
-                });
         }
 
         public List<Customer> GetAllCustomers()
@@ -111,13 +100,14 @@ namespace Vormas.Database
                 "prcUpdateCustomer",
                 cmd =>
                 {
+                    cmd.Parameters.AddWithValue("@pCustomerId", customer.CustomerId);
                     cmd.Parameters.AddWithValue("@pFirstName", customer.FirstName);
                     cmd.Parameters.AddWithValue("@pLastName", customer.LastName);
                     cmd.Parameters.AddWithValue("@pAddress", customer.Address ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pEmail", customer.Email ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@pFirstName", customer.Phone ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@pPhone", customer.Phone ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pDateOfBirth", customer.BirthDate);
-                    cmd.Parameters.AddWithValue("@pCustomerType", customer.CustomerType);
+                    cmd.Parameters.AddWithValue("@pCustomerType", (int)customer.CustomerType);
                     cmd.Parameters.AddWithValue("@pEmergencyContactName",
                         customer.EmergencyContactName ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pEmergencyContactPhone",
@@ -125,6 +115,8 @@ namespace Vormas.Database
                     cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
                 }
             );
+            
+            
         }
 
         public int DeleteCustomer(int customerId)
