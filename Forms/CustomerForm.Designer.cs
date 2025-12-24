@@ -301,6 +301,7 @@ namespace Vormas.Forms
             this.btnClear.TabIndex = 27;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnDelete
             // 
@@ -311,6 +312,7 @@ namespace Vormas.Forms
             this.btnDelete.TabIndex = 26;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnSave
             // 
@@ -321,6 +323,7 @@ namespace Vormas.Forms
             this.btnSave.TabIndex = 25;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // pnlTop
             // 
