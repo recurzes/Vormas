@@ -8,6 +8,7 @@ namespace Vormas.Forms
 {
     public partial class CustomerForm : PageControl
     {
+        private DriverLicense _pendingLicense;
         private readonly ICustomerService _service;
         private Customer _selectedCustomer;
         private readonly BindingSource _bindingSource;
@@ -73,6 +74,18 @@ namespace Vormas.Forms
         {
             if (_service == null) return;
             
+        }
+
+        private void btnDriversLicense_Click(object sender, EventArgs e)
+        {
+            using (var licenseForm = new DriverLicenseForm())
+            {
+                if (licenseForm.ShowDialog() == DialogResult.OK)
+                {
+                    _pendingLicense = licenseForm.License;
+                    lblLicenseStatus.Text = $@"License: {_pendingLicense.LicenseNumber}";
+                }
+            }
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Vormas.Forms
         {
             this.dgvCustomers = new System.Windows.Forms.DataGridView();
             this.pnlInputs = new System.Windows.Forms.Panel();
+            this.lblLicenseStatus = new System.Windows.Forms.Label();
             this.btnDriversLicense = new System.Windows.Forms.Button();
             this.txtEmergencyContactPhone = new System.Windows.Forms.TextBox();
             this.chkIsBlacklisted = new System.Windows.Forms.CheckBox();
@@ -79,6 +80,7 @@ namespace Vormas.Forms
             // pnlInputs
             // 
             this.pnlInputs.AutoScroll = true;
+            this.pnlInputs.Controls.Add(this.lblLicenseStatus);
             this.pnlInputs.Controls.Add(this.btnDriversLicense);
             this.pnlInputs.Controls.Add(this.txtEmergencyContactPhone);
             this.pnlInputs.Controls.Add(this.chkIsBlacklisted);
@@ -109,6 +111,14 @@ namespace Vormas.Forms
             this.pnlInputs.Size = new System.Drawing.Size(375, 393);
             this.pnlInputs.TabIndex = 3;
             // 
+            // lblLicenseStatus
+            // 
+            this.lblLicenseStatus.Location = new System.Drawing.Point(198, 265);
+            this.lblLicenseStatus.Name = "lblLicenseStatus";
+            this.lblLicenseStatus.Size = new System.Drawing.Size(100, 23);
+            this.lblLicenseStatus.TabIndex = 33;
+            this.lblLicenseStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // btnDriversLicense
             // 
             this.btnDriversLicense.Location = new System.Drawing.Point(10, 265);
@@ -117,6 +127,7 @@ namespace Vormas.Forms
             this.btnDriversLicense.TabIndex = 32;
             this.btnDriversLicense.Text = "Add Driver\'s License";
             this.btnDriversLicense.UseVisualStyleBackColor = true;
+            this.btnDriversLicense.Click += new System.EventHandler(this.btnDriversLicense_Click);
             // 
             // txtEmergencyContactPhone
             // 
@@ -363,6 +374,8 @@ namespace Vormas.Forms
             this.pnlTop.PerformLayout();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Label lblLicenseStatus;
 
         private System.Windows.Forms.Button btnDriversLicense;
 
