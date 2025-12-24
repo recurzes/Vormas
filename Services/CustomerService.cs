@@ -87,7 +87,7 @@ namespace Vormas.Services
                     return false;
             }
 
-            return false;
+            return true;
         }
     }
 }
