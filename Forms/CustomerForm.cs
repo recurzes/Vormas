@@ -78,14 +78,10 @@ namespace Vormas.Forms
 
         private void btnDriversLicense_Click(object sender, EventArgs e)
         {
-            using (var licenseForm = new DriverLicenseForm())
-            {
-                if (licenseForm.ShowDialog() == DialogResult.OK)
-                {
-                    _pendingLicense = licenseForm.License;
-                    lblLicenseStatus.Text = $@"License: {_pendingLicense.LicenseNumber}";
-                }
-            }
+            using var licenseForm = new DriverLicenseForm();
+            if (licenseForm.ShowDialog() != DialogResult.OK) return;
+            _pendingLicense = licenseForm.License;
+            lblLicenseStatus.Text = $@"License: {_pendingLicense.LicenseNumber}";
         }
     }
 }
