@@ -15,7 +15,7 @@ namespace Vormas.Database
 
         public int CreateCustomer(Customer customer)
         {
-            int customerId = DbCommandHelper.ExecuteNonQueryLastIdReturn(_connStr, "prcCreateCustomer", cmd =>
+            long customerId = DbCommandHelper.ExecuteNonQueryLastIdReturn(_connStr, "prcCreateCustomer", cmd =>
             {
                 cmd.Parameters.AddWithValue("@pFirstName", customer.FirstName);
                 cmd.Parameters.AddWithValue("@pLastName", customer.LastName);
@@ -33,7 +33,7 @@ namespace Vormas.Database
             MessageBox.Show($@"Customer ID: {customerId}", @"Fuck you", MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
             customer.CustomerId = (int) customerId;
-            return customerId;
+            return (int)customerId;
         }
 
         public List<Customer> GetAllCustomers()
