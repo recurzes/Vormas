@@ -42,7 +42,7 @@ namespace Vormas.Database
             }
         }
 
-        public static int ExecuteNonQueryLastIdReturn(string connectionString, string procedureName,
+        public static long ExecuteNonQueryLastIdReturn(string connectionString, string procedureName,
             Action<MySqlCommand> configureCommand)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -54,7 +54,7 @@ namespace Vormas.Database
                     
                     conn.Open();
                     command.ExecuteNonQuery();
-                    return Convert.ToInt32(command.LastInsertedId);
+                    return command.LastInsertedId;
                 }
             }
         }
