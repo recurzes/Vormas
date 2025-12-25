@@ -142,7 +142,7 @@ namespace Vormas.Database
                 {
                     if (reader.Read())
                     {
-                        return reader.GetInt32("Exists") == 1;
+                        return reader.GetInt32("ExistsFlag") == 1;
                     }
 
                     return false;

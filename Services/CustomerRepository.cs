@@ -47,7 +47,7 @@ namespace Vormas.Services
 
         public int DeleteCustomer(int customerId)
         {
-            return _repo.DeactivateCustomer(customerId);
+            return _repo.DeleteCustomer(customerId);
         }
 
         public bool CustomerExists(int customerId)
