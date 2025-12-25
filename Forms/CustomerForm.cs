@@ -48,7 +48,7 @@ namespace Vormas.Forms
 
             _selectedCustomer.FirstName = txtFirstName.Text;
             _selectedCustomer.LastName = txtLastName.Text;
-            _selectedCustomer.BirthDate = dtpBirthdate.Value;
+            _selectedCustomer.DateOfBirth = dtpBirthdate.Value;
             _selectedCustomer.Address = txtAddress.Text;
             _selectedCustomer.Email = txtEmail.Text;
             _selectedCustomer.Phone = txtPhone.Text;
@@ -78,20 +78,9 @@ namespace Vormas.Forms
                 }
                 else
                 {
-                    MessageBox.Show($@"Updating CustomerId: {_selectedCustomer.CustomerId}", @"Debug", MessageBoxButtons.OK);
-            
-                    int rowsAffected = _service.UpdateCustomer(_selectedCustomer, _pendingLicense);
-            
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show(@"Customer updated successfully.", @"Success", MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show(@"No rows were updated.", @"Warning", MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
-                    }
+                    _service.UpdateCustomer(_selectedCustomer, _pendingLicense);
+                    MessageBox.Show(@"Customer updated successfully.", @"Success", MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
 
                 LoadCustomers();
@@ -151,7 +140,7 @@ namespace Vormas.Forms
             dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
                 { DataPropertyName = "Phone", HeaderText = @"Phone", Width = 60 });
             dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "BirthDate", HeaderText = @"Birth Date", Width = 60 });
+                { DataPropertyName = "DateOfBirth", HeaderText = @"Birth Date", Width = 60 });
             dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
                 { DataPropertyName = "CustomerType", HeaderText = @"Customer Type", Width = 60 });
             dgvCustomers.Columns.Add(new DataGridViewTextBoxColumn
@@ -172,9 +161,7 @@ namespace Vormas.Forms
             txtAddress.Text = _selectedCustomer.Address;
             txtEmail.Text = _selectedCustomer.Email;
             txtPhone.Text = _selectedCustomer.Phone;
-            dtpBirthdate.Value = _selectedCustomer.BirthDate > dtpBirthdate.MinDate 
-                ? _selectedCustomer.BirthDate 
-                : DateTime.Today;
+            dtpBirthdate.Value = _selectedCustomer.DateOfBirth;
             txtEmergencyContactName.Text = _selectedCustomer.EmergencyContactName;
             txtEmergencyContactPhone.Text = _selectedCustomer.EmergencyContactPhone;
             var customerTypeItem = ((IEnumerable<CustomerTypeItem>)cmbCustomerType.DataSource)
