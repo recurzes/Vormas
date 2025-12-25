@@ -29,21 +29,21 @@ namespace Vormas.Forms
                     string.IsNullOrWhiteSpace(txtPassword.Text) ||
                     string.IsNullOrWhiteSpace(txtVerifyPassword.Text))
                 {
-                    MessageBox.Show("Please fill in all fields", "Validation Error", MessageBoxButtons.OK,
+                    MessageBox.Show(@"Please fill in all fields", "Validation Error", MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                     return;
                 }
 
                 if (txtPassword.Text != txtVerifyPassword.Text)
                 {
-                    MessageBox.Show("Passwords do not match", "Validation Error", MessageBoxButtons.OK,
+                    MessageBox.Show(@"Passwords do not match", "Validation Error", MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                     return;
                 }
 
                 if (!txtEmail.Text.Contains("@"))
                 {
-                    MessageBox.Show("Invalid email format", "Validation Error", MessageBoxButtons.OK,
+                    MessageBox.Show(@"Invalid email format", "Validation Error", MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                     return;
                 }
@@ -52,7 +52,7 @@ namespace Vormas.Forms
 
                 if (birthDate > DateTime.Now)
                 {
-                    MessageBox.Show("Birth date cannot be in the future", "Validation Error", MessageBoxButtons.OK,
+                    MessageBox.Show(@"Birth date cannot be in the future", "Validation Error", MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
                     return;
                 }
@@ -64,7 +64,7 @@ namespace Vormas.Forms
                     Address = txtAddress.Text,
                     Email = txtEmail.Text,
                     Phone = txtPhone.Text,
-                    BirthDate = birthDate,
+                    DateOfBirth = birthDate,
                     UserName = txtUsername.Text,
                     PasswordHash = txtPassword.Text,
                     RoleId = Convert.ToInt32(cmbRole.SelectedItem?.ToString()),
@@ -73,12 +73,12 @@ namespace Vormas.Forms
                 };
                 _authService.RegisterUser(user);
 
-                MessageBox.Show("Registration successful!", "Success", MessageBoxButtons.OK,
+                MessageBox.Show(@"Registration successful!", "Success", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK,
+                MessageBox.Show($@"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }

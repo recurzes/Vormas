@@ -248,7 +248,7 @@ namespace Vormas.Forms
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(100, 23);
             this.label12.TabIndex = 22;
-            this.label12.Text = "BirthDate:";
+            this.label12.Text = "DateOfBirth:";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dtmBirthDate

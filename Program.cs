@@ -23,12 +23,16 @@ namespace Vormas
             
             // Manual composition / DI
             var dbContext = new UserDbContext();
+            var customerDbContext = new CustomerDbContext();
+            ICustomerRepository customerRepository = new CustomerRepository(customerDbContext);
+            IVehicleRepository vehicleRepository = new VehicleDbContext();
             IUserManager userManager = new UserManager(dbContext);
             ISessionService sessionService = new SessionService();
             IAuthService authService = new AuthManager(userManager, sessionService);
+            VehicleService vehicleService = new VehicleService(vehicleRepository);
+            ICustomerService customerService = new CustomerService(customerRepository);
             
-            // Instantiate the main form with injected services
-            Application.Run(new Form1(userManager, authService, sessionService));
+            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService));
         }
     }
 }

@@ -4,7 +4,7 @@ using MySql.Data.MySqlClient;
 
 namespace Vormas.Database
 {
-    public class DbCommandHelper
+    public static class DbCommandHelper
     {
         public static int ExecuteNonQuery(string connectionString, string procedureName,
             Action<MySqlCommand> configureCommand)
@@ -17,7 +17,8 @@ namespace Vormas.Database
                     configureCommand(command);
                     
                     conn.Open();
-                    return command.ExecuteNonQuery();
+                    object result = command.ExecuteScalar();
+                    return result != null && result != DBNull.Value ? Convert.ToInt32(result) : 0;
                 }
             }
         }
@@ -38,6 +39,23 @@ namespace Vormas.Database
                     {
                         return mapResult(reader);
                     }
+                }
+            }
+        }
+
+        public static int ExecuteNonQueryLastIdReturn(string connectionString, string procedureName,
+            Action<MySqlCommand> configureCommand)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand command = new MySqlCommand(procedureName, conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    configureCommand(command);
+                    
+                    conn.Open();
+                    object result = command.ExecuteScalar();
+                    return Convert.ToInt32(result);
                 }
             }
         }
