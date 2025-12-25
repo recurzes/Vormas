@@ -64,7 +64,7 @@ namespace Vormas.Forms
                     Address = txtAddress.Text,
                     Email = txtEmail.Text,
                     Phone = txtPhone.Text,
-                    BirthDate = birthDate,
+                    DateOfBirth = birthDate,
                     UserName = txtUsername.Text,
                     PasswordHash = txtPassword.Text,
                     RoleId = Convert.ToInt32(cmbRole.SelectedItem?.ToString()),

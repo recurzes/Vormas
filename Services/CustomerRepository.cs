@@ -5,24 +5,24 @@ using Vormas.Models;
 
 namespace Vormas.Services
 {
-    public class CustomerManager: ICustomerManager
+    public class CustomerRepository: ICustomerRepository
     {
         private readonly CustomerDbContext _repo;
 
-        public CustomerManager(CustomerDbContext repo)
+        public CustomerRepository(CustomerDbContext repo)
         {
             _repo = repo;
         }
         
         // Methods
-        public void CreateCustomer(Customer customer)
+        public int CreateCustomer(Customer customer)
         {
-            _repo.CreateCustomer(customer);
+            return _repo.CreateCustomer(customer);
         }
 
-        public List<Customer> GetALlCustomers()
+        public List<Customer> GetAllCustomers()
         {
-            return _repo.GetALlCustomers();
+            return _repo.GetAllCustomers();
         }
 
         public Customer GetCustomerById(int customerId)
@@ -47,7 +47,7 @@ namespace Vormas.Services
 
         public int DeleteCustomer(int customerId)
         {
-            return _repo.DeactivateCustomer(customerId);
+            return _repo.DeleteCustomer(customerId);
         }
 
         public bool CustomerExists(int customerId)
@@ -83,6 +83,16 @@ namespace Vormas.Services
         public int ActivateCustomer(int customerId)
         {
             return _repo.ActivateCustomer(customerId);
+        }
+
+        public DriverLicense GetLicenseByCustomerId(int customerId)
+        {
+            return _repo.GetLicenseByCustomerId(customerId);
+        }
+
+        public int UpsertLicense(DriverLicense license)
+        {
+            return _repo.UpsertLicense(license);
         }
     }
 }

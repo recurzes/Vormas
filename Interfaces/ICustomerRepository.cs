@@ -3,10 +3,10 @@ using Vormas.Models;
 
 namespace Vormas.Interfaces
 {
-    public interface ICustomerManager
+    public interface ICustomerRepository
     {
-        void CreateCustomer(Customer customer);
-        List<Customer> GetALlCustomers();
+        int CreateCustomer(Customer customer);
+        List<Customer> GetAllCustomers();
         Customer GetCustomerById(int customerId);
         Customer GetCustomerByPhone(string phoneNumber);
         Customer GetCustomerByEmail(string email);
@@ -23,5 +23,8 @@ namespace Vormas.Interfaces
 
         int DeactivateCustomer(int customerId);
         int ActivateCustomer(int customerId);
+
+        DriverLicense GetLicenseByCustomerId(int customerId);
+        int UpsertLicense(DriverLicense license);
     }
 }

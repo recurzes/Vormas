@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 using Vormas.Helpers;
 using Vormas.Interfaces;
 using Vormas.Models;
 
 namespace Vormas.Database
 {
-    public class CustomerDbContext : ICustomerManager
+    public class CustomerDbContext : ICustomerRepository
     {
         private string _connStr = Helpers.MySqlHelper.GetConnectionString();
 
-        public void CreateCustomer(Customer customer)
+        public int CreateCustomer(Customer customer)
         {
-            DbCommandHelper.ExecuteNonQuery(_connStr, "prcCreateCustomer", cmd =>
+            int customerId = DbCommandHelper.ExecuteNonQueryLastIdReturn(_connStr, "prcCreateCustomer", cmd =>
             {
                 cmd.Parameters.AddWithValue("@pFirstName", customer.FirstName);
                 cmd.Parameters.AddWithValue("@pLastName", customer.LastName);
                 cmd.Parameters.AddWithValue("@pAddress", customer.Address ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pEmail", customer.Email ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@pFirstName", customer.Phone ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@pDateOfBirth", customer.BirthDate);
-                cmd.Parameters.AddWithValue("@pCustomerType", customer.CustomerType);
+                cmd.Parameters.AddWithValue("@pPhone", customer.Phone ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@pDateOfBirth", customer.DateOfBirth);
+                cmd.Parameters.AddWithValue("@pCustomerType", customer.CustomerType.ToString());
                 cmd.Parameters.AddWithValue("@pEmergencyContactName",
                     customer.EmergencyContactName ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pEmergencyContactPhone",
@@ -28,19 +31,11 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
             });
 
-            customer.CustomerId = DbCommandHelper.ExecuteReader(_connStr,
-                "SELECT LAST_INSERT_ID() As CustomerId", cmd => { }, reader =>
-                {
-                    if (reader.Read())
-                    {
-                        return reader.GetInt32("CustomerId");
-                    }
-
-                    return 0;
-                });
+            customer.CustomerId = customerId;
+            return customerId;
         }
 
-        public List<Customer> GetALlCustomers()
+        public List<Customer> GetAllCustomers()
         {
             return DbCommandHelper.ExecuteReader(
                 _connStr,
@@ -111,13 +106,14 @@ namespace Vormas.Database
                 "prcUpdateCustomer",
                 cmd =>
                 {
+                    cmd.Parameters.AddWithValue("@pCustomerId", customer.CustomerId);
                     cmd.Parameters.AddWithValue("@pFirstName", customer.FirstName);
                     cmd.Parameters.AddWithValue("@pLastName", customer.LastName);
                     cmd.Parameters.AddWithValue("@pAddress", customer.Address ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pEmail", customer.Email ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@pFirstName", customer.Phone ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@pDateOfBirth", customer.BirthDate);
-                    cmd.Parameters.AddWithValue("@pCustomerType", customer.CustomerType);
+                    cmd.Parameters.AddWithValue("@pPhone", customer.Phone ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@pDateOfBirth", customer.DateOfBirth);
+                    cmd.Parameters.AddWithValue("@pCustomerType", customer.CustomerType.ToString());
                     cmd.Parameters.AddWithValue("@pEmergencyContactName",
                         customer.EmergencyContactName ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pEmergencyContactPhone",
@@ -146,7 +142,7 @@ namespace Vormas.Database
                 {
                     if (reader.Read())
                     {
-                        return reader.GetInt32("Exists") == 1;
+                        return reader.GetInt32("ExistsFlag") == 1;
                     }
 
                     return false;
@@ -225,6 +221,39 @@ namespace Vormas.Database
                 _connStr,
                 "prcActivateCustomer",
                 cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId)
+            );
+        }
+
+        public DriverLicense GetLicenseByCustomerId(int customerId)
+        {
+            return DbCommandHelper.ExecuteReader(
+                _connStr,
+                "prcGetDriverLicenseByCustomerId",
+                cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId),
+                reader =>
+                {
+                    if (!reader.Read()) return null;
+                    return DataReaderMapper.MapToModel<DriverLicense>(reader);
+                }
+            );
+        }
+
+        public int UpsertLicense(DriverLicense license)
+        {
+            return DbCommandHelper.ExecuteNonQuery(
+                _connStr,
+                "prcUpsertDriverLicense",
+                cmd =>
+                {
+                    cmd.Parameters.AddWithValue("@pCustomerId", license.CustomerId);
+                    cmd.Parameters.AddWithValue("@pLicenseNumber", license.LicenseNumber);
+                    cmd.Parameters.AddWithValue("@pIssueDate", license.IssueDate);
+                    cmd.Parameters.AddWithValue("@pExpiryDate", license.ExpiryDate);
+                    cmd.Parameters.AddWithValue("@pIssuingCountry", license.IssuingCountry);
+                    cmd.Parameters.AddWithValue("@pIssuingStateProvince", license.IssuingStateProvince);
+                    cmd.Parameters.AddWithValue("@pLicenseImagePath", license.LicenseImagePath);
+                    cmd.Parameters.AddWithValue("@pIsInternational", license.IsInternational);
+                }
             );
         }
     }
