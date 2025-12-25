@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using Vormas.Helpers;
 using Vormas.Interfaces;
 using Vormas.Models;
@@ -10,7 +11,7 @@ namespace Vormas.Database
     {
         private string _connStr = Helpers.MySqlHelper.GetConnectionString();
 
-        public void CreateCustomer(Customer customer)
+        public int CreateCustomer(Customer customer)
         {
             DbCommandHelper.ExecuteNonQuery(_connStr, "prcCreateCustomer", cmd =>
             {
@@ -20,13 +21,22 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("@pEmail", customer.Email ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pPhone", customer.Phone ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pDateOfBirth", customer.BirthDate);
-                cmd.Parameters.AddWithValue("@pCustomerType", (int)customer.CustomerType);
+                cmd.Parameters.AddWithValue("@pCustomerType", customer.CustomerType.ToString());
                 cmd.Parameters.AddWithValue("@pEmergencyContactName",
                     customer.EmergencyContactName ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pEmergencyContactPhone",
                     customer.EmergencyContactPhone ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
+
+                var outParam = cmd.CreateParameter();
+                outParam.ParameterName = "@pCustomerId";
+                outParam.Direction = ParameterDirection.Output;
+                outParam.DbType = DbType.Int32;
+                cmd.Parameters.Add(outParam);
             });
+
+            // TODO: Fix Shit
+            return 0;
         }
 
         public List<Customer> GetAllCustomers()
@@ -107,7 +117,7 @@ namespace Vormas.Database
                     cmd.Parameters.AddWithValue("@pEmail", customer.Email ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pPhone", customer.Phone ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pDateOfBirth", customer.BirthDate);
-                    cmd.Parameters.AddWithValue("@pCustomerType", (int)customer.CustomerType);
+                    cmd.Parameters.AddWithValue("@pCustomerType", customer.CustomerType.ToString());
                     cmd.Parameters.AddWithValue("@pEmergencyContactName",
                         customer.EmergencyContactName ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pEmergencyContactPhone",
