@@ -21,7 +21,7 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("pUsername", e.UserName);
                 cmd.Parameters.AddWithValue("pPasswordHash", e.PasswordHash);
                 cmd.Parameters.AddWithValue("pEmail", e.Email);
-                cmd.Parameters.AddWithValue("pBirthDate", e.BirthDate);
+                cmd.Parameters.AddWithValue("pBirthDate", e.DateOfBirth);
                 cmd.Parameters.AddWithValue("pPhone", e.Phone);
                 cmd.Parameters.AddWithValue("pRoleId", e.RoleId);
                 cmd.Parameters.AddWithValue("pIsActive", e.IsActive);
@@ -82,7 +82,7 @@ namespace Vormas.Database
                 command.Parameters.AddWithValue("pUsername", e.UserName);
                 command.Parameters.AddWithValue("pEmail", e.Email);
                 command.Parameters.AddWithValue("pPhone", e.Phone);
-                command.Parameters.AddWithValue("pBirthDate", e.BirthDate);
+                command.Parameters.AddWithValue("pBirthDate", e.DateOfBirth);
                 command.Parameters.AddWithValue("pAddress", e.Address);
                 command.Parameters.AddWithValue("pRoleId", e.RoleId);
                 command.Parameters.AddWithValue("pIsActive", e.IsActive);

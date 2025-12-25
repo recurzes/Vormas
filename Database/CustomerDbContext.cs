@@ -22,7 +22,7 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("@pAddress", customer.Address ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pEmail", customer.Email ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pPhone", customer.Phone ?? (object)DBNull.Value);
-                cmd.Parameters.AddWithValue("@pDateOfBirth", customer.BirthDate);
+                cmd.Parameters.AddWithValue("@pDateOfBirth", customer.DateOfBirth);
                 cmd.Parameters.AddWithValue("@pCustomerType", customer.CustomerType.ToString());
                 cmd.Parameters.AddWithValue("@pEmergencyContactName",
                     customer.EmergencyContactName ?? (object)DBNull.Value);
@@ -112,7 +112,7 @@ namespace Vormas.Database
                     cmd.Parameters.AddWithValue("@pAddress", customer.Address ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pEmail", customer.Email ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pPhone", customer.Phone ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@pDateOfBirth", customer.BirthDate);
+                    cmd.Parameters.AddWithValue("@pDateOfBirth", customer.DateOfBirth);
                     cmd.Parameters.AddWithValue("@pCustomerType", customer.CustomerType.ToString());
                     cmd.Parameters.AddWithValue("@pEmergencyContactName",
                         customer.EmergencyContactName ?? (object)DBNull.Value);
