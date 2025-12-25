@@ -69,12 +69,12 @@ namespace Vormas.Services
         private bool ValidateCustomerAndLicense(Customer customer, DriverLicense license)
         {
             // Age verification 21+
-            if (customer.BirthDate == DateTime.MinValue)
+            if (customer.DateOfBirth == DateTime.MinValue)
                 return false;
 
             var today = DateTime.Today;
-            var age = today.Year - customer.BirthDate.Year;
-            if (customer.BirthDate.Date > today.AddYears(-age)) age--;
+            var age = today.Year - customer.DateOfBirth.Year;
+            if (customer.DateOfBirth.Date > today.AddYears(-age)) age--;
 
             if (age < 21)
                 return false;
