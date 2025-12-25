@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Vormas.Helpers;
 using Vormas.Interfaces;
@@ -14,8 +15,7 @@ namespace Vormas.Database
 
         public int CreateCustomer(Customer customer)
         {
-            int customerId;
-            DbCommandHelper.ExecuteNonQueryWithOutput(_connStr, "prcCreateCustomer", cmd =>
+            int customerId = DbCommandHelper.ExecuteNonQueryLastIdReturn(_connStr, "prcCreateCustomer", cmd =>
             {
                 cmd.Parameters.AddWithValue("@pFirstName", customer.FirstName);
                 cmd.Parameters.AddWithValue("@pLastName", customer.LastName);
@@ -29,14 +29,10 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("@pEmergencyContactPhone",
                     customer.EmergencyContactPhone ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
-
-                cmd.Parameters.Add(new MySqlParameter("@pCustomerId", MySqlDbType.Int32) 
-                { 
-                    Direction = ParameterDirection.Output 
-                });
-            }, "@pCustomerId", out customerId);
-
-            customer.CustomerId = customerId;
+            });
+            MessageBox.Show($@"Customer ID: {customerId}", @"Fuck you", MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+            customer.CustomerId = (int) customerId;
             return customerId;
         }
 
