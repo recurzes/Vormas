@@ -78,9 +78,20 @@ namespace Vormas.Forms
                 }
                 else
                 {
-                    _service.UpdateCustomer(_selectedCustomer, _pendingLicense);
-                    MessageBox.Show(@"Customer updated successfully.", @"Success", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    MessageBox.Show($@"Updating CustomerId: {_selectedCustomer.CustomerId}", @"Debug", MessageBoxButtons.OK);
+            
+                    int rowsAffected = _service.UpdateCustomer(_selectedCustomer, _pendingLicense);
+            
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show(@"Customer updated successfully.", @"Success", MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(@"No rows were updated.", @"Warning", MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+                    }
                 }
 
                 LoadCustomers();
