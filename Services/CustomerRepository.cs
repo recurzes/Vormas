@@ -87,12 +87,12 @@ namespace Vormas.Services
 
         public DriverLicense GetLicenseByCustomerId(int customerId)
         {
-            throw new System.NotImplementedException();
+            return _repo.GetLicenseByCustomerId(customerId);
         }
 
         public int UpsertLicense(DriverLicense license)
         {
-            throw new System.NotImplementedException();
+            return _repo.UpsertLicense(license);
         }
     }
 }
