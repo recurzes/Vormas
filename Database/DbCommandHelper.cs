@@ -41,5 +41,24 @@ namespace Vormas.Database
                 }
             }
         }
+
+        public static int ExecuteNonQueryWithOutput(string connectionString, string procedureName,
+            Action<MySqlCommand> configureCommand, string param, out int outputValue)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand command = new MySqlCommand(procedureName, conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    configureCommand(command);
+                    
+                    conn.Open();
+                    int result = command.ExecuteNonQuery();
+
+                    outputValue = Convert.ToInt32(command.Parameters[param].Value);
+                    return result;
+                }
+            }
+        }
     }
 }
