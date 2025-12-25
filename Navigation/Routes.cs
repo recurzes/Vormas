@@ -8,5 +8,6 @@
         public const string RentalAgentDashboard = "rental_agent_dashboard";
         public const string Vehicles = "vehicles";
         public const string Customers = "customers";
+        public const string TempDashboard = "temp_dashboard";
     }
 }
