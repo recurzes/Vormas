@@ -30,7 +30,10 @@ namespace Vormas.Database
                     customer.EmergencyContactPhone ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
 
-                cmd.Parameters.Add("@pCustomerId", MySqlDbType.Int32).Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(new MySqlParameter("@pCustomerId", MySqlDbType.Int32) 
+                { 
+                    Direction = ParameterDirection.Output 
+                });
             }, "@pCustomerId", out customerId);
 
             customer.CustomerId = customerId;
