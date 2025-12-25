@@ -15,9 +15,9 @@ namespace Vormas.Services
         }
         
         // Methods
-        public void CreateCustomer(Customer customer)
+        public int CreateCustomer(Customer customer)
         {
-            _repo.CreateCustomer(customer);
+            return _repo.CreateCustomer(customer);
         }
 
         public List<Customer> GetAllCustomers()
