@@ -55,7 +55,10 @@ namespace Vormas.Database
                     conn.Open();
                     int result = command.ExecuteNonQuery();
 
-                    outputValue = Convert.ToInt32(command.Parameters[param].Value);
+                    using (MySqlCommand getOutputCmd = new MySqlCommand($"SELECT {param}", conn))
+                    {
+                        outputValue = Convert.ToInt32(getOutputCmd.ExecuteScalar());
+                    }
                     return result;
                 }
             }
