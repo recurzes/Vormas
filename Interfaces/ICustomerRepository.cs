@@ -5,7 +5,7 @@ namespace Vormas.Interfaces
 {
     public interface ICustomerRepository
     {
-        void CreateCustomer(Customer customer);
+        int CreateCustomer(Customer customer);
         List<Customer> GetAllCustomers();
         Customer GetCustomerById(int customerId);
         Customer GetCustomerByPhone(string phoneNumber);
