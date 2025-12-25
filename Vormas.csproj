@@ -128,6 +128,12 @@
     <Compile Include="Forms\RentalAgentDashboard.Designer.cs">
       <DependentUpon>RentalAgentDashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Temp\Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Temp\Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UserLoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -193,6 +199,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RentalAgentDashboard.resx">
       <DependentUpon>RentalAgentDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Temp\Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserLoginForm.resx">
       <DependentUpon>UserLoginForm.cs</DependentUpon>

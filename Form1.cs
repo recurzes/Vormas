@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Vormas.Database;
 using Vormas.Forms;
+using Vormas.Forms.Temp;
 using Vormas.Interfaces;
 using Vormas.Navigation;
 using Vormas.Services;
@@ -38,14 +39,15 @@ namespace Vormas
                 { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService) },
                 { Routes.AdminDashboard, () => new AdminDashboard(_sessionService) },
                 { Routes.Customers, () => new CustomerForm(_customerService) },
-                { Routes.Vehicles, () => new VehicleForm(_vehicleService)}
+                { Routes.Vehicles, () => new VehicleForm(_vehicleService)},
             };
             
             _navigation = new NavigationService(contentHost, routes);
             
             routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
+            routes[Routes.TempDashboard] = () => new Dashboard(_navigation);
             
-            _navigation.Navigate(Routes.Customers);
+            _navigation.Navigate(Routes.TempDashboard);
         }
 
         public INavigationService Navigator => _navigation;
