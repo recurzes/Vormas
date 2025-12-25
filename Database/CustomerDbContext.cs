@@ -15,7 +15,7 @@ namespace Vormas.Database
 
         public int CreateCustomer(Customer customer)
         {
-            long customerId = DbCommandHelper.ExecuteNonQueryLastIdReturn(_connStr, "prcCreateCustomer", cmd =>
+            int customerId = DbCommandHelper.ExecuteNonQueryLastIdReturn(_connStr, "prcCreateCustomer", cmd =>
             {
                 cmd.Parameters.AddWithValue("@pFirstName", customer.FirstName);
                 cmd.Parameters.AddWithValue("@pLastName", customer.LastName);
@@ -30,10 +30,9 @@ namespace Vormas.Database
                     customer.EmergencyContactPhone ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
             });
-            MessageBox.Show($@"Customer ID: {customerId}", @"Fuck you", MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-            customer.CustomerId = (int) customerId;
-            return (int)customerId;
+
+            customer.CustomerId = customerId;
+            return customerId;
         }
 
         public List<Customer> GetAllCustomers()
@@ -122,8 +121,6 @@ namespace Vormas.Database
                     cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
                 }
             );
-            
-            
         }
 
         public int DeleteCustomer(int customerId)
@@ -255,7 +252,7 @@ namespace Vormas.Database
                     cmd.Parameters.AddWithValue("@pIssuingCountry", license.IssuingCountry);
                     cmd.Parameters.AddWithValue("@pIssuingStateProvince", license.IssuingStateProvince);
                     cmd.Parameters.AddWithValue("@pLicenseImagePath", license.LicenseImagePath);
-                    cmd.Parameters.AddWithValue("@IsInterNational", license.IsInternational);
+                    cmd.Parameters.AddWithValue("@pIsInternational", license.IsInternational);
                 }
             );
         }
