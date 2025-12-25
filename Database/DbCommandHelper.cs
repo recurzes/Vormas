@@ -17,7 +17,8 @@ namespace Vormas.Database
                     configureCommand(command);
                     
                     conn.Open();
-                    return command.ExecuteNonQuery();
+                    object result = command.ExecuteScalar();
+                    return result != null && result != DBNull.Value ? Convert.ToInt32(result) : 0;
                 }
             }
         }
