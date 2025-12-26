@@ -169,6 +169,13 @@
     <Compile Include="Interfaces\IVehicleService.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DriverLicense.cs" />
+    <Compile Include="Models\DTO\ActiveRentalDto.cs" />
+    <Compile Include="Models\DTO\CompleteRentalDto.cs" />
+    <Compile Include="Models\DTO\OverdueRentalDto.cs" />
+    <Compile Include="Models\DTO\RentalDetailsDto.cs" />
+    <Compile Include="Models\DTO\StartRentalDto.cs" />
+    <Compile Include="Models\Rentals.cs" />
+    <Compile Include="Models\Reservations.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Vehicle.cs" />
