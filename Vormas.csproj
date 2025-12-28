@@ -171,6 +171,7 @@
     <Compile Include="Models\DriverLicense.cs" />
     <Compile Include="Models\DTO\ActiveRentalDto.cs" />
     <Compile Include="Models\DTO\CompleteRentalDto.cs" />
+    <Compile Include="Models\DTO\CreateReservationDto.cs" />
     <Compile Include="Models\DTO\OverdueRentalDto.cs" />
     <Compile Include="Models\DTO\RentalDetailsDto.cs" />
     <Compile Include="Models\DTO\StartRentalDto.cs" />
