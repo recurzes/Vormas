@@ -36,14 +36,14 @@
             this.contentHost.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentHost.Location = new System.Drawing.Point(0, 0);
             this.contentHost.Name = "contentHost";
-            this.contentHost.Size = new System.Drawing.Size(1051, 628);
+            this.contentHost.Size = new System.Drawing.Size(1167, 756);
             this.contentHost.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1051, 628);
+            this.ClientSize = new System.Drawing.Size(1167, 756);
             this.Controls.Add(this.contentHost);
             this.Name = "Form1";
             this.Text = "Form1";

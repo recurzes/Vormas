@@ -95,6 +95,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Vormas">
+      <HintPath>bin\Debug\Vormas.exe</HintPath>
+    </Reference>
     <Reference Include="ZstdSharp, Version=0.8.6.0, Culture=neutral, PublicKeyToken=8d151af33a4ad5cf, processorArchitecture=MSIL">
       <HintPath>packages\ZstdSharp.Port.0.8.6\lib\net462\ZstdSharp.dll</HintPath>
     </Reference>
@@ -121,6 +124,12 @@
     </Compile>
     <Compile Include="Forms\DriverLicenseForm.Designer.cs">
       <DependentUpon>DriverLicenseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Pages\UserManagementControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Pages\UserManagementControl.Designer.cs">
+      <DependentUpon>UserManagementControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RentalAgentDashboard.cs">
       <SubType>Form</SubType>
@@ -160,6 +169,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\UserControls.cs" />
     <Compile Include="Interfaces\IAuthService.cs" />
     <Compile Include="Interfaces\ICustomerRepository.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
@@ -196,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DriverLicenseForm.resx">
       <DependentUpon>DriverLicenseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Pages\UserManagementControl.resx">
+      <DependentUpon>UserManagementControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RentalAgentDashboard.resx">
       <DependentUpon>RentalAgentDashboard.cs</DependentUpon>

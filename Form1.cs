@@ -37,7 +37,7 @@ namespace Vormas
             {
                 { Routes.UserRegister, () => new UserRegisterForm(_userManager, _authService) },
                 { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService) },
-                { Routes.AdminDashboard, () => new AdminDashboard(_sessionService) },
+                { Routes.AdminDashboard, () => new AdminDashboard(_sessionService, _authService, _userManager) },
                 { Routes.Customers, () => new CustomerForm(_customerService) },
                 { Routes.Vehicles, () => new VehicleForm(_vehicleService)},
             };
@@ -47,7 +47,7 @@ namespace Vormas
             routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             routes[Routes.TempDashboard] = () => new Dashboard(_navigation);
             
-            _navigation.Navigate(Routes.TempDashboard);
+            _navigation.Navigate(Routes.AdminDashboard);
         }
 
         public INavigationService Navigator => _navigation;
