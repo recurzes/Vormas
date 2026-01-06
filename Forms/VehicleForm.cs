@@ -14,6 +14,7 @@ namespace Vormas.Forms
     public partial class VehicleForm : PageControl
     {
         private readonly IVehicleService _service;
+        private List<Vehicle> _allVehicles; // Cache for search
         private Vehicle _selectedVehicle;
         private BindingSource _bindingSource;
 
@@ -23,6 +24,7 @@ namespace Vormas.Forms
 
             _service = service ?? throw new ArgumentNullException(nameof(service));
             _bindingSource = new BindingSource();
+            _allVehicles = new List<Vehicle>(); // Init
 
             _selectedVehicle = new Vehicle();
             ConfigureGrid();
@@ -45,8 +47,8 @@ namespace Vormas.Forms
         {
             try
             {
-                var vehicles = _service.GetAllVehicles();
-                _bindingSource.DataSource = vehicles;
+                _allVehicles = _service.GetAllVehicles(); // Cache the full list
+                _bindingSource.DataSource = _allVehicles;
                 dgvVehicles.DataSource = _bindingSource;
             }
             catch (Exception ex)
@@ -243,22 +245,19 @@ namespace Vormas.Forms
 
         private void SearchVehicles(string query)
         {
-            if (_bindingSource.DataSource is List<Vehicle> allVehicles)
+            if (_allVehicles == null) return;
+
+            if (string.IsNullOrWhiteSpace(query))
             {
-                if (string.IsNullOrWhiteSpace(query))
-                {
-                    _bindingSource.DataSource = _service.GetAllVehicles();
-                }
-                else
-                {
-                    var filtered = allVehicles.FindAll(v => 
-                        (v.Make != null && v.Make.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                        (v.Model != null && v.Model.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0) ||
-                        (v.LicensePlate != null && v.LicensePlate.IndexOf(query, StringComparison.OrdinalIgnoreCase) >= 0));
-                    _bindingSource.DataSource = filtered;
-                }
-                _bindingSource.ResetBindings(false);
+                _bindingSource.DataSource = _allVehicles;
             }
+            else
+            {
+                // Only search by ID as requested
+                var filtered = _allVehicles.FindAll(v => v.VehicleId.ToString().Contains(query));
+                _bindingSource.DataSource = filtered;
+            }
+            _bindingSource.ResetBindings(false);
         }
  
 

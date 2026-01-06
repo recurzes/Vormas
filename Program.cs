@@ -21,13 +21,30 @@ namespace Vormas
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
-            // Manual composition / DI
-            var dbContext = new UserDbContext();
-            IUserManager userManager = new UserManager(dbContext);
+            // Shared Data Contexts
+            var userDbContext = new UserDbContext();
+            var vehicleDbContext = new VehicleDbContext();
+            var customerDbContext = new CustomerDbContext();
+            var reservationDbContext = new ReservationDbContext();
+
+            // Services / Repositories
+            IUserManager userManager = new UserManager(userDbContext);
             ISessionService sessionService = new SessionService();
             IAuthService authService = new AuthManager(userManager, sessionService);
             
-            Application.Run(new Form1(userManager, authService, sessionService));
+            IVehicleRepository vehicleRepo = vehicleDbContext;
+            IVehicleService vehicleService = new VehicleService(vehicleRepo);
+            
+            ICustomerManager customerManager = new CustomerManager(customerDbContext);
+            IReservationRepository reservationRepo = reservationDbContext;
+            IReservationService reservationService = new ReservationService(reservationRepo);
+            
+            // To run the Main Application:
+            //Application.Run(new Form1(userManager, authService, sessionService, vehicleService));
+            Application.Run(new ReservationForm(reservationService, vehicleRepo, customerManager));
+
+            // To run the Reservation Form properly (Test Mode):
+            // Application.Run(new ReservationForm(reservationService, vehicleRepo, customerManager));
         }
     }
 }
