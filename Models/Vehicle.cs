@@ -12,7 +12,7 @@ namespace Vormas.Models
         public string Color { get; set; }
         public string LicensePlate { get; set; }
         public string VIN { get; set; }
-        public string Category { get; set; } 
+        public string CategoryId { get; set; } 
         public string Transmission { get; set; } 
         public string FuelType { get; set; } 
         public int SeatingCapacity { get; set; }

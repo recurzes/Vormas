@@ -24,6 +24,7 @@ namespace Vormas
             // Manual composition / DI
             var dbContext = new UserDbContext();
             var customerDbContext = new CustomerDbContext();
+            IRateConfigurationService rateConfigurationService = new RateConfigurationDbContext();
             ICustomerRepository customerRepository = new CustomerRepository(customerDbContext);
             IVehicleRepository vehicleRepository = new VehicleDbContext();
             IUserManager userManager = new UserManager(dbContext);
@@ -32,7 +33,7 @@ namespace Vormas
             VehicleService vehicleService = new VehicleService(vehicleRepository);
             ICustomerService customerService = new CustomerService(customerRepository);
             
-            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService));
+            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService, rateConfigurationService));
         }
     }
 }

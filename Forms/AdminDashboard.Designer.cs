@@ -81,6 +81,7 @@ namespace Vormas.Forms
             this.btnRateManagement.TabIndex = 2;
             this.btnRateManagement.Text = "Rate Management";
             this.btnRateManagement.UseVisualStyleBackColor = true;
+            this.btnRateManagement.Click += new System.EventHandler(this.btnRateManagement_Click);
             // 
             // btnFleetManagement
             // 
@@ -90,6 +91,7 @@ namespace Vormas.Forms
             this.btnFleetManagement.TabIndex = 1;
             this.btnFleetManagement.Text = "Fleet Management";
             this.btnFleetManagement.UseVisualStyleBackColor = true;
+            this.btnFleetManagement.Click += new System.EventHandler(this.btnFleetManagement_Click);
             // 
             // btnUserManagement
             // 

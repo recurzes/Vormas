@@ -264,7 +264,7 @@
             this.lblCategory.Name = "lblCategory";
             this.lblCategory.Size = new System.Drawing.Size(52, 13);
             this.lblCategory.TabIndex = 11;
-            this.lblCategory.Text = "Category:";
+            this.lblCategory.Text = "CategoryId:";
             // 
             // txtVin
             // 

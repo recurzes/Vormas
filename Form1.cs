@@ -18,14 +18,17 @@ namespace Vormas
         private readonly ISessionService _sessionService;
         private readonly IVehicleService _vehicleService;
         private readonly ICustomerService _customerService;
+        private readonly IRateConfigurationService _rateConfigurationService;
 
-        public Form1(IUserManager userManager, IAuthService authService, ISessionService sessionService, IVehicleService vehicleService, ICustomerService customerService)
+        public Form1(IUserManager userManager, IAuthService authService, ISessionService sessionService, IVehicleService vehicleService, ICustomerService customerService, IRateConfigurationService rateConfigurationService)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _authService = authService ?? throw new ArgumentNullException(nameof(authService));
             _sessionService = sessionService ?? throw new ArgumentNullException(nameof(sessionService));
             _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
-            _vehicleService = vehicleService;
+            _vehicleService = vehicleService ?? throw new ArgumentNullException(nameof(vehicleService));
+            _rateConfigurationService = rateConfigurationService ??
+                                        throw new ArgumentNullException(nameof(rateConfigurationService));
 
             InitializeComponent();
             InitializeNavigation();
@@ -37,7 +40,7 @@ namespace Vormas
             {
                 { Routes.UserRegister, () => new UserRegisterForm(_userManager, _authService) },
                 { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService) },
-                { Routes.AdminDashboard, () => new AdminDashboard(_sessionService, _authService, _userManager) },
+                { Routes.AdminDashboard, () => new AdminDashboard(_sessionService, _authService, _userManager, _vehicleService, _rateConfigurationService) },
                 { Routes.Customers, () => new CustomerForm(_customerService) },
                 { Routes.Vehicles, () => new VehicleForm(_vehicleService)},
             };

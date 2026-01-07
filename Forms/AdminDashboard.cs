@@ -13,13 +13,17 @@ namespace Vormas.Forms
         private readonly UserControls _controls;
         private readonly IAuthService _authService;
         private readonly IUserManager _userManager;
-        public AdminDashboard(ISessionService session, IAuthService authService, IUserManager userManager)
+        private readonly IVehicleService _vehicleService;
+        private readonly IRateConfigurationService _rateConfigurationService;
+        public AdminDashboard(ISessionService session, IAuthService authService, IUserManager userManager, IVehicleService vehicleService, IRateConfigurationService rateConfigurationService)
         {
             _session = session;
             InitializeComponent();
             _controls = new UserControls();
             _authService = authService;
             _userManager = userManager;
+            _vehicleService = vehicleService;
+            _rateConfigurationService = rateConfigurationService;
         }
 
         private void btnDamageClaims_Click(object sender, EventArgs e)
@@ -30,6 +34,16 @@ namespace Vormas.Forms
         private void btnUserManagement_Click(object sender, EventArgs e)
         {
             _controls.LoadUserControl(pnlPages, new UserManagementControl(_authService, _userManager));
+        }
+
+        private void btnFleetManagement_Click(object sender, EventArgs e)
+        {
+            _controls.LoadUserControl(pnlPages, new VehicleForm(_vehicleService));
+        }
+
+        private void btnRateManagement_Click(object sender, EventArgs e)
+        {
+            _controls.LoadUserControl(pnlPages, new RateConfigurationForm(_rateConfigurationService));
         }
     }
 }

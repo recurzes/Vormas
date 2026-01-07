@@ -22,7 +22,7 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("pColor", vehicle.Color);
                 cmd.Parameters.AddWithValue("pLicensePlate", vehicle.LicensePlate);
                 cmd.Parameters.AddWithValue("pVin", vehicle.VIN);
-                cmd.Parameters.AddWithValue("pCategory", vehicle.Category);
+                cmd.Parameters.AddWithValue("pCategory", vehicle.CategoryId);
                 cmd.Parameters.AddWithValue("pTransmission", vehicle.Transmission);
                 cmd.Parameters.AddWithValue("pFuelType", vehicle.FuelType);
                 cmd.Parameters.AddWithValue("pSeatingCapacity", vehicle.SeatingCapacity);
@@ -43,7 +43,7 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("pColor", vehicle.Color);
                 cmd.Parameters.AddWithValue("pLicensePlate", vehicle.LicensePlate);
                 cmd.Parameters.AddWithValue("pVin", vehicle.VIN);
-                cmd.Parameters.AddWithValue("pCategory", vehicle.Category);
+                cmd.Parameters.AddWithValue("pCategory", vehicle.CategoryId);
                 cmd.Parameters.AddWithValue("pTransmission", vehicle.Transmission);
                 cmd.Parameters.AddWithValue("pFuelType", vehicle.FuelType);
                 cmd.Parameters.AddWithValue("pSeatingCapacity", vehicle.SeatingCapacity);
