@@ -17,7 +17,7 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("pDamageId", request.DamageId);
                 cmd.Parameters.AddWithValue("pReportedByUserId", request.ReportedByUserId);
                 cmd.Parameters.AddWithValue("pPhotoPath", request.PhotoPath);
-                cmd.Parameters.AddWithValue("pInitialChargeAmount", request.InitialChargeAmount);
+                cmd.Parameters.AddWithValue("pInitialCharge", request.InitialChargeAmount ?? 0);
             });
         }
 
@@ -43,11 +43,12 @@ namespace Vormas.Database
 
         public DamageReports ApproveDamageReport(int damageReportId, decimal chargeAmount, int approvedByUserId)
         {
+            // Parameter order matches stored procedure: (pDamageReportId, pApprovedByUserId, pChargeAmount)
             return DbCommandHelper.ExecuteReader(_connStr, "prcApproveDamageReport", cmd =>
             {
                 cmd.Parameters.AddWithValue("pDamageReportId", damageReportId);
-                cmd.Parameters.AddWithValue("pChargeAmount", chargeAmount);
                 cmd.Parameters.AddWithValue("pApprovedByUserId", approvedByUserId);
+                cmd.Parameters.AddWithValue("pChargeAmount", chargeAmount);
             }, reader => { return DataReaderMapper.MapToModel<DamageReports>(reader); });
         }
 
@@ -62,7 +63,8 @@ namespace Vormas.Database
 
         public List<DamageTypes> GetAvailableDamageTypes()
         {
-            return DbCommandHelper.ExecuteReader(_connStr, "prcGetAvaialableDamageTypes", cmd => { },
+            // Note: SP name is prcGetAvailableDamageTypes (correctly spelled in your dump)
+            return DbCommandHelper.ExecuteReader(_connStr, "prcGetAvailableDamageTypes", cmd => { },
                 reader => { return DataReaderMapper.MapToList<DamageTypes>(reader); });
         }
 

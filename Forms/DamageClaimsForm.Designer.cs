@@ -32,58 +32,89 @@ namespace Vormas.Forms
         private void InitializeComponent()
         {
             this.pnlTop = new System.Windows.Forms.Panel();
+            this.cmbStatusFilter = new System.Windows.Forms.ComboBox();
+            this.lblStatusFilter = new System.Windows.Forms.Label();
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
             this.pnlInputs = new System.Windows.Forms.Panel();
-            this.txtCurrentMileage = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtVehicleCode = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnBrowseImage = new System.Windows.Forms.Button();
-            this.pbVehicleImage = new System.Windows.Forms.PictureBox();
-            this.cmbStatus = new System.Windows.Forms.ComboBox();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.txtSeatingCapacity = new System.Windows.Forms.TextBox();
-            this.lblSeatingCapacity = new System.Windows.Forms.Label();
-            this.cmbFuelType = new System.Windows.Forms.ComboBox();
-            this.lblFuelType = new System.Windows.Forms.Label();
-            this.cmbTransmission = new System.Windows.Forms.ComboBox();
-            this.lblTransmission = new System.Windows.Forms.Label();
-            this.cmbCategory = new System.Windows.Forms.ComboBox();
-            this.lblCategory = new System.Windows.Forms.Label();
-            this.txtVin = new System.Windows.Forms.TextBox();
-            this.lblVin = new System.Windows.Forms.Label();
-            this.txtLicensePlate = new System.Windows.Forms.TextBox();
-            this.lblLicensePlate = new System.Windows.Forms.Label();
-            this.txtColor = new System.Windows.Forms.TextBox();
-            this.lblColor = new System.Windows.Forms.Label();
-            this.txtYear = new System.Windows.Forms.TextBox();
-            this.lblYear = new System.Windows.Forms.Label();
-            this.txtModel = new System.Windows.Forms.TextBox();
-            this.lblModel = new System.Windows.Forms.Label();
-            this.txtMake = new System.Windows.Forms.TextBox();
-            this.lblMake = new System.Windows.Forms.Label();
+            this.grpActions = new System.Windows.Forms.GroupBox();
             this.btnClear = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnReject = new System.Windows.Forms.Button();
+            this.btnApprove = new System.Windows.Forms.Button();
+            this.grpCharge = new System.Windows.Forms.GroupBox();
+            this.txtChargeAmount = new System.Windows.Forms.TextBox();
+            this.lblChargeAmount = new System.Windows.Forms.Label();
+            this.grpDamagePhoto = new System.Windows.Forms.GroupBox();
+            this.pbDamagePhoto = new System.Windows.Forms.PictureBox();
+            this.grpDamageInfo = new System.Windows.Forms.GroupBox();
+            this.txtEstimatedCost = new System.Windows.Forms.TextBox();
+            this.lblEstimatedCost = new System.Windows.Forms.Label();
+            this.txtDamageSeverity = new System.Windows.Forms.TextBox();
+            this.lblDamageSeverity = new System.Windows.Forms.Label();
+            this.txtDamageDescription = new System.Windows.Forms.TextBox();
+            this.lblDamageDescription = new System.Windows.Forms.Label();
+            this.grpRentalInfo = new System.Windows.Forms.GroupBox();
+            this.txtCreatedAt = new System.Windows.Forms.TextBox();
+            this.lblCreatedAt = new System.Windows.Forms.Label();
+            this.txtReportedBy = new System.Windows.Forms.TextBox();
+            this.lblReportedBy = new System.Windows.Forms.Label();
+            this.txtVehicleInfo = new System.Windows.Forms.TextBox();
+            this.lblVehicleInfo = new System.Windows.Forms.Label();
+            this.grpCustomerInfo = new System.Windows.Forms.GroupBox();
+            this.txtCustomerEmail = new System.Windows.Forms.TextBox();
+            this.lblCustomerEmail = new System.Windows.Forms.Label();
+            this.txtCustomerPhone = new System.Windows.Forms.TextBox();
+            this.lblCustomerPhone = new System.Windows.Forms.Label();
+            this.txtCustomerName = new System.Windows.Forms.TextBox();
+            this.lblCustomerName = new System.Windows.Forms.Label();
+            this.txtDamageReportId = new System.Windows.Forms.TextBox();
+            this.lblDamageReportId = new System.Windows.Forms.Label();
+            this.txtStatus = new System.Windows.Forms.TextBox();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.dgvDamageClaims = new System.Windows.Forms.DataGridView();
             this.pnlTop.SuspendLayout();
             this.pnlInputs.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbVehicleImage)).BeginInit();
+            this.grpActions.SuspendLayout();
+            this.grpCharge.SuspendLayout();
+            this.grpDamagePhoto.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDamagePhoto)).BeginInit();
+            this.grpDamageInfo.SuspendLayout();
+            this.grpRentalInfo.SuspendLayout();
+            this.grpCustomerInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDamageClaims)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlTop
             // 
+            this.pnlTop.Controls.Add(this.cmbStatusFilter);
+            this.pnlTop.Controls.Add(this.lblStatusFilter);
             this.pnlTop.Controls.Add(this.btnSearch);
             this.pnlTop.Controls.Add(this.txtSearch);
             this.pnlTop.Controls.Add(this.lblSearch);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(1001, 60);
-            this.pnlTop.TabIndex = 3;
+            this.pnlTop.Size = new System.Drawing.Size(1020, 60);
+            this.pnlTop.TabIndex = 0;
+            // 
+            // cmbStatusFilter
+            // 
+            this.cmbStatusFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbStatusFilter.FormattingEnabled = true;
+            this.cmbStatusFilter.Location = new System.Drawing.Point(520, 19);
+            this.cmbStatusFilter.Name = "cmbStatusFilter";
+            this.cmbStatusFilter.Size = new System.Drawing.Size(150, 21);
+            this.cmbStatusFilter.TabIndex = 4;
+            // 
+            // lblStatusFilter
+            // 
+            this.lblStatusFilter.AutoSize = true;
+            this.lblStatusFilter.Location = new System.Drawing.Point(435, 22);
+            this.lblStatusFilter.Name = "lblStatusFilter";
+            this.lblStatusFilter.Size = new System.Drawing.Size(79, 13);
+            this.lblStatusFilter.TabIndex = 3;
+            this.lblStatusFilter.Text = "Filter by Status:";
             // 
             // btnSearch
             // 
@@ -113,316 +144,352 @@ namespace Vormas.Forms
             // pnlInputs
             // 
             this.pnlInputs.AutoScroll = true;
-            this.pnlInputs.Controls.Add(this.txtCurrentMileage);
-            this.pnlInputs.Controls.Add(this.label2);
-            this.pnlInputs.Controls.Add(this.txtVehicleCode);
-            this.pnlInputs.Controls.Add(this.label1);
-            this.pnlInputs.Controls.Add(this.btnBrowseImage);
-            this.pnlInputs.Controls.Add(this.pbVehicleImage);
-            this.pnlInputs.Controls.Add(this.cmbStatus);
+            this.pnlInputs.Controls.Add(this.grpActions);
+            this.pnlInputs.Controls.Add(this.grpCharge);
+            this.pnlInputs.Controls.Add(this.grpDamagePhoto);
+            this.pnlInputs.Controls.Add(this.grpDamageInfo);
+            this.pnlInputs.Controls.Add(this.grpRentalInfo);
+            this.pnlInputs.Controls.Add(this.grpCustomerInfo);
+            this.pnlInputs.Controls.Add(this.txtDamageReportId);
+            this.pnlInputs.Controls.Add(this.lblDamageReportId);
+            this.pnlInputs.Controls.Add(this.txtStatus);
             this.pnlInputs.Controls.Add(this.lblStatus);
-            this.pnlInputs.Controls.Add(this.txtSeatingCapacity);
-            this.pnlInputs.Controls.Add(this.lblSeatingCapacity);
-            this.pnlInputs.Controls.Add(this.cmbFuelType);
-            this.pnlInputs.Controls.Add(this.lblFuelType);
-            this.pnlInputs.Controls.Add(this.cmbTransmission);
-            this.pnlInputs.Controls.Add(this.lblTransmission);
-            this.pnlInputs.Controls.Add(this.cmbCategory);
-            this.pnlInputs.Controls.Add(this.lblCategory);
-            this.pnlInputs.Controls.Add(this.txtVin);
-            this.pnlInputs.Controls.Add(this.lblVin);
-            this.pnlInputs.Controls.Add(this.txtLicensePlate);
-            this.pnlInputs.Controls.Add(this.lblLicensePlate);
-            this.pnlInputs.Controls.Add(this.txtColor);
-            this.pnlInputs.Controls.Add(this.lblColor);
-            this.pnlInputs.Controls.Add(this.txtYear);
-            this.pnlInputs.Controls.Add(this.lblYear);
-            this.pnlInputs.Controls.Add(this.txtModel);
-            this.pnlInputs.Controls.Add(this.lblModel);
-            this.pnlInputs.Controls.Add(this.txtMake);
-            this.pnlInputs.Controls.Add(this.lblMake);
-            this.pnlInputs.Controls.Add(this.btnClear);
-            this.pnlInputs.Controls.Add(this.btnDelete);
-            this.pnlInputs.Controls.Add(this.btnSave);
             this.pnlInputs.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlInputs.Location = new System.Drawing.Point(0, 60);
             this.pnlInputs.Name = "pnlInputs";
-            this.pnlInputs.Size = new System.Drawing.Size(340, 571);
-            this.pnlInputs.TabIndex = 4;
+            this.pnlInputs.Size = new System.Drawing.Size(360, 571);
+            this.pnlInputs.TabIndex = 1;
             // 
-            // txtCurrentMileage
+            // grpActions
             // 
-            this.txtCurrentMileage.Location = new System.Drawing.Point(120, 285);
-            this.txtCurrentMileage.Name = "txtCurrentMileage";
-            this.txtCurrentMileage.Size = new System.Drawing.Size(200, 20);
-            this.txtCurrentMileage.TabIndex = 31;
+            this.grpActions.Controls.Add(this.btnClear);
+            this.grpActions.Controls.Add(this.btnReject);
+            this.grpActions.Controls.Add(this.btnApprove);
+            this.grpActions.Location = new System.Drawing.Point(10, 520);
+            this.grpActions.Name = "grpActions";
+            this.grpActions.Size = new System.Drawing.Size(340, 50);
+            this.grpActions.TabIndex = 9;
+            this.grpActions.TabStop = false;
+            this.grpActions.Text = "Actions";
             // 
-            // label2
+            // btnClear
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 285);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(84, 13);
-            this.label2.TabIndex = 30;
-            this.label2.Text = "Current Mileage:";
+            this.btnClear.Location = new System.Drawing.Point(230, 18);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(90, 25);
+            this.btnClear.TabIndex = 2;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
             // 
-            // txtVehicleCode
+            // btnReject
             // 
-            this.txtVehicleCode.Location = new System.Drawing.Point(120, 10);
-            this.txtVehicleCode.Name = "txtVehicleCode";
-            this.txtVehicleCode.Size = new System.Drawing.Size(200, 20);
-            this.txtVehicleCode.TabIndex = 28;
+            this.btnReject.BackColor = System.Drawing.Color.IndianRed;
+            this.btnReject.ForeColor = System.Drawing.Color.White;
+            this.btnReject.Location = new System.Drawing.Point(120, 18);
+            this.btnReject.Name = "btnReject";
+            this.btnReject.Size = new System.Drawing.Size(90, 25);
+            this.btnReject.TabIndex = 1;
+            this.btnReject.Text = "Reject";
+            this.btnReject.UseVisualStyleBackColor = false;
             // 
-            // label1
+            // btnApprove
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 13);
-            this.label1.TabIndex = 29;
-            this.label1.Text = "Rental Id:";
+            this.btnApprove.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.btnApprove.ForeColor = System.Drawing.Color.White;
+            this.btnApprove.Location = new System.Drawing.Point(15, 18);
+            this.btnApprove.Name = "btnApprove";
+            this.btnApprove.Size = new System.Drawing.Size(90, 25);
+            this.btnApprove.TabIndex = 0;
+            this.btnApprove.Text = "Approve";
+            this.btnApprove.UseVisualStyleBackColor = false;
             // 
-            // btnBrowseImage
+            // grpCharge
             // 
-            this.btnBrowseImage.Location = new System.Drawing.Point(120, 457);
-            this.btnBrowseImage.Name = "btnBrowseImage";
-            this.btnBrowseImage.Size = new System.Drawing.Size(100, 23);
-            this.btnBrowseImage.TabIndex = 24;
-            this.btnBrowseImage.Text = "Browse Image";
-            this.btnBrowseImage.UseVisualStyleBackColor = true;
+            this.grpCharge.Controls.Add(this.txtChargeAmount);
+            this.grpCharge.Controls.Add(this.lblChargeAmount);
+            this.grpCharge.Location = new System.Drawing.Point(10, 465);
+            this.grpCharge.Name = "grpCharge";
+            this.grpCharge.Size = new System.Drawing.Size(340, 50);
+            this.grpCharge.TabIndex = 8;
+            this.grpCharge.TabStop = false;
+            this.grpCharge.Text = "Charge to Customer";
             // 
-            // pbVehicleImage
+            // txtChargeAmount
             // 
-            this.pbVehicleImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbVehicleImage.Location = new System.Drawing.Point(120, 347);
-            this.pbVehicleImage.Name = "pbVehicleImage";
-            this.pbVehicleImage.Size = new System.Drawing.Size(200, 100);
-            this.pbVehicleImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbVehicleImage.TabIndex = 23;
-            this.pbVehicleImage.TabStop = false;
+            this.txtChargeAmount.Location = new System.Drawing.Point(120, 19);
+            this.txtChargeAmount.Name = "txtChargeAmount";
+            this.txtChargeAmount.Size = new System.Drawing.Size(200, 20);
+            this.txtChargeAmount.TabIndex = 1;
             // 
-            // cmbStatus
+            // lblChargeAmount
             // 
-            this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Location = new System.Drawing.Point(120, 257);
-            this.cmbStatus.Name = "cmbStatus";
-            this.cmbStatus.Size = new System.Drawing.Size(200, 21);
-            this.cmbStatus.TabIndex = 22;
+            this.lblChargeAmount.AutoSize = true;
+            this.lblChargeAmount.Location = new System.Drawing.Point(15, 22);
+            this.lblChargeAmount.Name = "lblChargeAmount";
+            this.lblChargeAmount.Size = new System.Drawing.Size(95, 13);
+            this.lblChargeAmount.TabIndex = 0;
+            this.lblChargeAmount.Text = "Amount to Charge:";
+            // 
+            // grpDamagePhoto
+            // 
+            this.grpDamagePhoto.Controls.Add(this.pbDamagePhoto);
+            this.grpDamagePhoto.Location = new System.Drawing.Point(10, 355);
+            this.grpDamagePhoto.Name = "grpDamagePhoto";
+            this.grpDamagePhoto.Size = new System.Drawing.Size(340, 105);
+            this.grpDamagePhoto.TabIndex = 7;
+            this.grpDamagePhoto.TabStop = false;
+            this.grpDamagePhoto.Text = "Damage Photo";
+            // 
+            // pbDamagePhoto
+            // 
+            this.pbDamagePhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbDamagePhoto.Location = new System.Drawing.Point(15, 18);
+            this.pbDamagePhoto.Name = "pbDamagePhoto";
+            this.pbDamagePhoto.Size = new System.Drawing.Size(310, 80);
+            this.pbDamagePhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbDamagePhoto.TabIndex = 0;
+            this.pbDamagePhoto.TabStop = false;
+            // 
+            // grpDamageInfo
+            // 
+            this.grpDamageInfo.Controls.Add(this.txtEstimatedCost);
+            this.grpDamageInfo.Controls.Add(this.lblEstimatedCost);
+            this.grpDamageInfo.Controls.Add(this.txtDamageSeverity);
+            this.grpDamageInfo.Controls.Add(this.lblDamageSeverity);
+            this.grpDamageInfo.Controls.Add(this.txtDamageDescription);
+            this.grpDamageInfo.Controls.Add(this.lblDamageDescription);
+            this.grpDamageInfo.Location = new System.Drawing.Point(10, 250);
+            this.grpDamageInfo.Name = "grpDamageInfo";
+            this.grpDamageInfo.Size = new System.Drawing.Size(340, 100);
+            this.grpDamageInfo.TabIndex = 6;
+            this.grpDamageInfo.TabStop = false;
+            this.grpDamageInfo.Text = "Damage Information";
+            // 
+            // txtEstimatedCost
+            // 
+            this.txtEstimatedCost.Location = new System.Drawing.Point(120, 71);
+            this.txtEstimatedCost.Name = "txtEstimatedCost";
+            this.txtEstimatedCost.ReadOnly = true;
+            this.txtEstimatedCost.Size = new System.Drawing.Size(200, 20);
+            this.txtEstimatedCost.TabIndex = 5;
+            // 
+            // lblEstimatedCost
+            // 
+            this.lblEstimatedCost.AutoSize = true;
+            this.lblEstimatedCost.Location = new System.Drawing.Point(15, 74);
+            this.lblEstimatedCost.Name = "lblEstimatedCost";
+            this.lblEstimatedCost.Size = new System.Drawing.Size(80, 13);
+            this.lblEstimatedCost.TabIndex = 4;
+            this.lblEstimatedCost.Text = "Estimated Cost:";
+            // 
+            // txtDamageSeverity
+            // 
+            this.txtDamageSeverity.Location = new System.Drawing.Point(120, 45);
+            this.txtDamageSeverity.Name = "txtDamageSeverity";
+            this.txtDamageSeverity.ReadOnly = true;
+            this.txtDamageSeverity.Size = new System.Drawing.Size(200, 20);
+            this.txtDamageSeverity.TabIndex = 3;
+            // 
+            // lblDamageSeverity
+            // 
+            this.lblDamageSeverity.AutoSize = true;
+            this.lblDamageSeverity.Location = new System.Drawing.Point(15, 48);
+            this.lblDamageSeverity.Name = "lblDamageSeverity";
+            this.lblDamageSeverity.Size = new System.Drawing.Size(48, 13);
+            this.lblDamageSeverity.TabIndex = 2;
+            this.lblDamageSeverity.Text = "Severity:";
+            // 
+            // txtDamageDescription
+            // 
+            this.txtDamageDescription.Location = new System.Drawing.Point(120, 19);
+            this.txtDamageDescription.Name = "txtDamageDescription";
+            this.txtDamageDescription.ReadOnly = true;
+            this.txtDamageDescription.Size = new System.Drawing.Size(200, 20);
+            this.txtDamageDescription.TabIndex = 1;
+            // 
+            // lblDamageDescription
+            // 
+            this.lblDamageDescription.AutoSize = true;
+            this.lblDamageDescription.Location = new System.Drawing.Point(15, 22);
+            this.lblDamageDescription.Name = "lblDamageDescription";
+            this.lblDamageDescription.Size = new System.Drawing.Size(63, 13);
+            this.lblDamageDescription.TabIndex = 0;
+            this.lblDamageDescription.Text = "Description:";
+            // 
+            // grpRentalInfo
+            // 
+            this.grpRentalInfo.Controls.Add(this.txtCreatedAt);
+            this.grpRentalInfo.Controls.Add(this.lblCreatedAt);
+            this.grpRentalInfo.Controls.Add(this.txtReportedBy);
+            this.grpRentalInfo.Controls.Add(this.lblReportedBy);
+            this.grpRentalInfo.Controls.Add(this.txtVehicleInfo);
+            this.grpRentalInfo.Controls.Add(this.lblVehicleInfo);
+            this.grpRentalInfo.Location = new System.Drawing.Point(10, 145);
+            this.grpRentalInfo.Name = "grpRentalInfo";
+            this.grpRentalInfo.Size = new System.Drawing.Size(340, 100);
+            this.grpRentalInfo.TabIndex = 5;
+            this.grpRentalInfo.TabStop = false;
+            this.grpRentalInfo.Text = "Rental Information";
+            // 
+            // txtCreatedAt
+            // 
+            this.txtCreatedAt.Location = new System.Drawing.Point(120, 71);
+            this.txtCreatedAt.Name = "txtCreatedAt";
+            this.txtCreatedAt.ReadOnly = true;
+            this.txtCreatedAt.Size = new System.Drawing.Size(200, 20);
+            this.txtCreatedAt.TabIndex = 5;
+            // 
+            // lblCreatedAt
+            // 
+            this.lblCreatedAt.AutoSize = true;
+            this.lblCreatedAt.Location = new System.Drawing.Point(15, 74);
+            this.lblCreatedAt.Name = "lblCreatedAt";
+            this.lblCreatedAt.Size = new System.Drawing.Size(80, 13);
+            this.lblCreatedAt.TabIndex = 4;
+            this.lblCreatedAt.Text = "Date Reported:";
+            // 
+            // txtReportedBy
+            // 
+            this.txtReportedBy.Location = new System.Drawing.Point(120, 45);
+            this.txtReportedBy.Name = "txtReportedBy";
+            this.txtReportedBy.ReadOnly = true;
+            this.txtReportedBy.Size = new System.Drawing.Size(200, 20);
+            this.txtReportedBy.TabIndex = 3;
+            // 
+            // lblReportedBy
+            // 
+            this.lblReportedBy.AutoSize = true;
+            this.lblReportedBy.Location = new System.Drawing.Point(15, 48);
+            this.lblReportedBy.Name = "lblReportedBy";
+            this.lblReportedBy.Size = new System.Drawing.Size(69, 13);
+            this.lblReportedBy.TabIndex = 2;
+            this.lblReportedBy.Text = "Reported By:";
+            // 
+            // txtVehicleInfo
+            // 
+            this.txtVehicleInfo.Location = new System.Drawing.Point(120, 19);
+            this.txtVehicleInfo.Name = "txtVehicleInfo";
+            this.txtVehicleInfo.ReadOnly = true;
+            this.txtVehicleInfo.Size = new System.Drawing.Size(200, 20);
+            this.txtVehicleInfo.TabIndex = 1;
+            // 
+            // lblVehicleInfo
+            // 
+            this.lblVehicleInfo.AutoSize = true;
+            this.lblVehicleInfo.Location = new System.Drawing.Point(15, 22);
+            this.lblVehicleInfo.Name = "lblVehicleInfo";
+            this.lblVehicleInfo.Size = new System.Drawing.Size(45, 13);
+            this.lblVehicleInfo.TabIndex = 0;
+            this.lblVehicleInfo.Text = "Vehicle:";
+            // 
+            // grpCustomerInfo
+            // 
+            this.grpCustomerInfo.Controls.Add(this.txtCustomerEmail);
+            this.grpCustomerInfo.Controls.Add(this.lblCustomerEmail);
+            this.grpCustomerInfo.Controls.Add(this.txtCustomerPhone);
+            this.grpCustomerInfo.Controls.Add(this.lblCustomerPhone);
+            this.grpCustomerInfo.Controls.Add(this.txtCustomerName);
+            this.grpCustomerInfo.Controls.Add(this.lblCustomerName);
+            this.grpCustomerInfo.Location = new System.Drawing.Point(10, 40);
+            this.grpCustomerInfo.Name = "grpCustomerInfo";
+            this.grpCustomerInfo.Size = new System.Drawing.Size(340, 100);
+            this.grpCustomerInfo.TabIndex = 4;
+            this.grpCustomerInfo.TabStop = false;
+            this.grpCustomerInfo.Text = "Customer Information";
+            // 
+            // txtCustomerEmail
+            // 
+            this.txtCustomerEmail.Location = new System.Drawing.Point(120, 71);
+            this.txtCustomerEmail.Name = "txtCustomerEmail";
+            this.txtCustomerEmail.ReadOnly = true;
+            this.txtCustomerEmail.Size = new System.Drawing.Size(200, 20);
+            this.txtCustomerEmail.TabIndex = 5;
+            // 
+            // lblCustomerEmail
+            // 
+            this.lblCustomerEmail.AutoSize = true;
+            this.lblCustomerEmail.Location = new System.Drawing.Point(15, 74);
+            this.lblCustomerEmail.Name = "lblCustomerEmail";
+            this.lblCustomerEmail.Size = new System.Drawing.Size(35, 13);
+            this.lblCustomerEmail.TabIndex = 4;
+            this.lblCustomerEmail.Text = "Email:";
+            // 
+            // txtCustomerPhone
+            // 
+            this.txtCustomerPhone.Location = new System.Drawing.Point(120, 45);
+            this.txtCustomerPhone.Name = "txtCustomerPhone";
+            this.txtCustomerPhone.ReadOnly = true;
+            this.txtCustomerPhone.Size = new System.Drawing.Size(200, 20);
+            this.txtCustomerPhone.TabIndex = 3;
+            // 
+            // lblCustomerPhone
+            // 
+            this.lblCustomerPhone.AutoSize = true;
+            this.lblCustomerPhone.Location = new System.Drawing.Point(15, 48);
+            this.lblCustomerPhone.Name = "lblCustomerPhone";
+            this.lblCustomerPhone.Size = new System.Drawing.Size(41, 13);
+            this.lblCustomerPhone.TabIndex = 2;
+            this.lblCustomerPhone.Text = "Phone:";
+            // 
+            // txtCustomerName
+            // 
+            this.txtCustomerName.Location = new System.Drawing.Point(120, 19);
+            this.txtCustomerName.Name = "txtCustomerName";
+            this.txtCustomerName.ReadOnly = true;
+            this.txtCustomerName.Size = new System.Drawing.Size(200, 20);
+            this.txtCustomerName.TabIndex = 1;
+            // 
+            // lblCustomerName
+            // 
+            this.lblCustomerName.AutoSize = true;
+            this.lblCustomerName.Location = new System.Drawing.Point(15, 22);
+            this.lblCustomerName.Name = "lblCustomerName";
+            this.lblCustomerName.Size = new System.Drawing.Size(38, 13);
+            this.lblCustomerName.TabIndex = 0;
+            this.lblCustomerName.Text = "Name:";
+            // 
+            // txtDamageReportId
+            // 
+            this.txtDamageReportId.Location = new System.Drawing.Point(80, 10);
+            this.txtDamageReportId.Name = "txtDamageReportId";
+            this.txtDamageReportId.ReadOnly = true;
+            this.txtDamageReportId.Size = new System.Drawing.Size(80, 20);
+            this.txtDamageReportId.TabIndex = 1;
+            // 
+            // lblDamageReportId
+            // 
+            this.lblDamageReportId.AutoSize = true;
+            this.lblDamageReportId.Location = new System.Drawing.Point(10, 13);
+            this.lblDamageReportId.Name = "lblDamageReportId";
+            this.lblDamageReportId.Size = new System.Drawing.Size(56, 13);
+            this.lblDamageReportId.TabIndex = 0;
+            this.lblDamageReportId.Text = "Report ID:";
+            // 
+            // txtStatus
+            // 
+            this.txtStatus.Location = new System.Drawing.Point(230, 10);
+            this.txtStatus.Name = "txtStatus";
+            this.txtStatus.ReadOnly = true;
+            this.txtStatus.Size = new System.Drawing.Size(120, 20);
+            this.txtStatus.TabIndex = 3;
             // 
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(10, 260);
+            this.lblStatus.Location = new System.Drawing.Point(180, 13);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(40, 13);
-            this.lblStatus.TabIndex = 21;
+            this.lblStatus.TabIndex = 2;
             this.lblStatus.Text = "Status:";
-            // 
-            // txtSeatingCapacity
-            // 
-            this.txtSeatingCapacity.Location = new System.Drawing.Point(120, 230);
-            this.txtSeatingCapacity.Name = "txtSeatingCapacity";
-            this.txtSeatingCapacity.Size = new System.Drawing.Size(200, 20);
-            this.txtSeatingCapacity.TabIndex = 18;
-            // 
-            // lblSeatingCapacity
-            // 
-            this.lblSeatingCapacity.AutoSize = true;
-            this.lblSeatingCapacity.Location = new System.Drawing.Point(10, 233);
-            this.lblSeatingCapacity.Name = "lblSeatingCapacity";
-            this.lblSeatingCapacity.Size = new System.Drawing.Size(90, 13);
-            this.lblSeatingCapacity.TabIndex = 17;
-            this.lblSeatingCapacity.Text = "Seating Capacity:";
-            // 
-            // cmbFuelType
-            // 
-            this.cmbFuelType.FormattingEnabled = true;
-            this.cmbFuelType.Items.AddRange(new object[] { "Gasoline", "Diesel", "Electric", "Hybrid" });
-            this.cmbFuelType.Location = new System.Drawing.Point(120, 205);
-            this.cmbFuelType.Name = "cmbFuelType";
-            this.cmbFuelType.Size = new System.Drawing.Size(200, 21);
-            this.cmbFuelType.TabIndex = 16;
-            // 
-            // lblFuelType
-            // 
-            this.lblFuelType.AutoSize = true;
-            this.lblFuelType.Location = new System.Drawing.Point(10, 208);
-            this.lblFuelType.Name = "lblFuelType";
-            this.lblFuelType.Size = new System.Drawing.Size(57, 13);
-            this.lblFuelType.TabIndex = 15;
-            this.lblFuelType.Text = "Fuel Type:";
-            // 
-            // cmbTransmission
-            // 
-            this.cmbTransmission.FormattingEnabled = true;
-            this.cmbTransmission.Items.AddRange(new object[] { "Automatic", "Manual" });
-            this.cmbTransmission.Location = new System.Drawing.Point(120, 181);
-            this.cmbTransmission.Name = "cmbTransmission";
-            this.cmbTransmission.Size = new System.Drawing.Size(200, 21);
-            this.cmbTransmission.TabIndex = 14;
-            // 
-            // lblTransmission
-            // 
-            this.lblTransmission.AutoSize = true;
-            this.lblTransmission.Location = new System.Drawing.Point(10, 184);
-            this.lblTransmission.Name = "lblTransmission";
-            this.lblTransmission.Size = new System.Drawing.Size(71, 13);
-            this.lblTransmission.TabIndex = 13;
-            this.lblTransmission.Text = "Transmission:";
-            // 
-            // cmbCategory
-            // 
-            this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Items.AddRange(new object[] { "Hatchback ", "Sedan", "SUV ", "Pickup ", "Van/Minibus " });
-            this.cmbCategory.Location = new System.Drawing.Point(120, 157);
-            this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(200, 21);
-            this.cmbCategory.TabIndex = 12;
-            // 
-            // lblCategory
-            // 
-            this.lblCategory.AutoSize = true;
-            this.lblCategory.Location = new System.Drawing.Point(10, 160);
-            this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(61, 13);
-            this.lblCategory.TabIndex = 11;
-            this.lblCategory.Text = "CategoryId:";
-            // 
-            // txtVin
-            // 
-            this.txtVin.Location = new System.Drawing.Point(120, 133);
-            this.txtVin.Name = "txtVin";
-            this.txtVin.Size = new System.Drawing.Size(200, 20);
-            this.txtVin.TabIndex = 10;
-            // 
-            // lblVin
-            // 
-            this.lblVin.AutoSize = true;
-            this.lblVin.Location = new System.Drawing.Point(10, 136);
-            this.lblVin.Name = "lblVin";
-            this.lblVin.Size = new System.Drawing.Size(28, 13);
-            this.lblVin.TabIndex = 9;
-            this.lblVin.Text = "VIN:";
-            // 
-            // txtLicensePlate
-            // 
-            this.txtLicensePlate.Location = new System.Drawing.Point(120, 109);
-            this.txtLicensePlate.Name = "txtLicensePlate";
-            this.txtLicensePlate.Size = new System.Drawing.Size(200, 20);
-            this.txtLicensePlate.TabIndex = 8;
-            // 
-            // lblLicensePlate
-            // 
-            this.lblLicensePlate.AutoSize = true;
-            this.lblLicensePlate.Location = new System.Drawing.Point(10, 112);
-            this.lblLicensePlate.Name = "lblLicensePlate";
-            this.lblLicensePlate.Size = new System.Drawing.Size(74, 13);
-            this.lblLicensePlate.TabIndex = 7;
-            this.lblLicensePlate.Text = "License Plate:";
-            // 
-            // txtColor
-            // 
-            this.txtColor.Location = new System.Drawing.Point(230, 85);
-            this.txtColor.Name = "txtColor";
-            this.txtColor.Size = new System.Drawing.Size(90, 20);
-            this.txtColor.TabIndex = 6;
-            // 
-            // lblColor
-            // 
-            this.lblColor.AutoSize = true;
-            this.lblColor.Location = new System.Drawing.Point(190, 88);
-            this.lblColor.Name = "lblColor";
-            this.lblColor.Size = new System.Drawing.Size(34, 13);
-            this.lblColor.TabIndex = 5;
-            this.lblColor.Text = "Color:";
-            // 
-            // txtYear
-            // 
-            this.txtYear.Location = new System.Drawing.Point(120, 85);
-            this.txtYear.Name = "txtYear";
-            this.txtYear.Size = new System.Drawing.Size(60, 20);
-            this.txtYear.TabIndex = 4;
-            // 
-            // lblYear
-            // 
-            this.lblYear.AutoSize = true;
-            this.lblYear.Location = new System.Drawing.Point(10, 88);
-            this.lblYear.Name = "lblYear";
-            this.lblYear.Size = new System.Drawing.Size(32, 13);
-            this.lblYear.TabIndex = 3;
-            this.lblYear.Text = "Year:";
-            // 
-            // txtModel
-            // 
-            this.txtModel.Location = new System.Drawing.Point(120, 61);
-            this.txtModel.Name = "txtModel";
-            this.txtModel.Size = new System.Drawing.Size(200, 20);
-            this.txtModel.TabIndex = 2;
-            // 
-            // lblModel
-            // 
-            this.lblModel.AutoSize = true;
-            this.lblModel.Location = new System.Drawing.Point(10, 64);
-            this.lblModel.Name = "lblModel";
-            this.lblModel.Size = new System.Drawing.Size(39, 13);
-            this.lblModel.TabIndex = 1;
-            this.lblModel.Text = "Model:";
-            // 
-            // txtMake
-            // 
-            this.txtMake.Location = new System.Drawing.Point(120, 37);
-            this.txtMake.Name = "txtMake";
-            this.txtMake.Size = new System.Drawing.Size(200, 20);
-            this.txtMake.TabIndex = 0;
-            // 
-            // lblMake
-            // 
-            this.lblMake.AutoSize = true;
-            this.lblMake.Location = new System.Drawing.Point(10, 40);
-            this.lblMake.Name = "lblMake";
-            this.lblMake.Size = new System.Drawing.Size(85, 13);
-            this.lblMake.TabIndex = 0;
-            this.lblMake.Text = "Customer Name:";
-            // 
-            // btnClear
-            // 
-            this.btnClear.Location = new System.Drawing.Point(245, 502);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(75, 30);
-            this.btnClear.TabIndex = 27;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.BackColor = System.Drawing.Color.IndianRed;
-            this.btnDelete.Location = new System.Drawing.Point(135, 502);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 30);
-            this.btnDelete.TabIndex = 26;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = false;
-            // 
-            // btnSave
-            // 
-            this.btnSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnSave.Location = new System.Drawing.Point(25, 502);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 30);
-            this.btnSave.TabIndex = 25;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = false;
             // 
             // dgvDamageClaims
             // 
             this.dgvDamageClaims.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDamageClaims.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dgvDamageClaims.Location = new System.Drawing.Point(367, 60);
+            this.dgvDamageClaims.Location = new System.Drawing.Point(360, 60);
             this.dgvDamageClaims.Name = "dgvDamageClaims";
-            this.dgvDamageClaims.Size = new System.Drawing.Size(634, 571);
-            this.dgvDamageClaims.TabIndex = 5;
+            this.dgvDamageClaims.Size = new System.Drawing.Size(660, 571);
+            this.dgvDamageClaims.TabIndex = 2;
             // 
             // DamageClaimsForm
             // 
@@ -432,55 +499,86 @@ namespace Vormas.Forms
             this.Controls.Add(this.pnlInputs);
             this.Controls.Add(this.pnlTop);
             this.Name = "DamageClaimsForm";
-            this.Size = new System.Drawing.Size(1001, 631);
+            this.Size = new System.Drawing.Size(1020, 631);
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
             this.pnlInputs.ResumeLayout(false);
             this.pnlInputs.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbVehicleImage)).EndInit();
+            this.grpActions.ResumeLayout(false);
+            this.grpCharge.ResumeLayout(false);
+            this.grpCharge.PerformLayout();
+            this.grpDamagePhoto.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbDamagePhoto)).EndInit();
+            this.grpDamageInfo.ResumeLayout(false);
+            this.grpDamageInfo.PerformLayout();
+            this.grpRentalInfo.ResumeLayout(false);
+            this.grpRentalInfo.PerformLayout();
+            this.grpCustomerInfo.ResumeLayout(false);
+            this.grpCustomerInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDamageClaims)).EndInit();
             this.ResumeLayout(false);
         }
 
         private System.Windows.Forms.DataGridView dgvDamageClaims;
 
-        private System.Windows.Forms.Panel pnlInputs;
-        private System.Windows.Forms.TextBox txtCurrentMileage;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtVehicleCode;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnBrowseImage;
-        private System.Windows.Forms.PictureBox pbVehicleImage;
-        private System.Windows.Forms.ComboBox cmbStatus;
-        private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.TextBox txtSeatingCapacity;
-        private System.Windows.Forms.Label lblSeatingCapacity;
-        private System.Windows.Forms.ComboBox cmbFuelType;
-        private System.Windows.Forms.Label lblFuelType;
-        private System.Windows.Forms.ComboBox cmbTransmission;
-        private System.Windows.Forms.Label lblTransmission;
-        private System.Windows.Forms.ComboBox cmbCategory;
-        private System.Windows.Forms.Label lblCategory;
-        private System.Windows.Forms.TextBox txtVin;
-        private System.Windows.Forms.Label lblVin;
-        private System.Windows.Forms.TextBox txtLicensePlate;
-        private System.Windows.Forms.Label lblLicensePlate;
-        private System.Windows.Forms.TextBox txtColor;
-        private System.Windows.Forms.Label lblColor;
-        private System.Windows.Forms.TextBox txtYear;
-        private System.Windows.Forms.Label lblYear;
-        private System.Windows.Forms.TextBox txtModel;
-        private System.Windows.Forms.Label lblModel;
-        private System.Windows.Forms.TextBox txtMake;
-        private System.Windows.Forms.Label lblMake;
-        private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnSave;
-
+        // Top Panel - Search and Filter
         private System.Windows.Forms.Panel pnlTop;
+        private System.Windows.Forms.ComboBox cmbStatusFilter;
+        private System.Windows.Forms.Label lblStatusFilter;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Label lblSearch;
+
+        // Left Panel - Details
+        private System.Windows.Forms.Panel pnlInputs;
+        
+        // Report ID and Status
+        private System.Windows.Forms.TextBox txtDamageReportId;
+        private System.Windows.Forms.Label lblDamageReportId;
+        private System.Windows.Forms.TextBox txtStatus;
+        private System.Windows.Forms.Label lblStatus;
+        
+        // Customer Info Group
+        private System.Windows.Forms.GroupBox grpCustomerInfo;
+        private System.Windows.Forms.TextBox txtCustomerName;
+        private System.Windows.Forms.Label lblCustomerName;
+        private System.Windows.Forms.TextBox txtCustomerPhone;
+        private System.Windows.Forms.Label lblCustomerPhone;
+        private System.Windows.Forms.TextBox txtCustomerEmail;
+        private System.Windows.Forms.Label lblCustomerEmail;
+        
+        // Rental Info Group
+        private System.Windows.Forms.GroupBox grpRentalInfo;
+        private System.Windows.Forms.TextBox txtVehicleInfo;
+        private System.Windows.Forms.Label lblVehicleInfo;
+        private System.Windows.Forms.TextBox txtReportedBy;
+        private System.Windows.Forms.Label lblReportedBy;
+        private System.Windows.Forms.TextBox txtCreatedAt;
+        private System.Windows.Forms.Label lblCreatedAt;
+        
+        // Damage Info Group
+        private System.Windows.Forms.GroupBox grpDamageInfo;
+        private System.Windows.Forms.TextBox txtDamageDescription;
+        private System.Windows.Forms.Label lblDamageDescription;
+        private System.Windows.Forms.TextBox txtDamageSeverity;
+        private System.Windows.Forms.Label lblDamageSeverity;
+        private System.Windows.Forms.TextBox txtEstimatedCost;
+        private System.Windows.Forms.Label lblEstimatedCost;
+        
+        // Damage Photo Group
+        private System.Windows.Forms.GroupBox grpDamagePhoto;
+        private System.Windows.Forms.PictureBox pbDamagePhoto;
+        
+        // Charge Group
+        private System.Windows.Forms.GroupBox grpCharge;
+        private System.Windows.Forms.TextBox txtChargeAmount;
+        private System.Windows.Forms.Label lblChargeAmount;
+        
+        // Actions Group
+        private System.Windows.Forms.GroupBox grpActions;
+        private System.Windows.Forms.Button btnApprove;
+        private System.Windows.Forms.Button btnReject;
+        private System.Windows.Forms.Button btnClear;
 
         #endregion
     }

@@ -15,7 +15,9 @@ namespace Vormas.Forms
         private readonly IUserManager _userManager;
         private readonly IVehicleService _vehicleService;
         private readonly IRateConfigurationService _rateConfigurationService;
-        public AdminDashboard(ISessionService session, IAuthService authService, IUserManager userManager, IVehicleService vehicleService, IRateConfigurationService rateConfigurationService)
+        private readonly IDamageClaimsService _damageClaimsService;
+
+        public AdminDashboard(ISessionService session, IAuthService authService, IUserManager userManager, IVehicleService vehicleService, IRateConfigurationService rateConfigurationService, IDamageClaimsService damageClaimsService)
         {
             _session = session;
             InitializeComponent();
@@ -24,11 +26,12 @@ namespace Vormas.Forms
             _userManager = userManager;
             _vehicleService = vehicleService;
             _rateConfigurationService = rateConfigurationService;
+            _damageClaimsService = damageClaimsService;
         }
 
         private void btnDamageClaims_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            _controls.LoadUserControl(pnlPages, new DamageClaimsForm(_damageClaimsService, _session));
         }
 
         private void btnUserManagement_Click(object sender, EventArgs e)
