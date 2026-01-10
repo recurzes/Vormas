@@ -66,7 +66,7 @@ namespace Vormas.Forms
             // 
             // btnReports
             // 
-            this.btnReports.Location = new System.Drawing.Point(29, 300);
+            this.btnReports.Location = new System.Drawing.Point(29, 152);
             this.btnReports.Name = "btnReports";
             this.btnReports.Size = new System.Drawing.Size(117, 33);
             this.btnReports.TabIndex = 3;
@@ -96,7 +96,7 @@ namespace Vormas.Forms
             // 
             // btnUserManagement
             // 
-            this.btnUserManagement.Location = new System.Drawing.Point(29, 152);
+            this.btnUserManagement.Location = new System.Drawing.Point(29, 299);
             this.btnUserManagement.Name = "btnUserManagement";
             this.btnUserManagement.Size = new System.Drawing.Size(117, 33);
             this.btnUserManagement.TabIndex = 0;

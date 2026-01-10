@@ -27,6 +27,8 @@ namespace Vormas.Forms
             _vehicleService = vehicleService;
             _rateConfigurationService = rateConfigurationService;
             _damageClaimsService = damageClaimsService;
+            
+            _controls.LoadUserControl(pnlPages, new ReportsForm());
         }
 
         private void btnDamageClaims_Click(object sender, EventArgs e)
