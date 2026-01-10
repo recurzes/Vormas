@@ -102,6 +102,7 @@
   <ItemGroup>
     <Compile Include="Database\CustomerDbContext.cs" />
     <Compile Include="Database\DbCommandHelper.cs" />
+    <Compile Include="Database\ReportDbContext.cs" />
     <Compile Include="Database\UserDbContext.cs" />
     <Compile Include="Database\VehicleDbContext.cs" />
     <Compile Include="Forms\AdminDashboard.cs">
@@ -152,6 +153,12 @@
     <Compile Include="Forms\VehicleForm.Designer.cs">
       <DependentUpon>VehicleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DashboardForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\DashboardForm.Designer.cs">
+      <DependentUpon>DashboardForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DataReaderMapper.cs" />
     <Compile Include="Helpers\MySqlHelper.cs" />
     <Compile Include="Form1.cs">
@@ -167,11 +174,16 @@
     <Compile Include="Interfaces\IUserManager.cs" />
     <Compile Include="Interfaces\IVehicleRepository.cs" />
     <Compile Include="Interfaces\IVehicleService.cs" />
+    <Compile Include="Interfaces\IReportService.cs" />
+    <Compile Include="Interfaces\IReportRepository.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DriverLicense.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\DashboardSummaryDto.cs" />
+    <Compile Include="Models\OverdueRentalDto.cs" />
+    <Compile Include="Models\TodayActivityDto.cs" />
     <Compile Include="Navigation\INavigationService.cs" />
     <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="Navigation\PageControl.cs" />
@@ -184,6 +196,7 @@
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\UserManager.cs" />
     <Compile Include="Services\VehicleService.cs" />
+    <Compile Include="Services\ReportService.cs" />
     <Compile Include="Test\Something.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -211,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\VehicleForm.resx">
       <DependentUpon>VehicleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DashboardForm.resx">
+      <DependentUpon>DashboardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
