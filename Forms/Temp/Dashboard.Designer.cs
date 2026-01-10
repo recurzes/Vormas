@@ -34,6 +34,7 @@ namespace Vormas.Forms.Temp
             this.btnVehicle = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnCustomer = new System.Windows.Forms.Button();
+            this.btnDashboard = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnVehicle
@@ -64,12 +65,24 @@ namespace Vormas.Forms.Temp
             this.btnCustomer.TabIndex = 2;
             this.btnCustomer.Text = "Go To Customer Page";
             this.btnCustomer.UseVisualStyleBackColor = true;
+
             this.btnCustomer.Click += new System.EventHandler(this.btnCustomer_Click);
+            // 
+            // btnDashboard
+            // 
+            this.btnDashboard.Location = new System.Drawing.Point(113, 361);
+            this.btnDashboard.Name = "btnDashboard";
+            this.btnDashboard.Size = new System.Drawing.Size(179, 49);
+            this.btnDashboard.TabIndex = 3;
+            this.btnDashboard.Text = "Go To General Dashboard";
+            this.btnDashboard.UseVisualStyleBackColor = true;
+            this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
             // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnDashboard);
             this.Controls.Add(this.btnCustomer);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.btnVehicle);
@@ -80,7 +93,9 @@ namespace Vormas.Forms.Temp
 
         private System.Windows.Forms.Button btnVehicle;
         private System.Windows.Forms.Button btnLogin;
+
         private System.Windows.Forms.Button btnCustomer;
+        private System.Windows.Forms.Button btnDashboard;
 
         #endregion
     }

@@ -32,7 +32,11 @@ namespace Vormas
             VehicleService vehicleService = new VehicleService(vehicleRepository);
             ICustomerService customerService = new CustomerService(customerRepository);
             
-            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService));
+            // Report/Dashboard services
+            IReportRepository reportRepository = new ReportDbContext();
+            IReportService reportService = new ReportService(reportRepository);
+            
+            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService, reportService));
         }
     }
 }

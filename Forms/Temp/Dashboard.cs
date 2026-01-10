@@ -28,5 +28,10 @@ namespace Vormas.Forms.Temp
         {
             _navigation.Navigate(Routes.Customers);
         }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            _navigation.Navigate(Routes.Dashboard);
+        }
     }
 }

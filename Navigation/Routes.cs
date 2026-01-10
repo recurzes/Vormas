@@ -9,5 +9,6 @@
         public const string Vehicles = "vehicles";
         public const string Customers = "customers";
         public const string TempDashboard = "temp_dashboard";
+        public const string Dashboard = "dashboard";
     }
 }
