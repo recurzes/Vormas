@@ -45,5 +45,10 @@ namespace Vormas.Forms
         {
             _controls.LoadUserControl(pnlPages, new RateConfigurationForm(_rateConfigurationService));
         }
+
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            _controls.LoadUserControl(pnlPages, new ReportsForm());
+        }
     }
 }
