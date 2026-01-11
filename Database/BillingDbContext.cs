@@ -149,8 +149,7 @@ namespace Vormas.Database
                 GeneratedAt = reader.GetDateTime("GeneratedAt"),
                 Status = reader.GetString("Status")
             };
-
-            // Try to get joined fields (may not be present in all queries)
+            
             try
             {
                 if (HasColumn(reader, "CustomerName") && !reader.IsDBNull(reader.GetOrdinal("CustomerName")))

@@ -152,7 +152,7 @@ namespace Vormas.Forms
             }
             else
             {
-                txtChargeAmount.Text = "0.00";
+                txtChargeAmount.Text = @"0.00";
             }
 
 

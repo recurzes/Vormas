@@ -65,7 +65,6 @@ namespace Vormas.Forms
         {
             try
             {
-                // Load eligible customers
                 var customers = _rentalService.GetEligibleCustomers();
                 cmbCustomer.DataSource = customers.Select(c => new
                 {
@@ -74,13 +73,11 @@ namespace Vormas.Forms
                 }).ToList();
                 cmbCustomer.DisplayMember = "DisplayName";
                 cmbCustomer.ValueMember = "CustomerId";
-
-                // Load available vehicles
+                
                 var vehicles = _rentalService.GetAvailableVehicles();
                 _vehicleBindingSource.DataSource = vehicles;
                 dgvVehicles.DataSource = _vehicleBindingSource;
-
-                // Set defaults
+                
                 dtpPickupDate.Value = DateTime.Now;
                 numFuelLevel.Value = 1.00m;
                 numDeposit.Value = 5000.00m;
@@ -132,7 +129,7 @@ namespace Vormas.Forms
                 MessageBox.Show($@"Rental started successfully! Rental ID: {rentalId}",
                     @"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                LoadData(); // Refresh vehicle list
+                LoadData();
                 ClearForm();
             }
             catch (Exception ex)

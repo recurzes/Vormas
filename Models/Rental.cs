@@ -19,8 +19,7 @@ namespace Vormas.Models
         public int? ReturnAgentId { get; set; }
         public decimal DepositAmount { get; set; }
         public DateTime CreatedAt { get; set; }
-
-        // Navigation properties for display
+        
         public string CustomerName { get; set; }
         public string VehicleCode { get; set; }
         public string VehicleDescription { get; set; }

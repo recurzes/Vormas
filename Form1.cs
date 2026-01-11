@@ -56,7 +56,6 @@ namespace Vormas
             
             _navigation = new NavigationService(contentHost, routes);
             
-            // Routes that need _navigation must be registered after NavigationService is created
             routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             routes[Routes.TempDashboard] = () => new Dashboard(_navigation);
             routes[Routes.RentalReturn] = () => new ReturnForm(_rentalService, _damageClaimsService, _sessionService, _billingService, _navigation);

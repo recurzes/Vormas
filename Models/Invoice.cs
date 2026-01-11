@@ -4,9 +4,6 @@ using System.Collections.Generic;
 
 namespace Vormas.Models
 {
-    /// <summary>
-    /// Represents an invoice for a rental transaction
-    /// </summary>
     public class Invoice
     {
         public int InvoiceId { get; set; }
@@ -18,8 +15,7 @@ namespace Vormas.Models
         public decimal BalanceDue { get; set; }
         public DateTime GeneratedAt { get; set; }
         public string Status { get; set; } = "Unpaid"; // Unpaid, PartiallyPaid, Paid, Refunded
-
-        // Joined fields from queries
+        
         public string? CustomerName { get; set; }
         public string? CustomerPhone { get; set; }
         public string? CustomerEmail { get; set; }
@@ -28,14 +24,11 @@ namespace Vormas.Models
         public string? VehicleDescription { get; set; }
         public DateTime? PickupDateTime { get; set; }
         public DateTime? ReturnDateTime { get; set; }
-
-        // Navigation property
+        
         public List<InvoiceLineItem> LineItems { get; set; } = new List<InvoiceLineItem>();
     }
 
-    /// <summary>
-    /// Represents a line item on an invoice
-    /// </summary>
+    
     public class InvoiceLineItem
     {
         public int LineItemId { get; set; }
@@ -46,10 +39,7 @@ namespace Vormas.Models
         public decimal UnitPrice { get; set; }
         public decimal LineTotal { get; set; }
     }
-
-    /// <summary>
-    /// Represents a payment against an invoice
-    /// </summary>
+    
     public class Payment
     {
         public int PaymentId { get; set; }
@@ -60,13 +50,10 @@ namespace Vormas.Models
         public string? ReferenceNumber { get; set; }
         public int ProcessedByUserId { get; set; }
 
-        // Joined fields
+        
         public string? ProcessedByName { get; set; }
     }
-
-    /// <summary>
-    /// Request object for recording a payment
-    /// </summary>
+    
     public class PaymentRequest
     {
         public int InvoiceId { get; set; }

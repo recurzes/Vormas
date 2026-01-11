@@ -57,8 +57,7 @@ namespace Vormas.Forms
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"WebView2 initialization error: {ex.Message}");
-
-                // Show error message using MessageBox for immediate feedback
+                
                 MessageBox.Show(
                     @$"Failed to initialize dashboard:\n{ex.Message}\n\n" +
                     @$"Please ensure:\n" +

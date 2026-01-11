@@ -244,14 +244,13 @@ namespace Vormas.Forms
 
                 _rentalService.CompleteRental(request);
                 
-                // Store the completed rental ID before clearing
                 int completedRentalId = _selectedRental.RentalId;
 
                 string damageMsg = _pendingDamageClaims.Count > 0 
                     ? $"\n{_pendingDamageClaims.Count} damage claim(s) submitted for review." 
                     : "";
                 
-                // Ask if user wants to view invoice
+                
                 var viewInvoiceResult = MessageBox.Show(
                     $@"Rental completed successfully!{damageMsg}\n\nWould you like to view and print the invoice now?",
                     @"Rental Completed",
@@ -262,7 +261,6 @@ namespace Vormas.Forms
                 
                 if (viewInvoiceResult == DialogResult.Yes)
                 {
-                    // Generate invoice and navigate to billing
                     try
                     {
                         _billingService.GenerateInvoice(completedRentalId, _sessionService.CurrentUser.UserId);

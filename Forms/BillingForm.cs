@@ -40,7 +40,6 @@ namespace Vormas.Forms
         {
             base.OnNavigatedTo();
             
-            // If navigated with a RentalId parameter, find and select that invoice
             if (Parameter is int rentalId && rentalId > 0)
             {
                 try
@@ -51,7 +50,7 @@ namespace Vormas.Forms
                         _selectedInvoice = invoice;
                         LoadInvoiceDetails(invoice);
                         
-                        // Try to select in grid
+                        
                         foreach (DataGridViewRow row in dgvInvoices.Rows)
                         {
                             if (row.DataBoundItem is Invoice inv && inv.RentalId == rentalId)
@@ -155,25 +154,22 @@ namespace Vormas.Forms
         {
             try
             {
-                // Load line items
                 _currentLineItems = _billingService.GetInvoiceLineItems(invoice.InvoiceId);
                 _lineItemBindingSource.DataSource = _currentLineItems;
                 dgvLineItems.DataSource = _lineItemBindingSource;
-
-                // Update details panel
+                
                 lblCustomerName.Text = invoice.CustomerName ?? "N/A";
-                lblCustomerContact.Text = $"{invoice.CustomerPhone ?? ""} | {invoice.CustomerEmail ?? ""}";
-                lblVehicleInfo.Text = $"{invoice.VehicleCode ?? ""} - {invoice.VehicleDescription ?? ""}";
-                lblRentalDates.Text = $"Pickup: {invoice.PickupDateTime:yyyy-MM-dd HH:mm} → Return: {invoice.ReturnDateTime:yyyy-MM-dd HH:mm}";
+                lblCustomerContact.Text = $@"{invoice.CustomerPhone ?? ""} | {invoice.CustomerEmail ?? ""}";
+                lblVehicleInfo.Text = $@"{invoice.VehicleCode ?? ""} - {invoice.VehicleDescription ?? ""}";
+                lblRentalDates.Text = $@"Pickup: {invoice.PickupDateTime:yyyy-MM-dd HH:mm} → Return: {invoice.ReturnDateTime:yyyy-MM-dd HH:mm}";
 
-                lblSubtotal.Text = $"₱{invoice.SubtotalAmount:N2}";
-                lblTax.Text = $"₱{invoice.TaxAmount:N2}";
-                lblTotal.Text = $"₱{invoice.TotalAmount:N2}";
-                lblDeposit.Text = $"₱{invoice.DepositApplied:N2}";
-                lblBalanceDue.Text = $"₱{invoice.BalanceDue:N2}";
+                lblSubtotal.Text = $@"₱{invoice.SubtotalAmount:N2}";
+                lblTax.Text = $@"₱{invoice.TaxAmount:N2}";
+                lblTotal.Text = $@"₱{invoice.TotalAmount:N2}";
+                lblDeposit.Text = $@"₱{invoice.DepositApplied:N2}";
+                lblBalanceDue.Text = $@"₱{invoice.BalanceDue:N2}";
                 lblStatus.Text = invoice.Status;
-
-                // Color code status
+                
                 switch (invoice.Status)
                 {
                     case "Paid":
@@ -241,27 +237,23 @@ namespace Vormas.Forms
             float leftMargin = 50;
             float rightMargin = e.PageBounds.Width - 50;
             float pageWidth = rightMargin - leftMargin;
-
-            // Fonts
+            
             Font titleFont = new Font("Arial", 18, FontStyle.Bold);
             Font headerFont = new Font("Arial", 12, FontStyle.Bold);
             Font normalFont = new Font("Arial", 10);
             Font smallFont = new Font("Arial", 8);
-
-            // Company Header
+            
             g.DrawString("VORMAS CAR RENTAL", titleFont, Brushes.DarkBlue, leftMargin, yPos);
             yPos += 30;
             g.DrawString("Vehicle Operations & Rental Management System", normalFont, Brushes.Black, leftMargin, yPos);
             yPos += 25;
-
-            // Invoice Title
+            
             g.DrawLine(Pens.DarkBlue, leftMargin, yPos, rightMargin, yPos);
             yPos += 10;
             g.DrawString($"INVOICE #{_selectedInvoice.InvoiceId}", headerFont, Brushes.Black, leftMargin, yPos);
             g.DrawString($"Date: {_selectedInvoice.GeneratedAt:yyyy-MM-dd}", normalFont, Brushes.Black, rightMargin - 150, yPos);
             yPos += 30;
-
-            // Customer Info
+            
             g.DrawString("Bill To:", headerFont, Brushes.Black, leftMargin, yPos);
             yPos += 20;
             g.DrawString(_selectedInvoice.CustomerName ?? "N/A", normalFont, Brushes.Black, leftMargin + 10, yPos);
@@ -270,8 +262,7 @@ namespace Vormas.Forms
             yPos += 15;
             g.DrawString(_selectedInvoice.CustomerEmail ?? "", normalFont, Brushes.Black, leftMargin + 10, yPos);
             yPos += 25;
-
-            // Rental Details
+            
             g.DrawString("Rental Details:", headerFont, Brushes.Black, leftMargin, yPos);
             yPos += 20;
             g.DrawString($"Vehicle: {_selectedInvoice.VehicleCode} - {_selectedInvoice.VehicleDescription}", normalFont, Brushes.Black, leftMargin + 10, yPos);
@@ -280,8 +271,7 @@ namespace Vormas.Forms
             yPos += 15;
             g.DrawString($"Return: {_selectedInvoice.ReturnDateTime:yyyy-MM-dd HH:mm}", normalFont, Brushes.Black, leftMargin + 10, yPos);
             yPos += 30;
-
-            // Line Items Header
+            
             g.DrawLine(Pens.Black, leftMargin, yPos, rightMargin, yPos);
             yPos += 5;
             g.DrawString("Description", headerFont, Brushes.Black, leftMargin, yPos);
@@ -291,8 +281,7 @@ namespace Vormas.Forms
             yPos += 20;
             g.DrawLine(Pens.Black, leftMargin, yPos, rightMargin, yPos);
             yPos += 5;
-
-            // Line Items
+            
             foreach (var item in _currentLineItems)
             {
                 g.DrawString(item.Description ?? item.LineType, normalFont, Brushes.Black, leftMargin, yPos);
@@ -305,8 +294,7 @@ namespace Vormas.Forms
             yPos += 10;
             g.DrawLine(Pens.Black, leftMargin, yPos, rightMargin, yPos);
             yPos += 15;
-
-            // Totals
+            
             float totalLabelX = leftMargin + 350;
             float totalValueX = leftMargin + 450;
 
@@ -329,13 +317,11 @@ namespace Vormas.Forms
             g.DrawString("Balance Due:", headerFont, Brushes.Black, totalLabelX, yPos);
             g.DrawString($"₱{_selectedInvoice.BalanceDue:N2}", headerFont, Brushes.DarkRed, totalValueX, yPos);
             yPos += 30;
-
-            // Status
+            
             g.DrawString($"Status: {_selectedInvoice.Status}", headerFont,
                 _selectedInvoice.Status == "Paid" ? Brushes.Green : Brushes.Red, leftMargin, yPos);
             yPos += 40;
-
-            // Footer
+            
             g.DrawLine(Pens.Gray, leftMargin, yPos, rightMargin, yPos);
             yPos += 10;
             g.DrawString("Thank you for choosing Vormas Car Rental!", smallFont, Brushes.Gray, leftMargin, yPos);
@@ -385,8 +371,7 @@ namespace Vormas.Forms
 
                 MessageBox.Show(@"Payment recorded successfully!", @"Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Refresh
+                
                 LoadInvoices();
                 numPaymentAmount.Value = 0;
                 txtReferenceNumber.Text = "";
@@ -409,11 +394,11 @@ namespace Vormas.Forms
             lblCustomerContact.Text = "";
             lblVehicleInfo.Text = "";
             lblRentalDates.Text = "";
-            lblSubtotal.Text = "₱0.00";
-            lblTax.Text = "₱0.00";
-            lblTotal.Text = "₱0.00";
-            lblDeposit.Text = "₱0.00";
-            lblBalanceDue.Text = "₱0.00";
+            lblSubtotal.Text = @"₱0.00";
+            lblTax.Text = @"₱0.00";
+            lblTotal.Text = @"₱0.00";
+            lblDeposit.Text = @"₱0.00";
+            lblBalanceDue.Text = @"₱0.00";
             lblStatus.Text = "";
 
             btnPrint.Enabled = false;
