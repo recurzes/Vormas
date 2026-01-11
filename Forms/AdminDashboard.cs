@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Vormas.Forms.Controls;
 using Vormas.Forms.Pages;
 using Vormas.Helpers;
 using Vormas.Navigation;
@@ -28,32 +29,8 @@ namespace Vormas.Forms
             _rateConfigurationService = rateConfigurationService;
             _damageClaimsService = damageClaimsService;
             
-            _controls.LoadUserControl(pnlPages, new ReportsForm());
-        }
-
-        private void btnDamageClaims_Click(object sender, EventArgs e)
-        {
-            _controls.LoadUserControl(pnlPages, new DamageClaimsForm(_damageClaimsService, _session));
-        }
-
-        private void btnUserManagement_Click(object sender, EventArgs e)
-        {
-            _controls.LoadUserControl(pnlPages, new UserManagementControl(_authService, _userManager));
-        }
-
-        private void btnFleetManagement_Click(object sender, EventArgs e)
-        {
-            _controls.LoadUserControl(pnlPages, new VehicleForm(_vehicleService));
-        }
-
-        private void btnRateManagement_Click(object sender, EventArgs e)
-        {
-            _controls.LoadUserControl(pnlPages, new RateConfigurationForm(_rateConfigurationService));
-        }
-
-        private void btnReports_Click(object sender, EventArgs e)
-        {
-            _controls.LoadUserControl(pnlPages, new ReportsForm());
+            // Default to Web Dashboard
+            _controls.LoadUserControl(pnlPages, new WebViewControl("/")); 
         }
     }
 }
