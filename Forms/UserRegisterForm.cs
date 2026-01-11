@@ -10,11 +10,31 @@ namespace Vormas.Forms
     {
         private readonly IUserManager _userManager;
         private readonly IAuthService _authService;
-        public UserRegisterForm(IUserManager userManager, IAuthService authService)
+        private readonly INavigationService _navigation;
+
+        public UserRegisterForm(IUserManager userManager, IAuthService authService, INavigationService navigation)
         {
             InitializeComponent();
             _userManager = userManager;
             _authService = authService;
+            _navigation = navigation;
+            
+            // Populate roles
+            cmbRole.Items.Add("Admin");
+            cmbRole.Items.Add("Rental Agent");
+            cmbRole.SelectedIndex = 1; // Default to Rental Agent
+            
+            this.Resize += (s, e) => CenterPanel();
+            this.Load += (s, e) => CenterPanel();
+        }
+
+        private void CenterPanel()
+        {
+            if (pnlCard != null)
+            {
+                pnlCard.Left = (this.ClientSize.Width - pnlCard.Width) / 2;
+                pnlCard.Top = (this.ClientSize.Height - pnlCard.Height) / 2;
+            }
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -57,6 +77,8 @@ namespace Vormas.Forms
                     return;
                 }
 
+                int roleId = cmbRole.SelectedItem?.ToString() == "Admin" ? 1 : 2;
+
                 var user = new User
                 {
                     FirstName = txtFirstName.Text,
@@ -67,7 +89,7 @@ namespace Vormas.Forms
                     DateOfBirth = birthDate,
                     UserName = txtUsername.Text,
                     PasswordHash = txtPassword.Text,
-                    RoleId = Convert.ToInt32(cmbRole.SelectedItem?.ToString()),
+                    RoleId = roleId,
                     IsActive = cmbIsActive.SelectedItem?.ToString() == "Yes" ||
                                cmbIsActive.SelectedItem?.ToString() == "True"
                 };
@@ -83,14 +105,11 @@ namespace Vormas.Forms
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
 
-        private void label11_Click(object sender, EventArgs e)
+
+        private void lnkLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            _navigation.Navigate(Routes.UserLogin);
         }
     }
 }

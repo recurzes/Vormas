@@ -55,9 +55,12 @@ namespace Vormas.Database
 
         public User GetUserByUsername(string username)
         {
-            return DbCommandHelper.ExecuteReader(_connStr, "prcGetUserByUsername", cmd =>
+            // Use raw SQL to allow login by Username OR Email
+            string query = "SELECT * FROM Users WHERE UserName = @term OR Email = @term";
+            
+            return DbCommandHelper.ExecuteReaderText(_connStr, query, cmd =>
             {
-                cmd.Parameters.AddWithValue("pUsername", username);
+                cmd.Parameters.AddWithValue("term", username);
             }, reader =>
             {
                 if (reader.Read())
