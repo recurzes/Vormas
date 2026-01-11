@@ -16,6 +16,18 @@ namespace Vormas.Forms
             _authService = authService;
             _session = session;
             _navigation = navigation;
+            
+            this.Resize += (s, e) => CenterPanel();
+            this.Load += (s, e) => CenterPanel();
+        }
+
+        private void CenterPanel()
+        {
+            if (pnlCard != null)
+            {
+                pnlCard.Left = (this.ClientSize.Width - pnlCard.Width) / 2;
+                pnlCard.Top = (this.ClientSize.Height - pnlCard.Height) / 2;
+            }
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -63,6 +75,11 @@ namespace Vormas.Forms
             {
                 MessageBox.Show($@"Error: {exception.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            _navigation.Navigate(Routes.UserRegister);
         }
 
     }
