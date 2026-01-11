@@ -43,6 +43,26 @@ namespace Vormas.Database
             }
         }
 
+        public static T ExecuteReaderText<T>(string connectionString, string query,
+            Action<MySqlCommand> configureCommand, Func<MySqlDataReader, T> mapResult)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand command = new MySqlCommand(query, conn))
+                {
+                    command.CommandType = CommandType.Text;
+                    configureCommand(command);
+                    
+                    conn.Open();
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        return mapResult(reader);
+                    }
+                }
+            }
+        }
+
         public static int ExecuteNonQueryLastIdReturn(string connectionString, string procedureName,
             Action<MySqlCommand> configureCommand)
         {
