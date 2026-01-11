@@ -36,6 +36,41 @@ namespace Vormas.Forms
             LoadInvoices();
         }
 
+        public override void OnNavigatedTo()
+        {
+            base.OnNavigatedTo();
+            
+            // If navigated with a RentalId parameter, find and select that invoice
+            if (Parameter is int rentalId && rentalId > 0)
+            {
+                try
+                {
+                    var invoice = _billingService.GetInvoiceByRentalId(rentalId);
+                    if (invoice != null)
+                    {
+                        _selectedInvoice = invoice;
+                        LoadInvoiceDetails(invoice);
+                        
+                        // Try to select in grid
+                        foreach (DataGridViewRow row in dgvInvoices.Rows)
+                        {
+                            if (row.DataBoundItem is Invoice inv && inv.RentalId == rentalId)
+                            {
+                                row.Selected = true;
+                                dgvInvoices.CurrentCell = row.Cells[0];
+                                break;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($@"Error loading invoice for rental: {ex.Message}", @"Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
         private void ConfigureInvoiceGrid()
         {
             dgvInvoices.SelectionMode = DataGridViewSelectionMode.FullRowSelect;

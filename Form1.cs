@@ -51,14 +51,15 @@ namespace Vormas
                 { Routes.Vehicles, () => new VehicleForm(_vehicleService)},
                 { Routes.DamageClaims, () => new DamageClaimsForm(_damageClaimsService, _sessionService)},
                 { Routes.RentalPickup, () => new PickupForm(_rentalService, _sessionService)},
-                { Routes.RentalReturn, () => new ReturnForm(_rentalService, _damageClaimsService, _sessionService)},
                 { Routes.Billing, () => new BillingForm(_billingService, _sessionService)},
             };
             
             _navigation = new NavigationService(contentHost, routes);
             
+            // Routes that need _navigation must be registered after NavigationService is created
             routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             routes[Routes.TempDashboard] = () => new Dashboard(_navigation);
+            routes[Routes.RentalReturn] = () => new ReturnForm(_rentalService, _damageClaimsService, _sessionService, _billingService, _navigation);
             
             _navigation.Navigate(Routes.Billing);
         }
