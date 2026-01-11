@@ -1,13 +1,15 @@
-﻿namespace Vormas
+﻿using System.ComponentModel;
+
+namespace Vormas.Forms
 {
-    partial class Form1
+    partial class ReportsForm
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -17,10 +19,11 @@
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -28,31 +31,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.contentHost = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // contentHost
-            // 
-            this.contentHost.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.contentHost.Location = new System.Drawing.Point(0, 0);
-            this.contentHost.Name = "contentHost";
-            this.contentHost.Size = new System.Drawing.Size(1167, 756);
-            this.contentHost.TabIndex = 0;
-            // 
-            // Form1
+            // ReportsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1167, 756);
-            this.Controls.Add(this.contentHost);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "ReportsForm";
+            this.Size = new System.Drawing.Size(1001, 631);
             this.ResumeLayout(false);
         }
-
-        private System.Windows.Forms.Panel contentHost;
 
         #endregion
     }
 }
-

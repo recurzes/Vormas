@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 using Vormas.Helpers;
 using Vormas.Interfaces;
 using Vormas.Models;
@@ -83,7 +80,6 @@ namespace Vormas.Database
                 command.Parameters.AddWithValue("pEmail", e.Email);
                 command.Parameters.AddWithValue("pPhone", e.Phone);
                 command.Parameters.AddWithValue("pBirthDate", e.DateOfBirth);
-                command.Parameters.AddWithValue("pAddress", e.Address);
                 command.Parameters.AddWithValue("pRoleId", e.RoleId);
                 command.Parameters.AddWithValue("pIsActive", e.IsActive);
             });

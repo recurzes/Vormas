@@ -18,14 +18,19 @@ namespace Vormas
         private readonly ISessionService _sessionService;
         private readonly IVehicleService _vehicleService;
         private readonly ICustomerService _customerService;
+        private readonly IRateConfigurationService _rateConfigurationService;
+        private readonly IDamageClaimsService _damageClaimsService;
 
-        public Form1(IUserManager userManager, IAuthService authService, ISessionService sessionService, IVehicleService vehicleService, ICustomerService customerService)
+        public Form1(IUserManager userManager, IAuthService authService, ISessionService sessionService, IVehicleService vehicleService, ICustomerService customerService, IRateConfigurationService rateConfigurationService, IDamageClaimsService damageClaimsService)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _authService = authService ?? throw new ArgumentNullException(nameof(authService));
             _sessionService = sessionService ?? throw new ArgumentNullException(nameof(sessionService));
             _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
-            _vehicleService = vehicleService;
+            _vehicleService = vehicleService ?? throw new ArgumentNullException(nameof(vehicleService));
+            _rateConfigurationService = rateConfigurationService ??
+                                        throw new ArgumentNullException(nameof(rateConfigurationService));
+            _damageClaimsService = damageClaimsService ?? throw new ArgumentNullException(nameof(damageClaimsService));
 
             InitializeComponent();
             InitializeNavigation();
@@ -37,9 +42,10 @@ namespace Vormas
             {
                 { Routes.UserRegister, () => new UserRegisterForm(_userManager, _authService) },
                 { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService) },
-                { Routes.AdminDashboard, () => new AdminDashboard(_sessionService) },
+                { Routes.AdminDashboard, () => new AdminDashboard(_sessionService, _authService, _userManager, _vehicleService, _rateConfigurationService, _damageClaimsService) },
                 { Routes.Customers, () => new CustomerForm(_customerService) },
                 { Routes.Vehicles, () => new VehicleForm(_vehicleService)},
+                { Routes.DamageClaims, () => new DamageClaimsForm(_damageClaimsService, _sessionService)},
             };
             
             _navigation = new NavigationService(contentHost, routes);
@@ -47,7 +53,7 @@ namespace Vormas
             routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             routes[Routes.TempDashboard] = () => new Dashboard(_navigation);
             
-            _navigation.Navigate(Routes.TempDashboard);
+            _navigation.Navigate(Routes.AdminDashboard);
         }
 
         public INavigationService Navigator => _navigation;

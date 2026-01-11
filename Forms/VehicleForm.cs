@@ -45,6 +45,7 @@ namespace Vormas.Forms
             try
             {
                 var vehicles = _service.GetAllVehicles();
+                LoadCategories(vehicles);
                 _bindingSource.DataSource = vehicles;
                 dgvVehicles.DataSource = _bindingSource;
             }
@@ -52,6 +53,31 @@ namespace Vormas.Forms
             {
                 MessageBox.Show($@"Error loading vehicles: {ex.Message}", @"Error", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadCategories(List<Vehicle> vehicles)
+        {
+            foreach (Vehicle vehicle in vehicles)
+            {
+                switch (vehicle.CategoryId)
+                {
+                    case "1":
+                        vehicle.CategoryId = "Hatchback";
+                        break;
+                    case "2":
+                        vehicle.CategoryId = "Sedan";
+                        break;
+                    case "3":
+                        vehicle.CategoryId = "SUV";
+                        break;
+                    case "4":
+                        vehicle.CategoryId = "Pickup";
+                        break;
+                    case "5":
+                        vehicle.CategoryId = "Van/Minibus";
+                        break;
+                }
             }
         }
 
@@ -67,7 +93,7 @@ namespace Vormas.Forms
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Make", HeaderText = @"Make" });
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Model", HeaderText = @"Model" });
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Year", HeaderText = @"Year", Width = 50 });
-            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Category", HeaderText = @"Category" });
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "CategoryId", HeaderText = @"CategoryId" });
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Odometer", HeaderText = @"Current Mileage" });
             dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Status", HeaderText = @"Status" });
             // dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "DailyRate", HeaderText = @"Daily Rate", DefaultCellStyle = new DataGridViewCellStyle { Format = "C2" } });
@@ -107,7 +133,7 @@ namespace Vormas.Forms
             txtColor.Text = vehicle.Color;
             txtLicensePlate.Text = vehicle.LicensePlate;
             txtVin.Text = vehicle.VIN;
-            cmbCategory.SelectedItem = vehicle.Category;
+            cmbCategory.SelectedItem = vehicle.CategoryId;
             cmbTransmission.SelectedItem = vehicle.Transmission;
             cmbFuelType.SelectedItem = vehicle.FuelType;
             txtSeatingCapacity.Text = vehicle.SeatingCapacity.ToString();
@@ -143,7 +169,7 @@ namespace Vormas.Forms
             _selectedVehicle.Color = txtColor.Text;
             _selectedVehicle.LicensePlate = txtLicensePlate.Text;
             _selectedVehicle.VIN = txtVin.Text;
-            _selectedVehicle.Category = cmbCategory.SelectedItem?.ToString();
+            _selectedVehicle.CategoryId = cmbCategory.SelectedItem?.ToString();
             _selectedVehicle.Transmission = cmbTransmission.SelectedItem?.ToString();
             _selectedVehicle.FuelType = cmbFuelType.SelectedItem?.ToString();
             _selectedVehicle.SeatingCapacity = capacity;
