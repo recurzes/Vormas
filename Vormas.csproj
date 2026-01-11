@@ -124,6 +124,7 @@
     <Compile Include="Database\DamageClaimsDbContext.cs" />
     <Compile Include="Database\DbCommandHelper.cs" />
     <Compile Include="Database\RateConfigurationDbContext.cs" />
+    <Compile Include="Database\BillingDbContext.cs" />
     <Compile Include="Database\RentalDbContext.cs" />
     <Compile Include="Database\UserDbContext.cs" />
     <Compile Include="Database\VehicleDbContext.cs" />
@@ -135,6 +136,12 @@
     </Compile>
     <Compile Include="Forms\CustomerForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BillingForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\BillingForm.Designer.cs">
+      <DependentUpon>BillingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\CustomerForm.Designer.cs">
       <DependentUpon>CustomerForm.cs</DependentUpon>
@@ -223,6 +230,7 @@
     <Compile Include="Interfaces\IAuthService.cs" />
     <Compile Include="Interfaces\ICustomerRepository.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
+    <Compile Include="Interfaces\IBillingService.cs" />
     <Compile Include="Interfaces\IDamageClaimsService.cs" />
     <Compile Include="Interfaces\IRateConfigurationService.cs" />
     <Compile Include="Interfaces\IRentalRepository.cs" />
@@ -234,6 +242,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DamageReports.cs" />
     <Compile Include="Models\DriverLicense.cs" />
+    <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\RateConfigurations.cs" />
     <Compile Include="Models\Rental.cs" />
     <Compile Include="Models\User.cs" />
@@ -249,6 +258,7 @@
     <Compile Include="Services\AuthManager.cs" />
     <Compile Include="Services\CustomerRepository.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\BillingService.cs" />
     <Compile Include="Services\DamageClaimsService.cs" />
     <Compile Include="Services\RateConfigurationService.cs" />
     <Compile Include="Services\RentalService.cs" />
@@ -261,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AdminDashboard.resx">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BillingForm.resx">
+      <DependentUpon>BillingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CustomerForm.resx">
       <DependentUpon>CustomerForm.cs</DependentUpon>

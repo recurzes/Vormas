@@ -36,8 +36,10 @@ namespace Vormas
             IDamageClaimsService damageClaimsService = new DamageClaimsService(damageClaimsDbContext);
             IRentalRepository rentalRepository = new RentalDbContext();
             IRentalService rentalService = new RentalService(rentalRepository);
+            var billingDbContext = new BillingDbContext();
+            IBillingService billingService = new BillingService(billingDbContext);
             
-            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService, rateConfigurationService, damageClaimsService, rentalService));
+            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService, rateConfigurationService, damageClaimsService, rentalService, billingService));
         }
     }
 }
