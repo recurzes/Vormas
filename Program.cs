@@ -34,8 +34,10 @@ namespace Vormas
             VehicleService vehicleService = new VehicleService(vehicleRepository);
             ICustomerService customerService = new CustomerService(customerRepository);
             IDamageClaimsService damageClaimsService = new DamageClaimsService(damageClaimsDbContext);
+            IRentalRepository rentalRepository = new RentalDbContext();
+            IRentalService rentalService = new RentalService(rentalRepository);
             
-            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService, rateConfigurationService, damageClaimsService));
+            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService, rateConfigurationService, damageClaimsService, rentalService));
         }
     }
 }
