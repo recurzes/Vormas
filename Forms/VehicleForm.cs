@@ -140,13 +140,23 @@ namespace Vormas.Forms
             txtCurrentMileage.Text = vehicle.Odometer.ToString();
             cmbStatus.SelectedItem = vehicle.Status;
             
-            if (!string.IsNullOrEmpty(vehicle.ImagePath) && File.Exists(vehicle.ImagePath))
+            pbVehicleImage.Image?.Dispose();
+            pbVehicleImage.Image = null;
+
+            if (!string.IsNullOrEmpty(vehicle.ImagePath))
             {
-                 pbVehicleImage.Image = Image.FromFile(vehicle.ImagePath);
-            }
-            else
-            {
-                pbVehicleImage.Image = null;
+                string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, vehicle.ImagePath);
+                if (File.Exists(fullPath))
+                {
+                    try 
+                    {
+                        using (var stream = new FileStream(fullPath, FileMode.Open, FileAccess.Read))
+                        {
+                            pbVehicleImage.Image = Image.FromStream(stream);
+                        }
+                    }
+                    catch (Exception) { /* Handle or ignore loading errors */ }
+                }
             }
         }
         
@@ -175,7 +185,33 @@ namespace Vormas.Forms
             _selectedVehicle.SeatingCapacity = capacity;
             _selectedVehicle.Odometer = currentMileage;
             _selectedVehicle.Status = cmbStatus.SelectedItem?.ToString();
-            _selectedVehicle.ImagePath = pbVehicleImage.Tag as string ?? _selectedVehicle.ImagePath;
+
+            // Handle Image Saving
+            if (pbVehicleImage.Tag is string sourcePath && File.Exists(sourcePath))
+            {
+                try
+                {
+                    string imagesDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "Vehicles");
+                    if (!Directory.Exists(imagesDir))
+                    {
+                        Directory.CreateDirectory(imagesDir);
+                    }
+
+                    string extension = Path.GetExtension(sourcePath);
+                    string newFileName = $"{Guid.NewGuid()}{extension}";
+                    string destPath = Path.Combine(imagesDir, newFileName);
+
+                    File.Copy(sourcePath, destPath, true);
+                    
+                    // Save relative path
+                    _selectedVehicle.ImagePath = Path.Combine("Images", "Vehicles", newFileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($@"Error saving image: {ex.Message}", @"Error");
+                    return; 
+                }
+            }
 
             try
             {
@@ -222,6 +258,7 @@ namespace Vormas.Forms
         {
             _selectedVehicle = new Vehicle();
             txtVehicleCode.Text = "";
+            txtMake.Text = "";
             txtModel.Text = "";
             txtYear.Text = "";
             txtColor.Text = "";
@@ -233,7 +270,10 @@ namespace Vormas.Forms
             txtSeatingCapacity.Text = "";
             txtCurrentMileage.Text = "";
             cmbStatus.SelectedIndex = -1;
+            
+            pbVehicleImage.Image?.Dispose();
             pbVehicleImage.Image = null;
+            pbVehicleImage.Tag = null;
         }
 
         private void btnClear_Click_1(object sender, EventArgs e)
@@ -247,8 +287,12 @@ namespace Vormas.Forms
             try
             {
                 string filePath = ofdImage.FileName;
-                pbVehicleImage.Image = Image.FromFile(filePath);
-                pbVehicleImage.Tag = filePath; // Store path in Tag
+                // Load without locking the file
+                using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    pbVehicleImage.Image = Image.FromStream(stream);
+                }
+                pbVehicleImage.Tag = filePath; 
             }
             catch (Exception ex)
             {
