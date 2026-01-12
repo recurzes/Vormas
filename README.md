@@ -133,6 +133,19 @@ VehicleRental.sln
 
 The repository includes:
 
+- ![UML Class Diagram](./docs/uml_class_diagram.png)
+- ![UML Use Case Diagram](./docs/uml_usecase_diagram.png)
+- ![ERD Diagram](./docs/final_erd.png)
+- ![UML Use Case Diagram](./uml_usecase_diagram_1768218371168.png)
+- ![ERD Diagram](./final_erd_1768218405151.png)
+
+
+For detailed architecture, data model, and usage instructions, see the **[ProjectDocumentation.md](ProjectDocumentation.md)**.
+
+[![](https://img.shields.io/badge/Docs-Complete-brightgreen)](ProjectDocumentation.md)
+
+The repository includes:
+
 - ERD diagram (PlantUML and exported image) 
 - UML diagrams (Class Diagram and Use Case Diagram)
 - Project documentation describing architecture, modules, and key business rules
