@@ -12,6 +12,7 @@ namespace Vormas.Interfaces
         int DeleteCustomer(int id);
 
         List<CustomerTypeItem> GetCustomerTypes();
+        DriverLicense GetDriverLicenseByCustomerId(int customerId);
     }
 
     public class CustomerTypeItem

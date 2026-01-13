@@ -66,6 +66,11 @@ namespace Vormas.Services
             };
         }
 
+        public DriverLicense GetDriverLicenseByCustomerId(int customerId)
+        {
+            return _repo.GetLicenseByCustomerId(customerId);
+        }
+
         private bool ValidateCustomerAndLicense(Customer customer, DriverLicense license)
         {
             // Age verification 21+

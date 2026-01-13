@@ -14,6 +14,7 @@ namespace Vormas.Forms
     public partial class CustomerForm : PageControl
     {
         private DriverLicense _pendingLicense;
+        private DriverLicense _existingLicense;
         private readonly ICustomerService _service;
         private Customer _selectedCustomer;
         private readonly BindingSource _bindingSource;
@@ -36,6 +37,32 @@ namespace Vormas.Forms
             if (dgvCustomers.CurrentRow?.DataBoundItem is Customer customer)
             {
                 PopulateFields(customer);
+                CheckDriverLicenseExists(customer.CustomerId);
+            }
+        }
+
+        private void CheckDriverLicenseExists(int customerId)
+        {
+            try
+            {
+                _existingLicense = _service.GetDriverLicenseByCustomerId(customerId);
+                if (_existingLicense != null)
+                {
+                    btnDriversLicense.Text = "Edit Driver's License";
+                    lblLicenseStatus.Text = $@"License: {_existingLicense.LicenseNumber}";
+                }
+                else
+                {
+                    btnDriversLicense.Text = "Add Driver's License";
+                    lblLicenseStatus.Text = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                // If there's an error checking, default to Add mode
+                _existingLicense = null;
+                btnDriversLicense.Text = "Add Driver's License";
+                lblLicenseStatus.Text = "";
             }
         }
 
@@ -194,6 +221,7 @@ namespace Vormas.Forms
         {
             _selectedCustomer = new Customer();
             _pendingLicense = null;
+            _existingLicense = null;
             txtFirstName.Text = "";
             txtLastName.Text = "";
             dtpBirthdate.Value = DateTime.Now;
@@ -206,6 +234,7 @@ namespace Vormas.Forms
             chkIsBlacklisted.Checked = false;
             lblLicenseStatus.Text = "";
             pbCustomerImage.Image = null;
+            btnDriversLicense.Text = "Add Driver's License";
         }
 
         private void LoadCustomers()
@@ -232,9 +261,19 @@ namespace Vormas.Forms
 
         private void btnDriversLicense_Click(object sender, EventArgs e)
         {
-            using var licenseForm = new DriverLicenseForm();
+            // Open the form with existing license data if editing, or empty for new
+            using var licenseForm = _existingLicense != null 
+                ? new DriverLicenseForm(_existingLicense) 
+                : new DriverLicenseForm();
+            
             if (licenseForm.ShowDialog() != DialogResult.OK) return;
+            
             _pendingLicense = licenseForm.License;
+            // Preserve the CustomerId if we're editing an existing license
+            if (_existingLicense != null)
+            {
+                _pendingLicense.CustomerId = _existingLicense.CustomerId;
+            }
             lblLicenseStatus.Text = $@"License: {_pendingLicense.LicenseNumber}";
         }
 
