@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Vormas.Interfaces;
@@ -67,6 +69,7 @@ namespace Vormas.Forms
             _selectedCustomer.EmergencyContactName = txtEmergencyContactName.Text;
             _selectedCustomer.EmergencyContactPhone = txtEmergencyContactPhone.Text;
             _selectedCustomer.IsBlacklisted = chkIsBlacklisted.Checked;
+            _selectedCustomer.ImagePathMain = pbCustomerImage.Tag as string ?? _selectedCustomer.ImagePathMain;
 
             try
             {
@@ -168,6 +171,15 @@ namespace Vormas.Forms
                 ?.FirstOrDefault(ct => ct.Value == _selectedCustomer.CustomerType.ToString());
             cmbCustomerType.SelectedItem = customerTypeItem;
             chkIsBlacklisted.Checked = _selectedCustomer.IsBlacklisted;
+            
+            if (!string.IsNullOrEmpty(customer.ImagePathMain) && File.Exists(customer.ImagePathMain))
+            {
+                pbCustomerImage.Image = Image.FromFile(customer.ImagePathMain);
+            }
+            else
+            {
+                pbCustomerImage.Image = null;
+            }
         }
 
         private void InitializeData()
@@ -193,6 +205,7 @@ namespace Vormas.Forms
             txtEmergencyContactPhone.Text = "";
             chkIsBlacklisted.Checked = false;
             lblLicenseStatus.Text = "";
+            pbCustomerImage.Image = null;
         }
 
         private void LoadCustomers()
@@ -223,6 +236,21 @@ namespace Vormas.Forms
             if (licenseForm.ShowDialog() != DialogResult.OK) return;
             _pendingLicense = licenseForm.License;
             lblLicenseStatus.Text = $@"License: {_pendingLicense.LicenseNumber}";
+        }
+
+        private void btnBrowseImage_Click(object sender, EventArgs e)
+        {
+            if (ofdImage.ShowDialog() != DialogResult.OK) return;
+            try
+            {
+                string filePath = ofdImage.FileName;
+                pbCustomerImage.Image = Image.FromFile(filePath);
+                pbCustomerImage.Tag = filePath; // Store path in Tag
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($@"Error loading image: {ex.Message}");
+            }
         }
     }
 }

@@ -33,6 +33,8 @@ namespace Vormas.Forms
         {
             this.dgvCustomers = new System.Windows.Forms.DataGridView();
             this.pnlInputs = new System.Windows.Forms.Panel();
+            this.btnBrowseImage = new System.Windows.Forms.Button();
+            this.pbCustomerImage = new System.Windows.Forms.PictureBox();
             this.lblLicenseStatus = new System.Windows.Forms.Label();
             this.btnDriversLicense = new System.Windows.Forms.Button();
             this.txtEmergencyContactPhone = new System.Windows.Forms.TextBox();
@@ -62,8 +64,10 @@ namespace Vormas.Forms
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
+            this.ofdImage = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             this.pnlInputs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCustomerImage)).BeginInit();
             this.pnlTop.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,13 +77,15 @@ namespace Vormas.Forms
             this.dgvCustomers.Dock = System.Windows.Forms.DockStyle.Right;
             this.dgvCustomers.Location = new System.Drawing.Point(386, 60);
             this.dgvCustomers.Name = "dgvCustomers";
-            this.dgvCustomers.Size = new System.Drawing.Size(634, 393);
+            this.dgvCustomers.Size = new System.Drawing.Size(634, 553);
             this.dgvCustomers.TabIndex = 4;
             this.dgvCustomers.SelectionChanged += new System.EventHandler(this.dgvCustomers_SelectionChanged);
             // 
             // pnlInputs
             // 
             this.pnlInputs.AutoScroll = true;
+            this.pnlInputs.Controls.Add(this.btnBrowseImage);
+            this.pnlInputs.Controls.Add(this.pbCustomerImage);
             this.pnlInputs.Controls.Add(this.lblLicenseStatus);
             this.pnlInputs.Controls.Add(this.btnDriversLicense);
             this.pnlInputs.Controls.Add(this.txtEmergencyContactPhone);
@@ -108,8 +114,28 @@ namespace Vormas.Forms
             this.pnlInputs.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlInputs.Location = new System.Drawing.Point(0, 60);
             this.pnlInputs.Name = "pnlInputs";
-            this.pnlInputs.Size = new System.Drawing.Size(375, 393);
+            this.pnlInputs.Size = new System.Drawing.Size(375, 553);
             this.pnlInputs.TabIndex = 3;
+            // 
+            // btnBrowseImage
+            // 
+            this.btnBrowseImage.Location = new System.Drawing.Point(98, 418);
+            this.btnBrowseImage.Name = "btnBrowseImage";
+            this.btnBrowseImage.Size = new System.Drawing.Size(100, 23);
+            this.btnBrowseImage.TabIndex = 35;
+            this.btnBrowseImage.Text = "Browse Image";
+            this.btnBrowseImage.UseVisualStyleBackColor = true;
+            this.btnBrowseImage.Click += new System.EventHandler(this.btnBrowseImage_Click);
+            // 
+            // pbCustomerImage
+            // 
+            this.pbCustomerImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbCustomerImage.Location = new System.Drawing.Point(98, 308);
+            this.pbCustomerImage.Name = "pbCustomerImage";
+            this.pbCustomerImage.Size = new System.Drawing.Size(200, 100);
+            this.pbCustomerImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbCustomerImage.TabIndex = 34;
+            this.pbCustomerImage.TabStop = false;
             // 
             // lblLicenseStatus
             // 
@@ -295,7 +321,7 @@ namespace Vormas.Forms
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(245, 332);
+            this.btnClear.Location = new System.Drawing.Point(256, 485);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 30);
             this.btnClear.TabIndex = 27;
@@ -306,7 +332,7 @@ namespace Vormas.Forms
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.IndianRed;
-            this.btnDelete.Location = new System.Drawing.Point(135, 332);
+            this.btnDelete.Location = new System.Drawing.Point(146, 485);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 30);
             this.btnDelete.TabIndex = 26;
@@ -317,7 +343,7 @@ namespace Vormas.Forms
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnSave.Location = new System.Drawing.Point(25, 332);
+            this.btnSave.Location = new System.Drawing.Point(36, 485);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 30);
             this.btnSave.TabIndex = 25;
@@ -361,6 +387,10 @@ namespace Vormas.Forms
             this.lblSearch.TabIndex = 0;
             this.lblSearch.Text = "Search:";
             // 
+            // ofdImage
+            // 
+            this.ofdImage.FileName = "openFileDialog1";
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -369,14 +399,20 @@ namespace Vormas.Forms
             this.Controls.Add(this.pnlInputs);
             this.Controls.Add(this.pnlTop);
             this.Name = "CustomerForm";
-            this.Size = new System.Drawing.Size(1020, 453);
+            this.Size = new System.Drawing.Size(1020, 613);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).EndInit();
             this.pnlInputs.ResumeLayout(false);
             this.pnlInputs.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCustomerImage)).EndInit();
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.OpenFileDialog ofdImage;
+
+        private System.Windows.Forms.Button btnBrowseImage;
+        private System.Windows.Forms.PictureBox pbCustomerImage;
 
         private System.Windows.Forms.Label lblLicenseStatus;
 
