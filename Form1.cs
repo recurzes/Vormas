@@ -20,8 +20,9 @@ namespace Vormas
         private readonly ICustomerService _customerService;
         private readonly IRateConfigurationService _rateConfigurationService;
         private readonly IDamageClaimsService _damageClaimsService;
+        private readonly IRentalService _rentalService;
 
-        public Form1(IUserManager userManager, IAuthService authService, ISessionService sessionService, IVehicleService vehicleService, ICustomerService customerService, IRateConfigurationService rateConfigurationService, IDamageClaimsService damageClaimsService)
+        public Form1(IUserManager userManager, IAuthService authService, ISessionService sessionService, IVehicleService vehicleService, ICustomerService customerService, IRateConfigurationService rateConfigurationService, IDamageClaimsService damageClaimsService, IRentalService rentalService)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _authService = authService ?? throw new ArgumentNullException(nameof(authService));
@@ -31,7 +32,8 @@ namespace Vormas
             _rateConfigurationService = rateConfigurationService ??
                                         throw new ArgumentNullException(nameof(rateConfigurationService));
             _damageClaimsService = damageClaimsService ?? throw new ArgumentNullException(nameof(damageClaimsService));
-
+            _rentalService = rentalService ?? throw new ArgumentNullException(nameof(rentalService));
+            
             InitializeComponent();
             InitializeNavigation();
         }
@@ -46,6 +48,8 @@ namespace Vormas
                 { Routes.Customers, () => new CustomerForm(_customerService) },
                 { Routes.Vehicles, () => new VehicleForm(_vehicleService)},
                 { Routes.DamageClaims, () => new DamageClaimsForm(_damageClaimsService, _sessionService)},
+                { Routes.RentalPickup, () => new PickupForm(_rentalService, _sessionService)},
+                { Routes.RentalReturn, () => new ReturnForm(_rentalService, _damageClaimsService, _sessionService)},
             };
             
             _navigation = new NavigationService(contentHost, routes);
