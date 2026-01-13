@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Vormas.Interfaces;
@@ -12,6 +14,7 @@ namespace Vormas.Forms
     public partial class CustomerForm : PageControl
     {
         private DriverLicense _pendingLicense;
+        private DriverLicense _existingLicense;
         private readonly ICustomerService _service;
         private Customer _selectedCustomer;
         private readonly BindingSource _bindingSource;
@@ -26,6 +29,7 @@ namespace Vormas.Forms
             _selectedCustomer = new Customer();
 
             ConfigureGrid();
+            ConfigureRentalHistoryGrid();
             InitializeData();
         }
 
@@ -34,7 +38,45 @@ namespace Vormas.Forms
             if (dgvCustomers.CurrentRow?.DataBoundItem is Customer customer)
             {
                 PopulateFields(customer);
+                CheckDriverLicenseExists(customer.CustomerId);
+                LoadCustomerHistory(customer.CustomerId);
             }
+        }
+
+        private void CheckDriverLicenseExists(int customerId)
+        {
+            try
+            {
+                _existingLicense = _service.GetDriverLicenseByCustomerId(customerId);
+                if (_existingLicense != null)
+                {
+                    btnDriversLicense.Text = @"Edit Driver's License";
+                    lblLicenseStatus.Text = $@"License: {_existingLicense.LicenseNumber}";
+                }
+                else
+                {
+                    btnDriversLicense.Text = @"Add Driver's License";
+                    lblLicenseStatus.Text = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                _existingLicense = null;
+                btnDriversLicense.Text = @"Add Driver's License";
+                lblLicenseStatus.Text = "";
+            }
+        }
+
+        private void btnDrivingRecords_Click(object sender, EventArgs e)
+        {
+            if (_selectedCustomer == null || _selectedCustomer.CustomerId == 0)
+            {
+                MessageBox.Show(@"Please select a customer first.", @"Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            using var form = new DrivingRecordForm(_service, _selectedCustomer.CustomerId, $"{_selectedCustomer.FirstName} {_selectedCustomer.LastName}");
+            form.ShowDialog();
+            LoadCustomerHistory(_selectedCustomer.CustomerId);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -67,6 +109,7 @@ namespace Vormas.Forms
             _selectedCustomer.EmergencyContactName = txtEmergencyContactName.Text;
             _selectedCustomer.EmergencyContactPhone = txtEmergencyContactPhone.Text;
             _selectedCustomer.IsBlacklisted = chkIsBlacklisted.Checked;
+            _selectedCustomer.ImagePathMain = pbCustomerImage.Tag as string ?? _selectedCustomer.ImagePathMain;
 
             try
             {
@@ -168,6 +211,15 @@ namespace Vormas.Forms
                 ?.FirstOrDefault(ct => ct.Value == _selectedCustomer.CustomerType.ToString());
             cmbCustomerType.SelectedItem = customerTypeItem;
             chkIsBlacklisted.Checked = _selectedCustomer.IsBlacklisted;
+            
+            if (!string.IsNullOrEmpty(customer.ImagePathMain) && File.Exists(customer.ImagePathMain))
+            {
+                pbCustomerImage.Image = Image.FromFile(customer.ImagePathMain);
+            }
+            else
+            {
+                pbCustomerImage.Image = null;
+            }
         }
 
         private void InitializeData()
@@ -182,6 +234,7 @@ namespace Vormas.Forms
         {
             _selectedCustomer = new Customer();
             _pendingLicense = null;
+            _existingLicense = null;
             txtFirstName.Text = "";
             txtLastName.Text = "";
             dtpBirthdate.Value = DateTime.Now;
@@ -193,6 +246,8 @@ namespace Vormas.Forms
             txtEmergencyContactPhone.Text = "";
             chkIsBlacklisted.Checked = false;
             lblLicenseStatus.Text = "";
+            pbCustomerImage.Image = null;
+            btnDriversLicense.Text = @"Add Driver's License";
         }
 
         private void LoadCustomers()
@@ -219,10 +274,80 @@ namespace Vormas.Forms
 
         private void btnDriversLicense_Click(object sender, EventArgs e)
         {
-            using var licenseForm = new DriverLicenseForm();
+            using var licenseForm = _existingLicense != null 
+                ? new DriverLicenseForm(_existingLicense) 
+                : new DriverLicenseForm();
+            
             if (licenseForm.ShowDialog() != DialogResult.OK) return;
+            
             _pendingLicense = licenseForm.License;
+            if (_existingLicense != null)
+            {
+                _pendingLicense.CustomerId = _existingLicense.CustomerId;
+            }
             lblLicenseStatus.Text = $@"License: {_pendingLicense.LicenseNumber}";
+        }
+
+        private void btnBrowseImage_Click(object sender, EventArgs e)
+        {
+            if (ofdImage.ShowDialog() != DialogResult.OK) return;
+            try
+            {
+                string filePath = ofdImage.FileName;
+                pbCustomerImage.Image = Image.FromFile(filePath);
+                pbCustomerImage.Tag = filePath; // Store path in Tag
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($@"Error loading image: {ex.Message}");
+            }
+        }
+
+        private void ConfigureRentalHistoryGrid()
+        {
+            dgvRentalHistory.AutoGenerateColumns = false;
+            dgvRentalHistory.Columns.Clear();
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "RentalId", HeaderText = @"Rental ID", Width = 70 });
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "VehicleInfo", HeaderText = @"Vehicle", Width = 180 });
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "PickupDate", HeaderText = @"Pickup", Width = 120 });
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "ReturnDate", HeaderText = @"Return", Width = 120 });
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "Status", HeaderText = @"Status", Width = 80 });
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "TotalAmount", HeaderText = @"Amount", Width = 100 });
+            dgvRentalHistory.Columns.Add(new DataGridViewCheckBoxColumn
+                { DataPropertyName = "WasLate", HeaderText = @"Late", Width = 50 });
+            dgvRentalHistory.Columns.Add(new DataGridViewCheckBoxColumn
+                { DataPropertyName = "HasDamage", HeaderText = @"Damage", Width = 60 });
+        }
+
+        private void LoadCustomerHistory(int customerId)
+        {
+            try
+            {
+                var history = _service.GetCustomerHistory(customerId);
+                
+                lblTotalRentals.Text = $@"Total Rentals: {history.TotalRentals}";
+                lblTotalSpent.Text = $@"Total Spent: ₱{history.TotalAmountSpent:N2}";
+                lblDamageCount.Text = $@"Damages: {history.TotalDamages} (₱{history.TotalDamageCharges:N2})";
+                lblLateReturns.Text = $@"Late Returns: {history.LateReturns}";
+                lblDrivingViolations.Text = $@"Violations: {history.DrivingViolations} (Major: {history.MajorViolations})";
+                
+                dgvRentalHistory.DataSource = history.RentalHistory;
+            }
+            catch
+            {
+                lblTotalRentals.Text = @"Total Rentals: 0";
+                lblTotalSpent.Text = @"Total Spent: ₱0.00";
+                lblDamageCount.Text = @"Damages: 0 (₱0.00)";
+                lblLateReturns.Text = @"Late Returns: 0";
+                lblDrivingViolations.Text = @"Violations: 0 (Major: 0)";
+                dgvRentalHistory.DataSource = null;
+            }
         }
     }
 }

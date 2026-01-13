@@ -57,7 +57,7 @@ namespace Vormas
             routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             routes[Routes.TempDashboard] = () => new Dashboard(_navigation);
             
-            _navigation.Navigate(Routes.AdminDashboard);
+            _navigation.Navigate(Routes.Customers);
         }
 
         public INavigationService Navigator => _navigation;
