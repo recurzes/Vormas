@@ -46,6 +46,8 @@ namespace Vormas.Forms
             this.lblFuelLevel = new System.Windows.Forms.Label();
             this.numDeposit = new System.Windows.Forms.NumericUpDown();
             this.lblDeposit = new System.Windows.Forms.Label();
+            this.dtpExpectedReturn = new System.Windows.Forms.DateTimePicker();
+            this.lblExpectedReturn = new System.Windows.Forms.Label();
             this.grpRentalDetails = new System.Windows.Forms.GroupBox();
             this.dgvVehicles = new System.Windows.Forms.DataGridView();
             this.grpVehicle = new System.Windows.Forms.GroupBox();
@@ -215,6 +217,25 @@ namespace Vormas.Forms
             this.lblDeposit.TabIndex = 6;
             this.lblDeposit.Text = "Deposit:";
             // 
+            // dtpExpectedReturn
+            // 
+            this.dtpExpectedReturn.CustomFormat = "yyyy-MM-dd HH:mm";
+            this.dtpExpectedReturn.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpExpectedReturn.Location = new System.Drawing.Point(103, 126);
+            this.dtpExpectedReturn.Name = "dtpExpectedReturn";
+            this.dtpExpectedReturn.Size = new System.Drawing.Size(138, 20);
+            this.dtpExpectedReturn.TabIndex = 9;
+            this.dtpExpectedReturn.Value = System.DateTime.Now.AddDays(1);
+            // 
+            // lblExpectedReturn
+            // 
+            this.lblExpectedReturn.AutoSize = true;
+            this.lblExpectedReturn.Location = new System.Drawing.Point(13, 128);
+            this.lblExpectedReturn.Name = "lblExpectedReturn";
+            this.lblExpectedReturn.Size = new System.Drawing.Size(88, 13);
+            this.lblExpectedReturn.TabIndex = 8;
+            this.lblExpectedReturn.Text = "Expected Return:";
+            // 
             // grpRentalDetails
             // 
             this.grpRentalDetails.Controls.Add(this.dtpPickupDate);
@@ -225,9 +246,11 @@ namespace Vormas.Forms
             this.grpRentalDetails.Controls.Add(this.lblFuelLevel);
             this.grpRentalDetails.Controls.Add(this.numDeposit);
             this.grpRentalDetails.Controls.Add(this.lblDeposit);
+            this.grpRentalDetails.Controls.Add(this.dtpExpectedReturn);
+            this.grpRentalDetails.Controls.Add(this.lblExpectedReturn);
             this.grpRentalDetails.Location = new System.Drawing.Point(17, 284);
             this.grpRentalDetails.Name = "grpRentalDetails";
-            this.grpRentalDetails.Size = new System.Drawing.Size(343, 121);
+            this.grpRentalDetails.Size = new System.Drawing.Size(343, 155);
             this.grpRentalDetails.TabIndex = 10;
             this.grpRentalDetails.TabStop = false;
             this.grpRentalDetails.Text = "Rental Details";
@@ -351,6 +374,8 @@ namespace Vormas.Forms
         private System.Windows.Forms.Label lblFuelLevel;
         private System.Windows.Forms.NumericUpDown numDeposit;
         private System.Windows.Forms.Label lblDeposit;
+        private System.Windows.Forms.DateTimePicker dtpExpectedReturn;
+        private System.Windows.Forms.Label lblExpectedReturn;
         private System.Windows.Forms.GroupBox grpRentalDetails;
         private System.Windows.Forms.DataGridView dgvVehicles;
         private System.Windows.Forms.GroupBox grpVehicle;

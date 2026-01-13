@@ -60,7 +60,7 @@ namespace Vormas
             routes[Routes.TempDashboard] = () => new Dashboard(_navigation);
             routes[Routes.RentalReturn] = () => new ReturnForm(_rentalService, _damageClaimsService, _sessionService, _billingService, _navigation);
             
-            _navigation.Navigate(Routes.Billing);
+            _navigation.Navigate(Routes.Customers);
         }
 
         public INavigationService Navigator => _navigation;

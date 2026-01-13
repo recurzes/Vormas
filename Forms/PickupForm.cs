@@ -114,6 +114,7 @@ namespace Vormas.Forms
                     CustomerId = (int)cmbCustomer.SelectedValue,
                     VehicleId = _selectedVehicle.VehicleId,
                     PickupDateTime = dtpPickupDate.Value,
+                    ExpectedReturnDateTime = dtpExpectedReturn.Value,
                     PickupOdometer = numOdometer.Value,
                     PickupFuelLevel = numFuelLevel.Value,
                     PickupAgentId = _sessionService.CurrentUser.UserId,
@@ -157,6 +158,7 @@ namespace Vormas.Forms
             chkIsClean.Checked = true;
             chkAccessoriesOk.Checked = true;
             txtNotes.Text = "";
+            dtpExpectedReturn.Value = DateTime.Now.AddDays(1);
         }
     }
 }

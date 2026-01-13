@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Vormas.Models;
 
 namespace Vormas.Interfaces
@@ -12,6 +13,13 @@ namespace Vormas.Interfaces
         int DeleteCustomer(int id);
 
         List<CustomerTypeItem> GetCustomerTypes();
+        DriverLicense GetDriverLicenseByCustomerId(int customerId);
+        CustomerHistory GetCustomerHistory(int customerId);
+        
+        List<DrivingRecord> GetDrivingRecords(int customerId);
+        int AddDrivingRecord(DrivingRecord record);
+        bool ValidateAgeForVehicleCategory(DateTime dateOfBirth, int categoryId);
+        int GetMinimumAgeForCategory(int categoryId);
     }
 
     public class CustomerTypeItem

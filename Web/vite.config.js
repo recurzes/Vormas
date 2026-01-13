@@ -161,26 +161,70 @@ function apiPlugin() {
         sendJson(res, events)
       })
       
+      // Reports endpoint - expanded with fleet and rental reports
       server.middlewares.use('/api/reports', async (req, res, next) => {
         if (req.method !== 'GET') return next()
         
         const url = new URL(req.url, 'http://localhost')
         const type = url.searchParams.get('type') || 'rentals'
+        const from = url.searchParams.get('from') || '2020-01-01'
+        const to = url.searchParams.get('to') || '2030-12-31'
+        const limit = parseInt(url.searchParams.get('limit')) || 10
         
+        // Map report types to stored procedures
         const procedures = {
-          rentals: 'prcGetRentalsReport',
-          invoices: 'prcGetInvoicesReport',
-          damages: 'prcGetDamagesReport',
-          customers: 'prcGetCustomersReport'
+          // Basic reports
+          rentals: { name: 'prcGetRentalsReport', params: [] },
+          invoices: { name: 'prcGetInvoicesReport', params: [] },
+          damages: { name: 'prcGetDamagesReport', params: [] },
+          customers: { name: 'prcGetCustomersReport', params: [] },
+          // Fleet reports
+          'fleet-by-category': { name: 'prcGetFleetByCategory', params: [] },
+          'fleet-maintenance': { name: 'prcGetFleetMaintenance', params: [] },
+          // Rental reports
+          'active-rentals': { name: 'prcGetActiveRentalsDetailed', params: [] },
+          'daily-rentals': { name: 'prcGetDailyRentals', params: [from, to] },
+          'rentals-by-category': { name: 'prcGetRentalsByCategory', params: [from, to] },
+          'rental-duration': { name: 'prcGetRentalDurationAnalysis', params: [from, to] },
+          // Operational reports
+          'fleet-utilization': { name: 'prcGetFleetUtilization', params: [from, to] },
+          'popular-vehicles': { name: 'prcGetMostPopularVehicles', params: [limit] },
+          'late-returns': { name: 'prcGetLateReturns', params: [] },
+          // Revenue
+          'revenue-per-vehicle': { name: 'prcGetRevenuePerVehicle', params: [from, to] }
         }
         
-        const procedureName = procedures[type]
-        if (!procedureName) {
+        const proc = procedures[type]
+        if (!proc) {
           return sendJson(res, MOCK_DATA.reports[type] || [])
         }
         
-        const rows = await callProcedure(procedureName, [], MOCK_DATA.reports[type] || [])
+        const rows = await callProcedure(proc.name, proc.params, MOCK_DATA.reports[type] || [])
         sendJson(res, rows)
+      })
+      
+      // Analytics/Performance metrics endpoint
+      server.middlewares.use('/api/analytics', async (req, res, next) => {
+        if (req.method !== 'GET') return next()
+        
+        const url = new URL(req.url, 'http://localhost')
+        const from = url.searchParams.get('from') || new Date(Date.now() - 30*24*60*60*1000).toISOString().split('T')[0]
+        const to = url.searchParams.get('to') || new Date().toISOString().split('T')[0]
+        
+        const mockMetrics = {
+          fleetUtilizationRate: 25.5,
+          revenuePerVehicle: 7560,
+          avgRentalRate: 15120,
+          avgRentalDuration: 3.5,
+          customerRetentionRate: 15.0,
+          totalRentals: 2,
+          totalRevenue: 30240,
+          totalCustomers: 2
+        }
+        
+        const result = await callProcedure('prcGetPerformanceMetrics', [from, to], [mockMetrics])
+        const data = Array.isArray(result) ? result[0] : result
+        sendJson(res, data)
       })
     }
   }

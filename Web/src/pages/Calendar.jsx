@@ -11,7 +11,6 @@ function Calendar() {
   const monthEnd = endOfMonth(currentDate)
   const days = eachDayOfInterval({ start: monthStart, end: monthEnd })
   
-  // Add padding days for week alignment
   const startDayOfWeek = getDay(monthStart)
   const paddingDays = Array(startDayOfWeek).fill(null)
   const allDays = [...paddingDays, ...days]
@@ -26,7 +25,7 @@ function Calendar() {
         if (res.ok) {
           const data = await res.json()
           setEvents(data)
-          setIsLiveData(data.length > 0 || true) // API responded
+          setIsLiveData(data.length > 0 || true)
         }
       } catch (error) {
         console.log('Calendar fetch error:', error.message)

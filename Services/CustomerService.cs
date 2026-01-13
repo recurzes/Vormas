@@ -66,6 +66,11 @@ namespace Vormas.Services
             };
         }
 
+        public DriverLicense GetDriverLicenseByCustomerId(int customerId)
+        {
+            return _repo.GetLicenseByCustomerId(customerId);
+        }
+
         private bool ValidateCustomerAndLicense(Customer customer, DriverLicense license)
         {
             // Age verification 21+
@@ -89,6 +94,52 @@ namespace Vormas.Services
             }
 
             return true;
+        }
+
+        public CustomerHistory GetCustomerHistory(int customerId)
+        {
+            var history = _repo.GetCustomerHistory(customerId);
+            history.RentalHistory = _repo.GetCustomerRentalHistory(customerId);
+            var violations = _repo.GetDrivingRecordCount(customerId);
+            history.DrivingViolations = violations.TotalViolations;
+            history.MajorViolations = violations.MajorViolations;
+            return history;
+        }
+
+        public List<DrivingRecord> GetDrivingRecords(int customerId)
+        {
+            return _repo.GetDrivingRecordsByCustomerId(customerId);
+        }
+
+        public int AddDrivingRecord(DrivingRecord record)
+        {
+            return _repo.AddDrivingRecord(record);
+        }
+
+        public bool ValidateAgeForVehicleCategory(DateTime dateOfBirth, int categoryId)
+        {
+            int minAge = GetMinimumAgeForCategory(categoryId);
+            int age = CalculateAge(dateOfBirth);
+            return age >= minAge;
+        }
+
+        public int GetMinimumAgeForCategory(int categoryId)
+        {
+            switch (categoryId)
+            {
+                case 3: return 25; // SUV
+                case 4: return 25; // Pickup
+                case 5: return 25; // Van/Minibus
+                default: return 21; // Hatchback, Sedan
+            }
+        }
+
+        private int CalculateAge(DateTime dateOfBirth)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - dateOfBirth.Year;
+            if (dateOfBirth.Date > today.AddYears(-age)) age--;
+            return age;
         }
     }
 }
