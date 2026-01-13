@@ -13,6 +13,8 @@ namespace Vormas.Forms
         private readonly IRentalService _rentalService;
         private readonly IDamageClaimsService _damageClaimsService;
         private readonly ISessionService _sessionService;
+        private readonly IBillingService _billingService;
+        private readonly INavigationService _navigationService;
         private readonly BindingSource _rentalBindingSource;
         private readonly BindingSource _damageBindingSource;
         private Rental _selectedRental;
@@ -21,13 +23,15 @@ namespace Vormas.Forms
         private const decimal MaxDailyMileage = 200.00m;
         private const int LateReturnGraceMinutes = 30;
         
-        public ReturnForm(IRentalService rentalService, IDamageClaimsService damageClaimsService, ISessionService sessionService)
+        public ReturnForm(IRentalService rentalService, IDamageClaimsService damageClaimsService, ISessionService sessionService, IBillingService billingService, INavigationService navigationService)
         {
             InitializeComponent();
             
             _rentalService = rentalService ?? throw new ArgumentNullException(nameof(rentalService));
             _damageClaimsService = damageClaimsService ?? throw new ArgumentNullException(nameof(damageClaimsService));
             _sessionService = sessionService ?? throw new ArgumentNullException(nameof(sessionService));
+            _billingService = billingService ?? throw new ArgumentNullException(nameof(billingService));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             _rentalBindingSource = new BindingSource();
             _damageBindingSource = new BindingSource();
 
@@ -374,15 +378,32 @@ namespace Vormas.Forms
                 };
 
                 _rentalService.CompleteRental(request);
+                
+                int completedRentalId = _selectedRental.RentalId;
 
                 string damageMsg = _pendingDamageClaims.Count > 0 
                     ? $"\n{_pendingDamageClaims.Count} damage claim(s) submitted for review." 
                     : "";
-                MessageBox.Show($@"Rental completed successfully!{damageMsg}", 
-                    @"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                
+                var viewInvoiceResult = MessageBox.Show(
+                    $@"Rental completed successfully!{damageMsg}\n\nWould you like to view and print the invoice now?",
+                    @"Rental Completed",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 LoadData();
                 ClearForm();
+                
+                if (viewInvoiceResult == DialogResult.Yes)
+                {
+                    try
+                    {
+                        _billingService.GenerateInvoice(completedRentalId, _sessionService.CurrentUser.UserId);
+                    }
+                    catch { /* Invoice may already exist */ }
+                    
+                    _navigationService.Navigate(Routes.Billing, completedRentalId);
+                }
             }
             catch (Exception ex)
             {

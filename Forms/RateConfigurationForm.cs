@@ -184,8 +184,6 @@ namespace Vormas.Forms
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
             try
             {
-                // Note: You'll need to add DeleteRateConfiguration method to IRateConfigurationService interface
-                // _rateConfigService.DeleteRateConfiguration(_selectedRateConfig.RateConfigId);
                 MessageBox.Show(@"Delete method not yet implemented in service", @"Info", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
                 LoadRateConfigs();
