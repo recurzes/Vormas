@@ -13,6 +13,20 @@ namespace Vormas.Forms
             InitializeComponent();
         }
 
+        public DriverLicenseForm(DriverLicense existingLicense) : this()
+        {
+            if (existingLicense != null)
+            {
+                License = existingLicense;
+                txtLicenseNumber.Text = existingLicense.LicenseNumber;
+                dtpIssueDate.Value = existingLicense.IssueDate;
+                dtpExpiryDate.Value = existingLicense.ExpiryDate;
+                txtIssuingCountry.Text = existingLicense.IssuingCountry;
+                txtIssuingStateProvince.Text = existingLicense.IssuingStateProvince;
+                chkIsInternational.Checked = existingLicense.IsInternational;
+            }
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             License = new DriverLicense

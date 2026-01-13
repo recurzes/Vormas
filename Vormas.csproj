@@ -150,6 +150,12 @@
     <Compile Include="Forms\DriverLicenseForm.Designer.cs">
       <DependentUpon>DriverLicenseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DrivingRecordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DrivingRecordForm.Designer.cs">
+      <DependentUpon>DrivingRecordForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Pages\UserManagementControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -217,8 +223,10 @@
     <Compile Include="Interfaces\IVehicleRepository.cs" />
     <Compile Include="Interfaces\IVehicleService.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerHistory.cs" />
     <Compile Include="Models\DamageReports.cs" />
     <Compile Include="Models\DriverLicense.cs" />
+    <Compile Include="Models\DrivingRecord.cs" />
     <Compile Include="Models\RateConfigurations.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Person.cs" />
