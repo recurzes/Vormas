@@ -104,5 +104,20 @@ namespace Vormas.Services
         {
             return _repo.GetCustomerRentalHistory(customerId);
         }
+
+        public List<DrivingRecord> GetDrivingRecordsByCustomerId(int customerId)
+        {
+            return _repo.GetDrivingRecordsByCustomerId(customerId);
+        }
+
+        public int AddDrivingRecord(DrivingRecord record)
+        {
+            return _repo.AddDrivingRecord(record);
+        }
+
+        public (int TotalViolations, int MajorViolations) GetDrivingRecordCount(int customerId)
+        {
+            return _repo.GetDrivingRecordCount(customerId);
+        }
     }
 }

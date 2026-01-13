@@ -12,6 +12,8 @@ namespace Vormas.Models
         public decimal TotalDamageCharges { get; set; }
         public int LateReturns { get; set; }
         public decimal TotalPayments { get; set; }
+        public int DrivingViolations { get; set; }
+        public int MajorViolations { get; set; }
         public List<RentalHistoryItem> RentalHistory { get; set; } = new List<RentalHistoryItem>();
     }
 

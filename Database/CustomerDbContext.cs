@@ -309,5 +309,46 @@ namespace Vormas.Database
                 }
             );
         }
+        public List<DrivingRecord> GetDrivingRecordsByCustomerId(int customerId)
+        {
+            return DbCommandHelper.ExecuteReader(
+                _connStr,
+                "prcGetDrivingRecordsByCustomerId",
+                cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId),
+                reader => DataReaderMapper.MapToList<DrivingRecord>(reader)
+            );
+        }
+
+        public int AddDrivingRecord(DrivingRecord record)
+        {
+            return DbCommandHelper.ExecuteNonQueryLastIdReturn(
+                _connStr,
+                "prcAddDrivingRecord",
+                cmd =>
+                {
+                    cmd.Parameters.AddWithValue("@pCustomerId", record.CustomerId);
+                    cmd.Parameters.AddWithValue("@pViolationDate", record.ViolationDate);
+                    cmd.Parameters.AddWithValue("@pViolationType", record.ViolationType);
+                    cmd.Parameters.AddWithValue("@pDescription", record.Description ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@pFineAmount", record.FineAmount);
+                    cmd.Parameters.AddWithValue("@pIsMajorViolation", record.IsMajorViolation ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@pIssuingAuthority", record.IssuingAuthority ?? (object)DBNull.Value);
+                }
+            );
+        }
+
+        public (int TotalViolations, int MajorViolations) GetDrivingRecordCount(int customerId)
+        {
+            return DbCommandHelper.ExecuteReader(
+                _connStr,
+                "prcGetDrivingRecordCount",
+                cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId),
+                reader =>
+                {
+                    if (!reader.Read()) return (0, 0);
+                    return (reader.GetInt32("TotalViolations"), reader.GetInt32("MajorViolations"));
+                }
+            );
+        }
     }
 }

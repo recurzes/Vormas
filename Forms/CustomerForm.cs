@@ -67,6 +67,18 @@ namespace Vormas.Forms
             }
         }
 
+        private void btnDrivingRecords_Click(object sender, EventArgs e)
+        {
+            if (_selectedCustomer == null || _selectedCustomer.CustomerId == 0)
+            {
+                MessageBox.Show(@"Please select a customer first.", @"Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            using var form = new DrivingRecordForm(_service, _selectedCustomer.CustomerId, $"{_selectedCustomer.FirstName} {_selectedCustomer.LastName}");
+            form.ShowDialog();
+            LoadCustomerHistory(_selectedCustomer.CustomerId);
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtFirstName.Text) || string.IsNullOrWhiteSpace(txtLastName.Text))
@@ -323,15 +335,17 @@ namespace Vormas.Forms
                 lblTotalSpent.Text = $@"Total Spent: ₱{history.TotalAmountSpent:N2}";
                 lblDamageCount.Text = $@"Damages: {history.TotalDamages} (₱{history.TotalDamageCharges:N2})";
                 lblLateReturns.Text = $@"Late Returns: {history.LateReturns}";
+                lblDrivingViolations.Text = $@"Violations: {history.DrivingViolations} (Major: {history.MajorViolations})";
                 
                 dgvRentalHistory.DataSource = history.RentalHistory;
             }
-            catch (Exception ex)
+            catch
             {
                 lblTotalRentals.Text = @"Total Rentals: 0";
                 lblTotalSpent.Text = @"Total Spent: ₱0.00";
                 lblDamageCount.Text = @"Damages: 0 (₱0.00)";
                 lblLateReturns.Text = @"Late Returns: 0";
+                lblDrivingViolations.Text = @"Violations: 0 (Major: 0)";
                 dgvRentalHistory.DataSource = null;
             }
         }

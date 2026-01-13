@@ -36,6 +36,7 @@ namespace Vormas.Forms
             this.btnBrowseImage = new System.Windows.Forms.Button();
             this.pbCustomerImage = new System.Windows.Forms.PictureBox();
             this.lblLicenseStatus = new System.Windows.Forms.Label();
+            this.btnDrivingRecords = new System.Windows.Forms.Button();
             this.btnDriversLicense = new System.Windows.Forms.Button();
             this.txtEmergencyContactPhone = new System.Windows.Forms.TextBox();
             this.chkIsBlacklisted = new System.Windows.Forms.CheckBox();
@@ -71,6 +72,7 @@ namespace Vormas.Forms
             this.lblDamageCount = new System.Windows.Forms.Label();
             this.lblTotalSpent = new System.Windows.Forms.Label();
             this.lblTotalRentals = new System.Windows.Forms.Label();
+            this.lblDrivingViolations = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             this.pnlInputs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCustomerImage)).BeginInit();
@@ -95,6 +97,7 @@ namespace Vormas.Forms
             this.pnlInputs.Controls.Add(this.btnBrowseImage);
             this.pnlInputs.Controls.Add(this.pbCustomerImage);
             this.pnlInputs.Controls.Add(this.lblLicenseStatus);
+            this.pnlInputs.Controls.Add(this.btnDrivingRecords);
             this.pnlInputs.Controls.Add(this.btnDriversLicense);
             this.pnlInputs.Controls.Add(this.txtEmergencyContactPhone);
             this.pnlInputs.Controls.Add(this.chkIsBlacklisted);
@@ -127,7 +130,7 @@ namespace Vormas.Forms
             // 
             // btnBrowseImage
             // 
-            this.btnBrowseImage.Location = new System.Drawing.Point(98, 418);
+            this.btnBrowseImage.Location = new System.Drawing.Point(98, 434);
             this.btnBrowseImage.Name = "btnBrowseImage";
             this.btnBrowseImage.Size = new System.Drawing.Size(100, 23);
             this.btnBrowseImage.TabIndex = 35;
@@ -138,7 +141,7 @@ namespace Vormas.Forms
             // pbCustomerImage
             // 
             this.pbCustomerImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbCustomerImage.Location = new System.Drawing.Point(98, 308);
+            this.pbCustomerImage.Location = new System.Drawing.Point(98, 324);
             this.pbCustomerImage.Name = "pbCustomerImage";
             this.pbCustomerImage.Size = new System.Drawing.Size(200, 100);
             this.pbCustomerImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -152,6 +155,16 @@ namespace Vormas.Forms
             this.lblLicenseStatus.Size = new System.Drawing.Size(100, 23);
             this.lblLicenseStatus.TabIndex = 33;
             this.lblLicenseStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnDrivingRecords
+            // 
+            this.btnDrivingRecords.Location = new System.Drawing.Point(10, 290);
+            this.btnDrivingRecords.Name = "btnDrivingRecords";
+            this.btnDrivingRecords.Size = new System.Drawing.Size(134, 22);
+            this.btnDrivingRecords.TabIndex = 36;
+            this.btnDrivingRecords.Text = "Driving Records";
+            this.btnDrivingRecords.UseVisualStyleBackColor = true;
+            this.btnDrivingRecords.Click += new System.EventHandler(this.btnDrivingRecords_Click);
             // 
             // btnDriversLicense
             // 
@@ -329,7 +342,7 @@ namespace Vormas.Forms
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(256, 485);
+            this.btnClear.Location = new System.Drawing.Point(256, 492);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 30);
             this.btnClear.TabIndex = 27;
@@ -340,7 +353,7 @@ namespace Vormas.Forms
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.IndianRed;
-            this.btnDelete.Location = new System.Drawing.Point(146, 485);
+            this.btnDelete.Location = new System.Drawing.Point(146, 492);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 30);
             this.btnDelete.TabIndex = 26;
@@ -351,7 +364,7 @@ namespace Vormas.Forms
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnSave.Location = new System.Drawing.Point(36, 485);
+            this.btnSave.Location = new System.Drawing.Point(36, 492);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 30);
             this.btnSave.TabIndex = 25;
@@ -452,6 +465,14 @@ namespace Vormas.Forms
             this.lblTotalRentals.TabIndex = 0;
             this.lblTotalRentals.Text = "Total Rentals: 0";
             // 
+            // lblDrivingViolations
+            // 
+            this.lblDrivingViolations.Location = new System.Drawing.Point(710, 20);
+            this.lblDrivingViolations.Name = "lblDrivingViolations";
+            this.lblDrivingViolations.Size = new System.Drawing.Size(200, 20);
+            this.lblDrivingViolations.TabIndex = 5;
+            this.lblDrivingViolations.Text = "Violations: 0 (Major: 0)";
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -475,6 +496,7 @@ namespace Vormas.Forms
 
         private System.Windows.Forms.GroupBox grpHistory;
         private System.Windows.Forms.DataGridView dgvRentalHistory;
+        private System.Windows.Forms.Label lblDrivingViolations;
         private System.Windows.Forms.Label lblLateReturns;
         private System.Windows.Forms.Label lblDamageCount;
         private System.Windows.Forms.Label lblTotalSpent;
@@ -483,6 +505,7 @@ namespace Vormas.Forms
         private System.Windows.Forms.OpenFileDialog ofdImage;
 
         private System.Windows.Forms.Button btnBrowseImage;
+        private System.Windows.Forms.Button btnDrivingRecords;
         private System.Windows.Forms.PictureBox pbCustomerImage;
 
         private System.Windows.Forms.Label lblLicenseStatus;
