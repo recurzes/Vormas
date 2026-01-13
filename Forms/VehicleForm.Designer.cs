@@ -457,7 +457,7 @@
 
         private System.Windows.Forms.TextBox txtCurrentMileage;
 
-        private System.Windows.Forms.ComboBox t;
+        private System.Windows.Forms.ComboBox  t;
         private System.Windows.Forms.Label label2;
 
         private System.Windows.Forms.TextBox txtVehicleCode;

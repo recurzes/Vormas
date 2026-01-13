@@ -21,6 +21,9 @@ namespace Vormas
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
+            // Run Migrations
+            Services.SchemaMigrator.EnsureSchema();
+            
             // Manual composition / DI
             var dbContext = new UserDbContext();
             var customerDbContext = new CustomerDbContext();

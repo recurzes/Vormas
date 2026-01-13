@@ -38,10 +38,14 @@ namespace Vormas
 
         private void InitializeNavigation()
         {
+            // Instantiate Data Services for Agent Module
+            var reservationService = new ReservationService();
+            var rentalService = new RentalService();
+
             var routes = new Dictionary<string, Func<PageControl>>
             {
 
-                { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService) },
+                { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService, reservationService, _vehicleService, _customerService, rentalService) },
                 { Routes.AdminDashboard, () => new AdminDashboard(_sessionService, _authService, _userManager, _vehicleService, _rateConfigurationService, _damageClaimsService) },
                 { Routes.Customers, () => new CustomerForm(_customerService) },
                 { Routes.Vehicles, () => new VehicleForm(_vehicleService)},
@@ -54,7 +58,7 @@ namespace Vormas
             routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             routes[Routes.TempDashboard] = () => new Dashboard(_navigation);
             
-            _navigation.Navigate(Routes.UserLogin);
+            _navigation.Navigate(Routes.RentalAgentDashboard);
         }
 
         public INavigationService Navigator => _navigation;
