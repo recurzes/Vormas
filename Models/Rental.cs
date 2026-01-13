@@ -10,6 +10,7 @@ namespace Vormas.Models
         public int VehicleId { get; set; }
         public DateTime PickupDateTime { get; set; }
         public DateTime? ReturnDateTime { get; set; }
+        public DateTime? ExpectedReturnDateTime { get; set; }
         public decimal? PickupOdometer { get; set; }
         public decimal? ReturnOdometer { get; set; }
         public decimal? PickupFuelLevel { get; set; }
@@ -24,6 +25,12 @@ namespace Vormas.Models
         public string CustomerName { get; set; }
         public string VehicleCode { get; set; }
         public string VehicleDescription { get; set; }
+        
+        // Pickup inspection data for comparison
+        public bool? PickupIsSmokedIn { get; set; }
+        public bool? PickupIsClean { get; set; }
+        public bool? PickupAccessoriesOk { get; set; }
+        public string PickupNotes { get; set; }
     }
 
     public class RentalPickupRequest

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using Vormas.Interfaces;
 using Vormas.Models;
@@ -16,6 +17,9 @@ namespace Vormas.Forms
         private readonly BindingSource _damageBindingSource;
         private Rental _selectedRental;
         private readonly List<DamageClaimRequest> _pendingDamageClaims = new List<DamageClaimRequest>();
+        
+        private const decimal MaxDailyMileage = 200.00m;
+        private const int LateReturnGraceMinutes = 30;
         
         public ReturnForm(IRentalService rentalService, IDamageClaimsService damageClaimsService, ISessionService sessionService)
         {
@@ -47,13 +51,13 @@ namespace Vormas.Forms
             dgvRentals.Columns.Add(new DataGridViewTextBoxColumn
                 { DataPropertyName = "VehicleCode", HeaderText = @"Vehicle", Width = 80 });
             dgvRentals.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "VehicleDescription", HeaderText = @"Description", Width = 150 });
+                { DataPropertyName = "VehicleDescription", HeaderText = @"Description", Width = 120 });
             dgvRentals.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "PickupDateTime", HeaderText = @"Pickup Date", Width = 130 });
+                { DataPropertyName = "PickupDateTime", HeaderText = @"Pickup Date", Width = 120 });
             dgvRentals.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "PickupOdometer", HeaderText = @"Pickup Odo", Width = 90 });
+                { DataPropertyName = "ExpectedReturnDateTime", HeaderText = @"Expected Return", Width = 120 });
             dgvRentals.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "DepositAmount", HeaderText = @"Deposit", Width = 80 });
+                { DataPropertyName = "DepositAmount", HeaderText = @"Deposit", Width = 70 });
 
             dgvRentals.SelectionChanged += DgvRentals_SelectionChanged;
         }
@@ -66,11 +70,11 @@ namespace Vormas.Forms
             dgvDamages.AutoGenerateColumns = false;
 
             dgvDamages.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "DamageDescription", HeaderText = @"Damage Type", Width = 200 });
+                { DataPropertyName = "DamageDescription", HeaderText = @"Damage Type", Width = 150 });
             dgvDamages.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "Severity", HeaderText = @"Severity", Width = 80 });
+                { DataPropertyName = "Severity", HeaderText = @"Severity", Width = 70 });
             dgvDamages.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "EstimatedCost", HeaderText = @"Est. Cost", Width = 80 });
+                { DataPropertyName = "EstimatedCost", HeaderText = @"Est. Cost", Width = 70 });
         }
 
         private void DgvRentals_SelectionChanged(object sender, EventArgs e)
@@ -80,11 +84,115 @@ namespace Vormas.Forms
                 _selectedRental = rental;
                 numOdometer.Minimum = rental.PickupOdometer ?? 0;
                 numOdometer.Value = rental.PickupOdometer ?? 0;
-                lblPickupInfo.Text = $@"Pickup: {rental.PickupDateTime:yyyy-MM-dd HH:mm} | Odo: {rental.PickupOdometer:N2} | Fuel: {rental.PickupFuelLevel:P0}";
+                
+                DisplayPickupCondition(rental);
+                
+                CalculateMetrics();
                 
                 _pendingDamageClaims.Clear();
                 RefreshDamageGrid();
             }
+        }
+
+        private void DisplayPickupCondition(Rental rental)
+        {
+            lblPickupInfo.Text = $@"PICKUP CONDITION - Date: {rental.PickupDateTime:yyyy-MM-dd HH:mm}";
+            lblPickupOdometer.Text = $@"Odometer: {rental.PickupOdometer:N2} km";
+            lblPickupFuel.Text = $@"Fuel: {rental.PickupFuelLevel:P0}";
+            lblPickupClean.Text = rental.PickupIsClean == true ? "Clean" : "Not Clean";
+            lblPickupSmoked.Text = rental.PickupIsSmokedIn == true ? "Smoked In" : "No Smoking";
+            lblPickupAccessories.Text = rental.PickupAccessoriesOk == true ? "Accessories OK" : "Accessories Issue";
+            
+            lblPickupClean.ForeColor = rental.PickupIsClean == true ? Color.Green : Color.OrangeRed;
+            lblPickupSmoked.ForeColor = rental.PickupIsSmokedIn == true ? Color.OrangeRed : Color.Green;
+            lblPickupAccessories.ForeColor = rental.PickupAccessoriesOk == true ? Color.Green : Color.OrangeRed;
+        }
+
+        private void CalculateMetrics()
+        {
+            if (_selectedRental == null || _selectedRental.PickupDateTime == null) return;
+
+            var pickupDate = _selectedRental.PickupDateTime;
+            var returnDate = dtpReturnDate.Value;
+            var duration = returnDate - pickupDate;
+            int days = (int)Math.Ceiling(duration.TotalDays);
+            int hours = (int)duration.TotalHours % 24;
+
+            lblDuration.Text = string.Format(@"Duration: {0} day(s), {1} hr(s)", days, hours);
+
+            decimal pickupOdo = _selectedRental.PickupOdometer ?? 0;
+            decimal returnOdo = numOdometer.Value;
+            decimal mileageTraveled = returnOdo - pickupOdo;
+
+            lblMileage.Text = string.Format(@"Mileage: {0:N2} km", mileageTraveled);
+
+            decimal allowedMileage = days * MaxDailyMileage;
+            decimal overage = mileageTraveled - allowedMileage;
+
+            if (overage > 0)
+            {
+                lblMileageOverage.Text = string.Format(@"OVERAGE: {0:N2} km over limit ({1:N0} km allowed)", overage, allowedMileage);
+                lblMileageOverage.ForeColor = Color.OrangeRed;
+                lblMileageOverage.Visible = true;
+            }
+            else
+            {
+                lblMileageOverage.Text = string.Format(@"Within limit ({0:N0}/{1:N0} km)", mileageTraveled, allowedMileage);
+                lblMileageOverage.ForeColor = Color.Green;
+                lblMileageOverage.Visible = true;
+            }
+
+            CheckLateReturn(returnDate);
+        }
+
+        private void CheckLateReturn(DateTime returnDate)
+        {
+            if (_selectedRental?.ExpectedReturnDateTime == null)
+            {
+                lblLateReturn.Visible = false;
+                return;
+            }
+
+            var expectedReturn = _selectedRental.ExpectedReturnDateTime.Value;
+            var gracePeriod = expectedReturn.AddMinutes(LateReturnGraceMinutes);
+
+            if (returnDate > gracePeriod)
+            {
+                var lateBy = returnDate - expectedReturn;
+                int lateHours = (int)lateBy.TotalHours;
+                int lateMins = lateBy.Minutes;
+
+                lblLateReturn.Text = string.Format(@"LATE RETURN: {0}h {1}m overdue", lateHours, lateMins);
+                lblLateReturn.ForeColor = Color.Red;
+                lblLateReturn.Visible = true;
+            }
+            else if (returnDate > expectedReturn)
+            {
+                lblLateReturn.Text = string.Format(@"Within grace period ({0} min)", LateReturnGraceMinutes);
+                lblLateReturn.ForeColor = Color.Orange;
+                lblLateReturn.Visible = true;
+            }
+            else
+            {
+                lblLateReturn.Text = @"On-time return";
+                lblLateReturn.ForeColor = Color.Green;
+                lblLateReturn.Visible = true;
+            }
+        }
+
+        private void numOdometer_ValueChanged(object sender, EventArgs e)
+        {
+            CalculateMetrics();
+        }
+
+        private void dtpReturnDate_ValueChanged(object sender, EventArgs e)
+        {
+            CalculateMetrics();
+        }
+
+        private void chkExpectedToday_CheckedChanged(object sender, EventArgs e)
+        {
+            LoadData();
         }
 
         private void LoadData()
@@ -92,6 +200,21 @@ namespace Vormas.Forms
             try
             {
                 var rentals = _rentalService.GetActiveRentals();
+                
+                if (chkExpectedToday.Checked)
+                {
+                    var today = DateTime.Today;
+                    var filtered = new List<Rental>();
+                    foreach (var r in rentals)
+                    {
+                        if (r.ExpectedReturnDateTime?.Date == today)
+                        {
+                            filtered.Add(r);
+                        }
+                    }
+                    rentals = filtered;
+                }
+                
                 _rentalBindingSource.DataSource = rentals;
                 dgvRentals.DataSource = _rentalBindingSource;
 
@@ -218,6 +341,18 @@ namespace Vormas.Forms
                 return;
             }
 
+            if (HasWarnings())
+            {
+                var result = MessageBox.Show(
+                    @"There are warnings (late return or mileage overage). Do you want to proceed?",
+                    @"Confirm",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+                    
+                if (result != DialogResult.Yes)
+                    return;
+            }
+
             try
             {
                 foreach (var damageClaim in _pendingDamageClaims)
@@ -256,6 +391,26 @@ namespace Vormas.Forms
             }
         }
 
+        private bool HasWarnings()
+        {
+            if (_selectedRental?.ExpectedReturnDateTime != null)
+            {
+                var gracePeriod = _selectedRental.ExpectedReturnDateTime.Value.AddMinutes(LateReturnGraceMinutes);
+                if (dtpReturnDate.Value > gracePeriod)
+                    return true;
+            }
+            
+            decimal pickupOdo = _selectedRental?.PickupOdometer ?? 0;
+            decimal returnOdo = numOdometer.Value;
+            decimal mileageTraveled = returnOdo - pickupOdo;
+            
+            var duration = dtpReturnDate.Value - _selectedRental.PickupDateTime;
+            int days = (int)Math.Ceiling(duration.TotalDays);
+            decimal allowedMileage = days * MaxDailyMileage;
+            
+            return mileageTraveled > allowedMileage;
+        }
+
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearForm();
@@ -274,10 +429,25 @@ namespace Vormas.Forms
             chkIsClean.Checked = true;
             chkAccessoriesOk.Checked = true;
             txtNotes.Text = "";
+            
             lblPickupInfo.Text = "";
+            lblPickupOdometer.Text = "";
+            lblPickupFuel.Text = "";
+            lblPickupClean.Text = "";
+            lblPickupSmoked.Text = "";
+            lblPickupAccessories.Text = "";
+            
+            lblDuration.Text = "";
+            lblMileage.Text = "";
+            lblMileageOverage.Text = "";
+            lblLateReturn.Text = "";
+            lblMileageOverage.Visible = false;
+            lblLateReturn.Visible = false;
+            
             cmbDamageType.SelectedIndex = -1;
             txtDamagePhotoPath.Text = "";
             RefreshDamageGrid();
         }
     }
 }
+
