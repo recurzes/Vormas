@@ -257,6 +257,7 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Models\VehicleInspection.cs" />
+    <Compile Include="Models\VehicleFeature.cs" />
     <Compile Include="Navigation\INavigationService.cs" />
     <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="Navigation\PageControl.cs" />
