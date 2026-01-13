@@ -33,11 +33,10 @@ function App() {
             <NavLink to="/damage-claims" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Damage</NavLink>
             <NavLink to="/calendar" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Calendar</NavLink>
             <NavLink to="/reports" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Reports</NavLink>
-            <NavLink to="/agent" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Agent</NavLink>
             <NavLink to="/analytics" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            Analytics
-          </NavLink>
-        </div>
+              Analytics
+            </NavLink>
+          </div>
         </nav>
       )}
 
