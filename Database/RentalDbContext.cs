@@ -13,9 +13,22 @@ namespace Vormas.Database
 
         public int StartRental(RentalPickupRequest request)
         {
+            int? reservationId = request.ReservationId;
+            
+            if (!reservationId.HasValue && request.ExpectedReturnDateTime.HasValue)
+            {
+                reservationId = CreateQuickReservation(
+                    request.CustomerId,
+                    request.VehicleId,
+                    request.PickupDateTime,
+                    request.ExpectedReturnDateTime.Value,
+                    request.PickupAgentId
+                );
+            }
+            
             return DbCommandHelper.ExecuteReader(_connStr, "prcStartRental", cmd =>
             {
-                cmd.Parameters.AddWithValue("pReservationId", request.ReservationId.HasValue ? (object)request.ReservationId.Value : DBNull.Value);
+                cmd.Parameters.AddWithValue("pReservationId", reservationId.HasValue ? (object)reservationId.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("pCustomerId", request.CustomerId);
                 cmd.Parameters.AddWithValue("pVehicleId", request.VehicleId);
                 cmd.Parameters.AddWithValue("pPickupDateTime", request.PickupDateTime);
@@ -32,6 +45,25 @@ namespace Vormas.Database
                 if (reader.Read())
                 {
                     return Convert.ToInt32(reader["NewRentalId"]);
+                }
+                return 0;
+            });
+        }
+
+        private int CreateQuickReservation(int customerId, int vehicleId, DateTime startDateTime, DateTime endDateTime, int createdByUserId)
+        {
+            return DbCommandHelper.ExecuteReader(_connStr, "prcCreateQuickReservation", cmd =>
+            {
+                cmd.Parameters.AddWithValue("pCustomerId", customerId);
+                cmd.Parameters.AddWithValue("pVehicleId", vehicleId);
+                cmd.Parameters.AddWithValue("pStartDateTime", startDateTime);
+                cmd.Parameters.AddWithValue("pEndDateTime", endDateTime);
+                cmd.Parameters.AddWithValue("pCreatedByUserId", createdByUserId);
+            }, reader =>
+            {
+                if (reader.Read())
+                {
+                    return Convert.ToInt32(reader["ReservationId"]);
                 }
                 return 0;
             });

@@ -39,6 +39,7 @@ namespace Vormas.Models
         public int CustomerId { get; set; }
         public int VehicleId { get; set; }
         public DateTime PickupDateTime { get; set; }
+        public DateTime? ExpectedReturnDateTime { get; set; }
         public decimal PickupOdometer { get; set; }
         public decimal PickupFuelLevel { get; set; }
         public int PickupAgentId { get; set; }
