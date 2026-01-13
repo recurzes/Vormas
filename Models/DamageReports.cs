@@ -14,7 +14,6 @@ namespace Vormas.Models
     
     public class DamageReports
     {
-        // Primary fields from damagereports table
         public int DamageReportId { get; set; }
         public int RentalId { get; set; }
         public int DamageId { get; set; }
@@ -25,7 +24,6 @@ namespace Vormas.Models
         public string Status { get; set; } = "PendingApproval";
         public DateTime CreatedAt { get; set; }
         
-        // Joined fields from prcGetAllDamageClaims / prcGetPendingDamageReports
         public string? CustomerName { get; set; }
         public string? VehicleCode { get; set; }
         public string? Make { get; set; }
@@ -37,7 +35,6 @@ namespace Vormas.Models
         public string? ApprovedBy { get; set; }
         public DateTime? ReturnDateTime { get; set; }
         
-        // Computed display properties for the form
         public string VehicleInfo => !string.IsNullOrEmpty(Make) ? $"{Make} {Model} ({VehicleCode})" : "";
         public string DamageSeverity => Severity ?? "";
         public string ReportedByName => ReportedBy ?? "";

@@ -52,6 +52,18 @@ namespace Vormas.Forms.Controls
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"WebView2 initialization error: {ex.Message}");
+                
+                MessageBox.Show(
+                    @$"Failed to initialize dashboard:\n{ex.Message}\n\n" +
+                    @$"Please ensure:\n" +
+                    @$"1. WebView2 Runtime is installed\n" +
+                    @$"2. The dev server is running on {_currentUrl}",
+                    @"Dashboard Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+
                 ShowErrorMessage(ex.Message);
             }
         }

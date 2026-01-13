@@ -15,7 +15,6 @@ namespace Vormas.Services
 
         public void AddVehicle(Vehicle vehicle)
         {
-            // Add business validation logic here if needed
             _repository.AddVehicle(vehicle);
         }
 
@@ -41,12 +40,42 @@ namespace Vormas.Services
         
         public IEnumerable<string> GetVehicleCategories()
         {
-            return new List<string> { "Hatchback", "Sedan", "SUV", "Pickup", "Van", "Minibus" };
+            return new List<string> { "Hatchback", "Sedan", "SUV", "Pickup", "Van/Minibus" };
         }
 
         public IEnumerable<string> GetVehicleStatuses()
         {
             return new List<string> { "Available", "Rented", "Reserved", "Under Maintenance", "Out of Service", "Retired" };
+        }
+
+        public List<VehicleFeature> GetAllFeatures()
+        {
+            return _repository.GetAllFeatures();
+        }
+
+        public List<int> GetVehicleFeatureIds(int vehicleId)
+        {
+            return _repository.GetVehicleFeatureIds(vehicleId);
+        }
+
+        public void SaveVehicleFeatures(int vehicleId, List<int> featureIds)
+        {
+            _repository.SaveVehicleFeatures(vehicleId, featureIds);
+        }
+
+        public List<string> GetVehicleImages(int vehicleId)
+        {
+            return _repository.GetVehicleImages(vehicleId);
+        }
+
+        public void SaveVehicleImages(int vehicleId, List<string> imagePaths)
+        {
+            _repository.SaveVehicleImages(vehicleId, imagePaths);
+        }
+
+        public void RetireVehicle(int vehicleId)
+        {
+            _repository.RetireVehicle(vehicleId);
         }
     }
 }

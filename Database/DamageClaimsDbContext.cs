@@ -43,7 +43,6 @@ namespace Vormas.Database
 
         public DamageReports ApproveDamageReport(int damageReportId, decimal chargeAmount, int approvedByUserId)
         {
-            // Parameter order matches stored procedure: (pDamageReportId, pApprovedByUserId, pChargeAmount)
             return DbCommandHelper.ExecuteReader(_connStr, "prcApproveDamageReport", cmd =>
             {
                 cmd.Parameters.AddWithValue("pDamageReportId", damageReportId);
@@ -63,7 +62,6 @@ namespace Vormas.Database
 
         public List<DamageTypes> GetAvailableDamageTypes()
         {
-            // Note: SP name is prcGetAvailableDamageTypes (correctly spelled in your dump)
             return DbCommandHelper.ExecuteReader(_connStr, "prcGetAvailableDamageTypes", cmd => { },
                 reader => { return DataReaderMapper.MapToList<DamageTypes>(reader); });
         }

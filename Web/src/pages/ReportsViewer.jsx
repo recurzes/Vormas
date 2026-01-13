@@ -9,44 +9,58 @@ import '../styles/ReportsViewer.css'
 
 
 function ReportsViewer() {
+  const [reportCategory, setReportCategory] = useState('basic')
   const navigate = useNavigate()
   const [timeRange, setTimeRange] = useState('30d')
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
+  const [isLiveData, setIsLiveData] = useState(false)
 
-  // Mock Data for Charts (Executive Insight)
-  const revenueData = [
-    { date: 'Jan 01', revenue: 45000 }, { date: 'Jan 05', revenue: 52000 },
-    { date: 'Jan 10', revenue: 48000 }, { date: 'Jan 15', revenue: 61000 },
-    { date: 'Jan 20', revenue: 55000 }, { date: 'Jan 25', revenue: 67000 },
-    { date: 'Jan 30', revenue: 72000 }
-  ]
+  const reportCategories = {
+    basic: {
+      label: 'Basic Reports',
+      types: [
+        { value: 'rentals', label: 'All Rentals' },
+        { value: 'invoices', label: 'Invoices' },
+        { value: 'damages', label: 'Damage Claims' },
+        { value: 'customers', label: 'Customers' }
+      ]
+    },
+    fleet: {
+      label: 'Fleet Reports',
+      types: [
+        { value: 'fleet-by-category', label: 'Vehicles by Category' },
+        { value: 'fleet-maintenance', label: 'Vehicles Under Maintenance' },
+        { value: 'fleet-utilization', label: 'Fleet Utilization Rate' }
+      ]
+    },
+    rental: {
+      label: 'Rental Reports',
+      types: [
+        { value: 'active-rentals', label: 'Active Rentals' },
+        { value: 'daily-rentals', label: 'Daily Rentals Summary' },
+        { value: 'rentals-by-category', label: 'Rentals by Category' },
+        { value: 'rental-duration', label: 'Rental Duration Analysis' }
+      ]
+    },
+    operational: {
+      label: 'Operational Reports',
+      types: [
+        { value: 'popular-vehicles', label: 'Most Popular Vehicles' },
+        { value: 'late-returns', label: 'Late Returns' },
+        { value: 'revenue-per-vehicle', label: 'Revenue per Vehicle' }
+      ]
+    }
+  }
 
-  const fleetStatusData = [
-    { name: 'Rented', value: 18, color: '#4f46e5' },
-    { name: 'Available', value: 8, color: '#22c55e' },
-    { name: 'Maintenance', value: 4, color: '#f59e0b' }
-  ]
+  const statusOptions = {
+    rentals: ['Active', 'Completed', 'Cancelled', 'Overdue'],
+    invoices: ['Unpaid', 'PartiallyPaid', 'Paid', 'Refunded'],
+    damages: ['PendingApproval', 'Approved', 'Rejected'],
+    customers: ['Individual', 'Corporate', 'Frequent', 'Blacklisted']
+  }
 
-  // Mock KPIs
-  const kpiData = [
-    { label: 'Total Revenue', value: '₱400,000', trend: '+12.5%', status: 'up', icon: '💰' },
-    { label: 'Completed Rentals', value: '142', trend: '+8%', status: 'up', icon: '🚗' },
-    { label: 'Fleet Utilization', value: '85%', trend: '+5%', status: 'up', icon: '📊' },
-    { label: 'Pending Payments', value: '₱45,200', trend: '-2%', status: 'down', icon: '⏳' } // Down is good for pending
-  ]
-
-  // Mock Ledger Data
-  const mockTableData = [
-    { id: 101, vehicle: 'Toyota Camry', customer: 'John Doe', status: 'Active', amount: 12500, date: '2024-01-10' },
-    { id: 102, vehicle: 'Honda Civic', customer: 'Jane Smith', status: 'Completed', amount: 8500, date: '2024-01-12' },
-    { id: 103, vehicle: 'Ford Explorer', customer: 'Mike Ross', status: 'Late', amount: 15000, date: '2024-01-08' },
-    { id: 104, vehicle: 'Toyota Vios', customer: 'Rachel Zane', status: 'Cancelled', amount: 0, date: '2024-01-14' },
-    { id: 105, vehicle: 'Mitsubishi Montero', customer: 'Harvey Specter', status: 'Completed', amount: 22000, date: '2024-01-05' },
-    { id: 106, vehicle: 'Nissan Terra', customer: 'Donna Paulsen', status: 'Active', amount: 18000, date: '2024-01-15' }
-  ]
-
-  useEffect(() => {
+  const fetchReport = async (type = reportType) => {
     setLoading(true)
     setTimeout(() => {
       setData(mockTableData)

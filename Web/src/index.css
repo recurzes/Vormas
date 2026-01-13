@@ -49,7 +49,6 @@ body {
   min-height: 100vh;
 }
 
-/* Navigation - Legacy Global Nav (Hidden in Agent View via Logic, but kept for others) */
 .nav {
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border);
@@ -91,7 +90,6 @@ body {
   color: white;
 }
 
-/* Main Content */
 .main-content {
   padding: 24px;
   max-width: 1400px;
@@ -105,7 +103,6 @@ body {
   color: var(--text-primary);
 }
 
-/* KPI Cards Grid */
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -178,7 +175,6 @@ body {
   margin-top: 4px;
 }
 
-/* Charts Section */
 .charts-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -207,7 +203,6 @@ body {
   margin-bottom: 16px;
 }
 
-/* Data Table */
 .data-table {
   width: 100%;
   border-collapse: collapse;
@@ -234,7 +229,6 @@ body {
   background: var(--bg-primary);
 }
 
-/* Filters */
 .filters-bar {
   display: flex;
   gap: 12px;
@@ -301,7 +295,6 @@ body {
   background: var(--bg-primary);
 }
 
-/* Status Badge */
 .status-badge {
   display: inline-block;
   padding: 4px 10px;
@@ -330,7 +323,6 @@ body {
   color: #991b1b;
 }
 
-/* Calendar */
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -387,7 +379,6 @@ body {
   color: #92400e;
 }
 
-/* Loading */
 .loading {
   display: flex;
   align-items: center;
@@ -396,7 +387,6 @@ body {
   color: var(--text-secondary);
 }
 
-/* Empty State */
 .empty-state {
   text-align: center;
   padding: 48px;
@@ -1902,3 +1892,102 @@ body {
   border-color: var(--slate-400);
 }
 
+
+.report-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: all 0.15s ease;
+}
+
+.tab-btn:hover {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.tab-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+.export-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  justify-content: flex-end;
+}
+
+.status-badge.approved { background: #dcfce7; color: #166534; }
+.status-badge.rejected { background: #fee2e2; color: #991b1b; }
+.status-badge.pendingapproval { background: #fef3c7; color: #92400e; }
+.status-badge.unpaid { background: #fee2e2; color: #991b1b; }
+.status-badge.partiallypaid { background: #fef3c7; color: #92400e; }
+.status-badge.paid { background: #dcfce7; color: #166534; }
+.status-badge.individual { background: #e0e7ff; color: #3730a3; }
+.status-badge.corporate { background: #f3e8ff; color: #6b21a8; }
+.status-badge.frequent { background: #dcfce7; color: #166534; }
+.status-badge.minor { background: #fef3c7; color: #92400e; }
+.status-badge.moderate { background: #fed7aa; color: #c2410c; }
+.status-badge.major { background: #fee2e2; color: #991b1b; }
+.status-badge.available { background: #dcfce7; color: #166534; }
+.status-badge.rented { background: #e0e7ff; color: #3730a3; }
+.status-badge.undermaintenance { background: #fef3c7; color: #92400e; }
+.status-badge.overdue { background: #fee2e2; color: #991b1b; }
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metric-card {
+  background: linear-gradient(135deg, var(--accent) 0%, #1e40af 100%);
+  color: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+}
+
+.metric-card.green {
+  background: linear-gradient(135deg, var(--success) 0%, #15803d 100%);
+}
+
+.metric-card.orange {
+  background: linear-gradient(135deg, var(--warning) 0%, #c2410c 100%);
+}
+
+.metric-card.purple {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+}
+
+.metric-label {
+  font-size: 12px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 8px 0;
+}
+
+.metric-subtext {
+  font-size: 12px;
+  opacity: 0.8;
+}

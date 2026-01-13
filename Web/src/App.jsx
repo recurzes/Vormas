@@ -2,6 +2,7 @@ import { Routes, Route, NavLink, useLocation } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import Calendar from './pages/Calendar'
 import ReportsViewer from './pages/ReportsViewer'
+import Analytics from './pages/Analytics'
 import FleetManagement from './pages/FleetManagement'
 import UserManagement from './pages/UserManagement'
 import RateManagement from './pages/RateManagement'
@@ -33,7 +34,10 @@ function App() {
             <NavLink to="/calendar" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Calendar</NavLink>
             <NavLink to="/reports" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Reports</NavLink>
             <NavLink to="/agent" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Agent</NavLink>
-          </div>
+            <NavLink to="/analytics" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            Analytics
+          </NavLink>
+        </div>
         </nav>
       )}
 
@@ -53,6 +57,7 @@ function App() {
           <Route path="/billing" element={<BillingForm />} />
           <Route path="/maintenance" element={<MaintenanceForm />} />
           <Route path="/reports-view" element={<ReportsForm />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Routes>
       </main>
     </div>
