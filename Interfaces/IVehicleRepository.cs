@@ -10,5 +10,11 @@ namespace Vormas.Interfaces
         void DeleteVehicle(int vehicleId);
         List<Vehicle> GetAllVehicles();
         Vehicle GetVehicleById(int vehicleId);
+        List<VehicleFeature> GetAllFeatures();
+        List<int> GetVehicleFeatureIds(int vehicleId);
+        void SaveVehicleFeatures(int vehicleId, List<int> featureIds);
+        List<string> GetVehicleImages(int vehicleId);
+        void SaveVehicleImages(int vehicleId, List<string> imagePaths);
+        void RetireVehicle(int vehicleId);
     }
 }
