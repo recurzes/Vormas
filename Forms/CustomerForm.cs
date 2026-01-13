@@ -29,6 +29,7 @@ namespace Vormas.Forms
             _selectedCustomer = new Customer();
 
             ConfigureGrid();
+            ConfigureRentalHistoryGrid();
             InitializeData();
         }
 
@@ -38,6 +39,7 @@ namespace Vormas.Forms
             {
                 PopulateFields(customer);
                 CheckDriverLicenseExists(customer.CustomerId);
+                LoadCustomerHistory(customer.CustomerId);
             }
         }
 
@@ -48,20 +50,19 @@ namespace Vormas.Forms
                 _existingLicense = _service.GetDriverLicenseByCustomerId(customerId);
                 if (_existingLicense != null)
                 {
-                    btnDriversLicense.Text = "Edit Driver's License";
+                    btnDriversLicense.Text = @"Edit Driver's License";
                     lblLicenseStatus.Text = $@"License: {_existingLicense.LicenseNumber}";
                 }
                 else
                 {
-                    btnDriversLicense.Text = "Add Driver's License";
+                    btnDriversLicense.Text = @"Add Driver's License";
                     lblLicenseStatus.Text = "";
                 }
             }
             catch (Exception ex)
             {
-                // If there's an error checking, default to Add mode
                 _existingLicense = null;
-                btnDriversLicense.Text = "Add Driver's License";
+                btnDriversLicense.Text = @"Add Driver's License";
                 lblLicenseStatus.Text = "";
             }
         }
@@ -234,7 +235,7 @@ namespace Vormas.Forms
             chkIsBlacklisted.Checked = false;
             lblLicenseStatus.Text = "";
             pbCustomerImage.Image = null;
-            btnDriversLicense.Text = "Add Driver's License";
+            btnDriversLicense.Text = @"Add Driver's License";
         }
 
         private void LoadCustomers()
@@ -261,7 +262,6 @@ namespace Vormas.Forms
 
         private void btnDriversLicense_Click(object sender, EventArgs e)
         {
-            // Open the form with existing license data if editing, or empty for new
             using var licenseForm = _existingLicense != null 
                 ? new DriverLicenseForm(_existingLicense) 
                 : new DriverLicenseForm();
@@ -269,7 +269,6 @@ namespace Vormas.Forms
             if (licenseForm.ShowDialog() != DialogResult.OK) return;
             
             _pendingLicense = licenseForm.License;
-            // Preserve the CustomerId if we're editing an existing license
             if (_existingLicense != null)
             {
                 _pendingLicense.CustomerId = _existingLicense.CustomerId;
@@ -289,6 +288,51 @@ namespace Vormas.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($@"Error loading image: {ex.Message}");
+            }
+        }
+
+        private void ConfigureRentalHistoryGrid()
+        {
+            dgvRentalHistory.AutoGenerateColumns = false;
+            dgvRentalHistory.Columns.Clear();
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "RentalId", HeaderText = @"Rental ID", Width = 70 });
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "VehicleInfo", HeaderText = @"Vehicle", Width = 180 });
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "PickupDate", HeaderText = @"Pickup", Width = 120 });
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "ReturnDate", HeaderText = @"Return", Width = 120 });
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "Status", HeaderText = @"Status", Width = 80 });
+            dgvRentalHistory.Columns.Add(new DataGridViewTextBoxColumn
+                { DataPropertyName = "TotalAmount", HeaderText = @"Amount", Width = 100 });
+            dgvRentalHistory.Columns.Add(new DataGridViewCheckBoxColumn
+                { DataPropertyName = "WasLate", HeaderText = @"Late", Width = 50 });
+            dgvRentalHistory.Columns.Add(new DataGridViewCheckBoxColumn
+                { DataPropertyName = "HasDamage", HeaderText = @"Damage", Width = 60 });
+        }
+
+        private void LoadCustomerHistory(int customerId)
+        {
+            try
+            {
+                var history = _service.GetCustomerHistory(customerId);
+                
+                lblTotalRentals.Text = $@"Total Rentals: {history.TotalRentals}";
+                lblTotalSpent.Text = $@"Total Spent: ₱{history.TotalAmountSpent:N2}";
+                lblDamageCount.Text = $@"Damages: {history.TotalDamages} (₱{history.TotalDamageCharges:N2})";
+                lblLateReturns.Text = $@"Late Returns: {history.LateReturns}";
+                
+                dgvRentalHistory.DataSource = history.RentalHistory;
+            }
+            catch (Exception ex)
+            {
+                lblTotalRentals.Text = @"Total Rentals: 0";
+                lblTotalSpent.Text = @"Total Spent: ₱0.00";
+                lblDamageCount.Text = @"Damages: 0 (₱0.00)";
+                lblLateReturns.Text = @"Late Returns: 0";
+                dgvRentalHistory.DataSource = null;
             }
         }
     }

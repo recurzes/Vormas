@@ -94,5 +94,15 @@ namespace Vormas.Services
         {
             return _repo.UpsertLicense(license);
         }
+
+        public CustomerHistory GetCustomerHistory(int customerId)
+        {
+            return _repo.GetCustomerHistory(customerId);
+        }
+
+        public List<RentalHistoryItem> GetCustomerRentalHistory(int customerId)
+        {
+            return _repo.GetCustomerRentalHistory(customerId);
+        }
     }
 }

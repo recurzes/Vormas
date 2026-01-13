@@ -95,5 +95,12 @@ namespace Vormas.Services
 
             return true;
         }
+
+        public CustomerHistory GetCustomerHistory(int customerId)
+        {
+            var history = _repo.GetCustomerHistory(customerId);
+            history.RentalHistory = _repo.GetCustomerRentalHistory(customerId);
+            return history;
+        }
     }
 }

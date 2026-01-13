@@ -217,6 +217,7 @@
     <Compile Include="Interfaces\IVehicleRepository.cs" />
     <Compile Include="Interfaces\IVehicleService.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerHistory.cs" />
     <Compile Include="Models\DamageReports.cs" />
     <Compile Include="Models\DriverLicense.cs" />
     <Compile Include="Models\RateConfigurations.cs" />

@@ -13,6 +13,7 @@ namespace Vormas.Interfaces
 
         List<CustomerTypeItem> GetCustomerTypes();
         DriverLicense GetDriverLicenseByCustomerId(int customerId);
+        CustomerHistory GetCustomerHistory(int customerId);
     }
 
     public class CustomerTypeItem

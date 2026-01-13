@@ -65,19 +65,27 @@ namespace Vormas.Forms
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
             this.ofdImage = new System.Windows.Forms.OpenFileDialog();
+            this.grpHistory = new System.Windows.Forms.GroupBox();
+            this.dgvRentalHistory = new System.Windows.Forms.DataGridView();
+            this.lblLateReturns = new System.Windows.Forms.Label();
+            this.lblDamageCount = new System.Windows.Forms.Label();
+            this.lblTotalSpent = new System.Windows.Forms.Label();
+            this.lblTotalRentals = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             this.pnlInputs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCustomerImage)).BeginInit();
             this.pnlTop.SuspendLayout();
+            this.grpHistory.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRentalHistory)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvCustomers
             // 
             this.dgvCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCustomers.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dgvCustomers.Location = new System.Drawing.Point(386, 60);
+            this.dgvCustomers.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dgvCustomers.Location = new System.Drawing.Point(375, 60);
             this.dgvCustomers.Name = "dgvCustomers";
-            this.dgvCustomers.Size = new System.Drawing.Size(634, 553);
+            this.dgvCustomers.Size = new System.Drawing.Size(671, 357);
             this.dgvCustomers.TabIndex = 4;
             this.dgvCustomers.SelectionChanged += new System.EventHandler(this.dgvCustomers_SelectionChanged);
             // 
@@ -114,7 +122,7 @@ namespace Vormas.Forms
             this.pnlInputs.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlInputs.Location = new System.Drawing.Point(0, 60);
             this.pnlInputs.Name = "pnlInputs";
-            this.pnlInputs.Size = new System.Drawing.Size(375, 553);
+            this.pnlInputs.Size = new System.Drawing.Size(375, 560);
             this.pnlInputs.TabIndex = 3;
             // 
             // btnBrowseImage
@@ -359,7 +367,7 @@ namespace Vormas.Forms
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(1020, 60);
+            this.pnlTop.Size = new System.Drawing.Size(1046, 60);
             this.pnlTop.TabIndex = 5;
             // 
             // btnSearch
@@ -387,27 +395,90 @@ namespace Vormas.Forms
             this.lblSearch.TabIndex = 0;
             this.lblSearch.Text = "Search:";
             // 
-            // ofdImage
+            // grpHistory
             // 
-            this.ofdImage.FileName = "openFileDialog1";
+            this.grpHistory.Controls.Add(this.dgvRentalHistory);
+            this.grpHistory.Controls.Add(this.lblLateReturns);
+            this.grpHistory.Controls.Add(this.lblDamageCount);
+            this.grpHistory.Controls.Add(this.lblTotalSpent);
+            this.grpHistory.Controls.Add(this.lblTotalRentals);
+            this.grpHistory.Dock = System.Windows.Forms.DockStyle.Top;
+            this.grpHistory.Location = new System.Drawing.Point(375, 417);
+            this.grpHistory.Name = "grpHistory";
+            this.grpHistory.Size = new System.Drawing.Size(671, 203);
+            this.grpHistory.TabIndex = 7;
+            this.grpHistory.TabStop = false;
+            this.grpHistory.Text = "Customer History";
+            // 
+            // dgvRentalHistory
+            // 
+            this.dgvRentalHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRentalHistory.Location = new System.Drawing.Point(10, 45);
+            this.dgvRentalHistory.Name = "dgvRentalHistory";
+            this.dgvRentalHistory.ReadOnly = true;
+            this.dgvRentalHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvRentalHistory.Size = new System.Drawing.Size(656, 145);
+            this.dgvRentalHistory.TabIndex = 4;
+            // 
+            // lblLateReturns
+            // 
+            this.lblLateReturns.Location = new System.Drawing.Point(550, 20);
+            this.lblLateReturns.Name = "lblLateReturns";
+            this.lblLateReturns.Size = new System.Drawing.Size(150, 20);
+            this.lblLateReturns.TabIndex = 3;
+            this.lblLateReturns.Text = "Late Returns: 0";
+            // 
+            // lblDamageCount
+            // 
+            this.lblDamageCount.Location = new System.Drawing.Point(360, 20);
+            this.lblDamageCount.Name = "lblDamageCount";
+            this.lblDamageCount.Size = new System.Drawing.Size(180, 20);
+            this.lblDamageCount.TabIndex = 2;
+            this.lblDamageCount.Text = "Damages: 0 (0.00)";
+            // 
+            // lblTotalSpent
+            // 
+            this.lblTotalSpent.Location = new System.Drawing.Point(170, 20);
+            this.lblTotalSpent.Name = "lblTotalSpent";
+            this.lblTotalSpent.Size = new System.Drawing.Size(180, 20);
+            this.lblTotalSpent.TabIndex = 1;
+            this.lblTotalSpent.Text = "Total Spent: 0.00";
+            // 
+            // lblTotalRentals
+            // 
+            this.lblTotalRentals.Location = new System.Drawing.Point(10, 20);
+            this.lblTotalRentals.Name = "lblTotalRentals";
+            this.lblTotalRentals.Size = new System.Drawing.Size(150, 20);
+            this.lblTotalRentals.TabIndex = 0;
+            this.lblTotalRentals.Text = "Total Rentals: 0";
             // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.grpHistory);
             this.Controls.Add(this.dgvCustomers);
             this.Controls.Add(this.pnlInputs);
             this.Controls.Add(this.pnlTop);
             this.Name = "CustomerForm";
-            this.Size = new System.Drawing.Size(1020, 613);
+            this.Size = new System.Drawing.Size(1046, 620);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).EndInit();
             this.pnlInputs.ResumeLayout(false);
             this.pnlInputs.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbCustomerImage)).EndInit();
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
+            this.grpHistory.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRentalHistory)).EndInit();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.GroupBox grpHistory;
+        private System.Windows.Forms.DataGridView dgvRentalHistory;
+        private System.Windows.Forms.Label lblLateReturns;
+        private System.Windows.Forms.Label lblDamageCount;
+        private System.Windows.Forms.Label lblTotalSpent;
+        private System.Windows.Forms.Label lblTotalRentals;
 
         private System.Windows.Forms.OpenFileDialog ofdImage;
 

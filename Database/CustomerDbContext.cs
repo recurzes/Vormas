@@ -256,5 +256,58 @@ namespace Vormas.Database
                 }
             );
         }
+
+        public CustomerHistory GetCustomerHistory(int customerId)
+        {
+            return DbCommandHelper.ExecuteReader(
+                _connStr,
+                "prcGetCustomerHistory",
+                cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId),
+                reader =>
+                {
+                    if (!reader.Read()) return new CustomerHistory { CustomerId = customerId };
+                    return new CustomerHistory
+                    {
+                        CustomerId = reader.GetInt32("CustomerId"),
+                        TotalRentals = reader.GetInt32("TotalRentals"),
+                        TotalAmountSpent = reader.GetDecimal("TotalAmountSpent"),
+                        TotalDamages = reader.GetInt32("TotalDamages"),
+                        TotalDamageCharges = reader.GetDecimal("TotalDamageCharges"),
+                        LateReturns = reader.GetInt32("LateReturns"),
+                        TotalPayments = reader.GetDecimal("TotalPayments")
+                    };
+                }
+            );
+        }
+
+        public List<RentalHistoryItem> GetCustomerRentalHistory(int customerId)
+        {
+            return DbCommandHelper.ExecuteReader(
+                _connStr,
+                "prcGetCustomerRentalHistory",
+                cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId),
+                reader =>
+                {
+                    var items = new List<RentalHistoryItem>();
+                    while (reader.Read())
+                    {
+                        items.Add(new RentalHistoryItem
+                        {
+                            RentalId = reader.GetInt32("RentalId"),
+                            VehicleInfo = reader.GetString("VehicleInfo"),
+                            PickupDate = reader.GetDateTime("PickupDate"),
+                            ReturnDate = reader.IsDBNull(reader.GetOrdinal("ReturnDate")) 
+                                ? (DateTime?)null 
+                                : reader.GetDateTime("ReturnDate"),
+                            Status = reader.GetString("Status"),
+                            TotalAmount = reader.GetDecimal("TotalAmount"),
+                            WasLate = reader.GetInt32("WasLate") == 1,
+                            HasDamage = reader.GetInt32("HasDamage") == 1
+                        });
+                    }
+                    return items;
+                }
+            );
+        }
     }
 }
