@@ -2,6 +2,7 @@ import { Routes, Route, NavLink } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import Calendar from './pages/Calendar'
 import ReportsViewer from './pages/ReportsViewer'
+import Analytics from './pages/Analytics'
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           <NavLink to="/reports" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
             Reports
           </NavLink>
+          <NavLink to="/analytics" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            Analytics
+          </NavLink>
         </div>
       </nav>
       
@@ -26,6 +30,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/reports" element={<ReportsViewer />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Routes>
       </main>
     </div>

@@ -124,6 +124,8 @@
     <Compile Include="Database\DamageClaimsDbContext.cs" />
     <Compile Include="Database\DbCommandHelper.cs" />
     <Compile Include="Database\RateConfigurationDbContext.cs" />
+    <Compile Include="Database\BillingDbContext.cs" />
+    <Compile Include="Database\RentalDbContext.cs" />
     <Compile Include="Database\UserDbContext.cs" />
     <Compile Include="Database\VehicleDbContext.cs" />
     <Compile Include="Forms\AdminDashboard.cs">
@@ -134,6 +136,12 @@
     </Compile>
     <Compile Include="Forms\CustomerForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BillingForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\BillingForm.Designer.cs">
+      <DependentUpon>BillingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\CustomerForm.Designer.cs">
       <DependentUpon>CustomerForm.cs</DependentUpon>
@@ -162,6 +170,12 @@
     <Compile Include="Forms\Pages\UserManagementControl.Designer.cs">
       <DependentUpon>UserManagementControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PickupForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\PickupForm.Designer.cs">
+      <DependentUpon>PickupForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RateConfigurationForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -179,6 +193,12 @@
     </Compile>
     <Compile Include="Forms\ReportsForm.Designer.cs">
       <DependentUpon>ReportsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ReturnForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ReturnForm.Designer.cs">
+      <DependentUpon>ReturnForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Temp\Dashboard.cs">
       <SubType>Form</SubType>
@@ -216,8 +236,11 @@
     <Compile Include="Interfaces\IAuthService.cs" />
     <Compile Include="Interfaces\ICustomerRepository.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
+    <Compile Include="Interfaces\IBillingService.cs" />
     <Compile Include="Interfaces\IDamageClaimsService.cs" />
     <Compile Include="Interfaces\IRateConfigurationService.cs" />
+    <Compile Include="Interfaces\IRentalRepository.cs" />
+    <Compile Include="Interfaces\IRentalService.cs" />
     <Compile Include="Interfaces\ISessionService.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
     <Compile Include="Interfaces\IVehicleRepository.cs" />
@@ -227,10 +250,13 @@
     <Compile Include="Models\DamageReports.cs" />
     <Compile Include="Models\DriverLicense.cs" />
     <Compile Include="Models\DrivingRecord.cs" />
+    <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\RateConfigurations.cs" />
+    <Compile Include="Models\Rental.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Vehicle.cs" />
+    <Compile Include="Models\VehicleInspection.cs" />
     <Compile Include="Models\VehicleFeature.cs" />
     <Compile Include="Navigation\INavigationService.cs" />
     <Compile Include="Navigation\NavigationService.cs" />
@@ -241,8 +267,10 @@
     <Compile Include="Services\AuthManager.cs" />
     <Compile Include="Services\CustomerRepository.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\BillingService.cs" />
     <Compile Include="Services\DamageClaimsService.cs" />
     <Compile Include="Services\RateConfigurationService.cs" />
+    <Compile Include="Services\RentalService.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\UserManager.cs" />
     <Compile Include="Services\VehicleService.cs" />
@@ -252,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AdminDashboard.resx">
       <DependentUpon>AdminDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BillingForm.resx">
+      <DependentUpon>BillingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CustomerForm.resx">
       <DependentUpon>CustomerForm.cs</DependentUpon>
@@ -265,6 +296,9 @@
     <EmbeddedResource Include="Forms\Pages\UserManagementControl.resx">
       <DependentUpon>UserManagementControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PickupForm.resx">
+      <DependentUpon>PickupForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\RateConfigurationForm.resx">
       <DependentUpon>RateConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -273,6 +307,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ReportsForm.resx">
       <DependentUpon>ReportsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReturnForm.resx">
+      <DependentUpon>ReturnForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Temp\Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
