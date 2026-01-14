@@ -47,7 +47,6 @@ namespace Vormas
             var routes = new Dictionary<string, Func<PageControl>>
             {
                 { Routes.UserRegister, () => new UserRegisterForm(_userManager, _authService) },
-                { Routes.RentalAgentDashboard, () => new RentalAgentDashboard(_sessionService) },
                 { Routes.AdminDashboard, () => new AdminDashboard(_sessionService, _authService, _userManager, _vehicleService, _rateConfigurationService, _damageClaimsService) },
                 { Routes.Customers, () => new CustomerForm(_customerService) },
                 { Routes.Vehicles, () => new VehicleForm(_vehicleService)},
@@ -62,6 +61,7 @@ namespace Vormas
             routes[Routes.UserLogin] = () => new UserLoginForm(_authService, _sessionService, _navigation);
             routes[Routes.TempDashboard] = () => new Dashboard(_navigation);
             routes[Routes.RentalReturn] = () => new ReturnForm(_rentalService, _damageClaimsService, _sessionService, _billingService, _navigation);
+            routes[Routes.RentalAgentDashboard] = () => new RentalAgentDashboard(_sessionService, _customerService, _rentalService, _reservationService, _damageClaimsService, _billingService, _navigation);
             
             _navigation.Navigate(Routes.AdminDashboard);
         }
