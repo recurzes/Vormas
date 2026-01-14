@@ -126,6 +126,7 @@
     <Compile Include="Database\RateConfigurationDbContext.cs" />
     <Compile Include="Database\BillingDbContext.cs" />
     <Compile Include="Database\RentalDbContext.cs" />
+    <Compile Include="Database\ReservationDbContext.cs" />
     <Compile Include="Database\UserDbContext.cs" />
     <Compile Include="Database\VehicleDbContext.cs" />
     <Compile Include="Forms\AdminDashboard.cs">
@@ -175,6 +176,12 @@
     </Compile>
     <Compile Include="Forms\PickupForm.Designer.cs">
       <DependentUpon>PickupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ReservationForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\ReservationForm.Designer.cs">
+      <DependentUpon>ReservationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RateConfigurationForm.cs">
       <SubType>UserControl</SubType>
@@ -241,6 +248,8 @@
     <Compile Include="Interfaces\IRateConfigurationService.cs" />
     <Compile Include="Interfaces\IRentalRepository.cs" />
     <Compile Include="Interfaces\IRentalService.cs" />
+    <Compile Include="Interfaces\IReservationRepository.cs" />
+    <Compile Include="Interfaces\IReservationService.cs" />
     <Compile Include="Interfaces\ISessionService.cs" />
     <Compile Include="Interfaces\IUserManager.cs" />
     <Compile Include="Interfaces\IVehicleRepository.cs" />
@@ -253,6 +262,7 @@
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\RateConfigurations.cs" />
     <Compile Include="Models\Rental.cs" />
+    <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Vehicle.cs" />
@@ -271,6 +281,7 @@
     <Compile Include="Services\DamageClaimsService.cs" />
     <Compile Include="Services\RateConfigurationService.cs" />
     <Compile Include="Services\RentalService.cs" />
+    <Compile Include="Services\ReservationService.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\UserManager.cs" />
     <Compile Include="Services\VehicleService.cs" />
@@ -298,6 +309,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PickupForm.resx">
       <DependentUpon>PickupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReservationForm.resx">
+      <DependentUpon>ReservationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RateConfigurationForm.resx">
       <DependentUpon>RateConfigurationForm.cs</DependentUpon>
