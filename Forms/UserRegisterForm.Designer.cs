@@ -65,7 +65,6 @@ namespace Vormas.Forms
             this.label1.TabIndex = 0;
             this.label1.Text = "First Name:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -262,7 +261,6 @@ namespace Vormas.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.dtmBirthDate);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.btnRegister);
@@ -288,7 +286,7 @@ namespace Vormas.Forms
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "UserRegisterForm";
-            this.Text = "UserRegisterForm";
+            this.Size = new System.Drawing.Size(800, 450);
             this.ResumeLayout(false);
             this.PerformLayout();
         }
