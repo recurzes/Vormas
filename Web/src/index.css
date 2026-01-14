@@ -90,6 +90,20 @@ body {
   color: white;
 }
 
+.header-only {
+  min-height: auto;
+  height: 56px;
+  overflow: hidden;
+}
+
+.header-only .main-content {
+  display: none;
+}
+
+.content-only {
+  padding-top: 0;
+}
+
 .nav-button {
   background: none;
   border: none;

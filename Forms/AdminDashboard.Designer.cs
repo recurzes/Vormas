@@ -20,34 +20,33 @@ namespace Vormas.Forms
 
         private void InitializeComponent()
         {
-            this.pnlWebView = new System.Windows.Forms.Panel();
-            this.pnlWinForms = new System.Windows.Forms.Panel();
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.pnlContent = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             
-            this.pnlWebView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlWebView.Location = new System.Drawing.Point(0, 0);
-            this.pnlWebView.Name = "pnlWebView";
-            this.pnlWebView.Size = new System.Drawing.Size(1183, 633);
-            this.pnlWebView.TabIndex = 0;
+            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Size = new System.Drawing.Size(1183, 56);
+            this.pnlHeader.TabIndex = 0;
             
-            this.pnlWinForms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlWinForms.Location = new System.Drawing.Point(0, 56);
-            this.pnlWinForms.Name = "pnlWinForms";
-            this.pnlWinForms.Size = new System.Drawing.Size(1183, 577);
-            this.pnlWinForms.TabIndex = 1;
-            this.pnlWinForms.Visible = false;
+            this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlContent.Location = new System.Drawing.Point(0, 56);
+            this.pnlContent.Name = "pnlContent";
+            this.pnlContent.Size = new System.Drawing.Size(1183, 577);
+            this.pnlContent.TabIndex = 1;
             
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pnlWinForms);
-            this.Controls.Add(this.pnlWebView);
+            this.Controls.Add(this.pnlContent);
+            this.Controls.Add(this.pnlHeader);
             this.Name = "AdminDashboard";
             this.Size = new System.Drawing.Size(1183, 633);
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.Panel pnlWebView;
-        private System.Windows.Forms.Panel pnlWinForms;
+        private System.Windows.Forms.Panel pnlHeader;
+        private System.Windows.Forms.Panel pnlContent;
 
         #endregion
     }

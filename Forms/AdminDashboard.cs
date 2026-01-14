@@ -17,7 +17,8 @@ namespace Vormas.Forms
         private readonly IVehicleService _vehicleService;
         private readonly IRateConfigurationService _rateConfigurationService;
         private readonly IDamageClaimsService _damageClaimsService;
-        private WebViewControl _webViewControl;
+        private WebViewControl _headerWebView;
+        private WebViewControl _contentWebView;
         private Control _currentWinFormsControl;
 
         public AdminDashboard(ISessionService session, IAuthService authService, IUserManager userManager, IVehicleService vehicleService, IRateConfigurationService rateConfigurationService, IDamageClaimsService damageClaimsService)
@@ -31,14 +32,31 @@ namespace Vormas.Forms
             _rateConfigurationService = rateConfigurationService;
             _damageClaimsService = damageClaimsService;
             
-            _webViewControl = new WebViewControl("/");
-            _webViewControl.Dock = DockStyle.Fill;
-            _webViewControl.OnFormRequest += HandleFormRequest;
-            pnlWebView.Controls.Add(_webViewControl);
+            InitializeHybridLayout();
+        }
+
+        private void InitializeHybridLayout()
+        {
+            _headerWebView = new WebViewControl("/?mode=header");
+            _headerWebView.Dock = DockStyle.Fill;
+            _headerWebView.OnFormRequest += HandleFormRequest;
+            pnlHeader.Controls.Add(_headerWebView);
+            
+            _contentWebView = new WebViewControl("/?mode=content");
+            _contentWebView.Dock = DockStyle.Fill;
+            _contentWebView.OnFormRequest += HandleFormRequest;
+            pnlContent.Controls.Add(_contentWebView);
         }
 
         private void HandleFormRequest(object sender, string formName)
         {
+            if (formName.StartsWith("navigate:"))
+            {
+                string route = formName.Substring("navigate:".Length);
+                NavigateContent(route);
+                return;
+            }
+            
             switch (formName)
             {
                 case "openFleet":
@@ -59,32 +77,39 @@ namespace Vormas.Forms
             }
         }
 
+        private void NavigateContent(string route)
+        {
+            ShowReactContent();
+            _contentWebView.NavigateToRoute(route + "?mode=content");
+        }
+
         private void ShowWinFormsControl(Control winFormsControl)
         {
             if (_currentWinFormsControl != null)
             {
-                pnlWinForms.Controls.Remove(_currentWinFormsControl);
+                pnlContent.Controls.Remove(_currentWinFormsControl);
                 _currentWinFormsControl.Dispose();
             }
             
+            _contentWebView.Visible = false;
+            
             _currentWinFormsControl = winFormsControl;
             _currentWinFormsControl.Dock = DockStyle.Fill;
-            pnlWinForms.Controls.Add(_currentWinFormsControl);
-            
-            pnlWinForms.Visible = true;
-            pnlWinForms.BringToFront();
+            pnlContent.Controls.Add(_currentWinFormsControl);
+            _currentWinFormsControl.BringToFront();
         }
 
         private void ShowReactContent()
         {
-            pnlWinForms.Visible = false;
-            
             if (_currentWinFormsControl != null)
             {
-                pnlWinForms.Controls.Remove(_currentWinFormsControl);
+                pnlContent.Controls.Remove(_currentWinFormsControl);
                 _currentWinFormsControl.Dispose();
                 _currentWinFormsControl = null;
             }
+            
+            _contentWebView.Visible = true;
+            _contentWebView.BringToFront();
         }
     }
 }

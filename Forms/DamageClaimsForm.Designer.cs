@@ -95,7 +95,7 @@ namespace Vormas.Forms
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(1020, 60);
+            this.pnlTop.Size = new System.Drawing.Size(1333, 60);
             this.pnlTop.TabIndex = 0;
             // 
             // cmbStatusFilter
@@ -157,7 +157,7 @@ namespace Vormas.Forms
             this.pnlInputs.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlInputs.Location = new System.Drawing.Point(0, 60);
             this.pnlInputs.Name = "pnlInputs";
-            this.pnlInputs.Size = new System.Drawing.Size(360, 571);
+            this.pnlInputs.Size = new System.Drawing.Size(463, 735);
             this.pnlInputs.TabIndex = 1;
             // 
             // grpActions
@@ -165,7 +165,7 @@ namespace Vormas.Forms
             this.grpActions.Controls.Add(this.btnClear);
             this.grpActions.Controls.Add(this.btnReject);
             this.grpActions.Controls.Add(this.btnApprove);
-            this.grpActions.Location = new System.Drawing.Point(10, 520);
+            this.grpActions.Location = new System.Drawing.Point(66, 544);
             this.grpActions.Name = "grpActions";
             this.grpActions.Size = new System.Drawing.Size(340, 50);
             this.grpActions.TabIndex = 9;
@@ -207,7 +207,7 @@ namespace Vormas.Forms
             // 
             this.grpCharge.Controls.Add(this.txtChargeAmount);
             this.grpCharge.Controls.Add(this.lblChargeAmount);
-            this.grpCharge.Location = new System.Drawing.Point(10, 465);
+            this.grpCharge.Location = new System.Drawing.Point(66, 489);
             this.grpCharge.Name = "grpCharge";
             this.grpCharge.Size = new System.Drawing.Size(340, 50);
             this.grpCharge.TabIndex = 8;
@@ -233,7 +233,7 @@ namespace Vormas.Forms
             // grpDamagePhoto
             // 
             this.grpDamagePhoto.Controls.Add(this.pbDamagePhoto);
-            this.grpDamagePhoto.Location = new System.Drawing.Point(10, 355);
+            this.grpDamagePhoto.Location = new System.Drawing.Point(66, 379);
             this.grpDamagePhoto.Name = "grpDamagePhoto";
             this.grpDamagePhoto.Size = new System.Drawing.Size(340, 105);
             this.grpDamagePhoto.TabIndex = 7;
@@ -258,7 +258,7 @@ namespace Vormas.Forms
             this.grpDamageInfo.Controls.Add(this.lblDamageSeverity);
             this.grpDamageInfo.Controls.Add(this.txtDamageDescription);
             this.grpDamageInfo.Controls.Add(this.lblDamageDescription);
-            this.grpDamageInfo.Location = new System.Drawing.Point(10, 250);
+            this.grpDamageInfo.Location = new System.Drawing.Point(66, 274);
             this.grpDamageInfo.Name = "grpDamageInfo";
             this.grpDamageInfo.Size = new System.Drawing.Size(340, 100);
             this.grpDamageInfo.TabIndex = 6;
@@ -324,7 +324,7 @@ namespace Vormas.Forms
             this.grpRentalInfo.Controls.Add(this.lblReportedBy);
             this.grpRentalInfo.Controls.Add(this.txtVehicleInfo);
             this.grpRentalInfo.Controls.Add(this.lblVehicleInfo);
-            this.grpRentalInfo.Location = new System.Drawing.Point(10, 145);
+            this.grpRentalInfo.Location = new System.Drawing.Point(66, 169);
             this.grpRentalInfo.Name = "grpRentalInfo";
             this.grpRentalInfo.Size = new System.Drawing.Size(340, 100);
             this.grpRentalInfo.TabIndex = 5;
@@ -390,7 +390,7 @@ namespace Vormas.Forms
             this.grpCustomerInfo.Controls.Add(this.lblCustomerPhone);
             this.grpCustomerInfo.Controls.Add(this.txtCustomerName);
             this.grpCustomerInfo.Controls.Add(this.lblCustomerName);
-            this.grpCustomerInfo.Location = new System.Drawing.Point(10, 40);
+            this.grpCustomerInfo.Location = new System.Drawing.Point(66, 64);
             this.grpCustomerInfo.Name = "grpCustomerInfo";
             this.grpCustomerInfo.Size = new System.Drawing.Size(340, 100);
             this.grpCustomerInfo.TabIndex = 4;
@@ -450,7 +450,7 @@ namespace Vormas.Forms
             // 
             // txtDamageReportId
             // 
-            this.txtDamageReportId.Location = new System.Drawing.Point(80, 10);
+            this.txtDamageReportId.Location = new System.Drawing.Point(136, 34);
             this.txtDamageReportId.Name = "txtDamageReportId";
             this.txtDamageReportId.ReadOnly = true;
             this.txtDamageReportId.Size = new System.Drawing.Size(80, 20);
@@ -459,7 +459,7 @@ namespace Vormas.Forms
             // lblDamageReportId
             // 
             this.lblDamageReportId.AutoSize = true;
-            this.lblDamageReportId.Location = new System.Drawing.Point(10, 13);
+            this.lblDamageReportId.Location = new System.Drawing.Point(66, 37);
             this.lblDamageReportId.Name = "lblDamageReportId";
             this.lblDamageReportId.Size = new System.Drawing.Size(56, 13);
             this.lblDamageReportId.TabIndex = 0;
@@ -467,7 +467,7 @@ namespace Vormas.Forms
             // 
             // txtStatus
             // 
-            this.txtStatus.Location = new System.Drawing.Point(230, 10);
+            this.txtStatus.Location = new System.Drawing.Point(286, 34);
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.ReadOnly = true;
             this.txtStatus.Size = new System.Drawing.Size(120, 20);
@@ -476,7 +476,7 @@ namespace Vormas.Forms
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(180, 13);
+            this.lblStatus.Location = new System.Drawing.Point(236, 37);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(40, 13);
             this.lblStatus.TabIndex = 2;
@@ -486,9 +486,9 @@ namespace Vormas.Forms
             // 
             this.dgvDamageClaims.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDamageClaims.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dgvDamageClaims.Location = new System.Drawing.Point(360, 60);
+            this.dgvDamageClaims.Location = new System.Drawing.Point(529, 60);
             this.dgvDamageClaims.Name = "dgvDamageClaims";
-            this.dgvDamageClaims.Size = new System.Drawing.Size(660, 571);
+            this.dgvDamageClaims.Size = new System.Drawing.Size(804, 735);
             this.dgvDamageClaims.TabIndex = 2;
             // 
             // DamageClaimsForm
@@ -499,7 +499,7 @@ namespace Vormas.Forms
             this.Controls.Add(this.pnlInputs);
             this.Controls.Add(this.pnlTop);
             this.Name = "DamageClaimsForm";
-            this.Size = new System.Drawing.Size(1020, 631);
+            this.Size = new System.Drawing.Size(1333, 795);
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
             this.pnlInputs.ResumeLayout(false);

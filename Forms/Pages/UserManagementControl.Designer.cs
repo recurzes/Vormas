@@ -75,7 +75,7 @@ namespace Vormas.Forms.Pages
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(1001, 60);
+            this.pnlTop.Size = new System.Drawing.Size(1333, 60);
             this.pnlTop.TabIndex = 3;
             // 
             // label11
@@ -141,19 +141,19 @@ namespace Vormas.Forms.Pages
             this.pnlInputs.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlInputs.Location = new System.Drawing.Point(0, 60);
             this.pnlInputs.Name = "pnlInputs";
-            this.pnlInputs.Size = new System.Drawing.Size(340, 571);
+            this.pnlInputs.Size = new System.Drawing.Size(468, 735);
             this.pnlInputs.TabIndex = 4;
             // 
             // dtmBirthDate
             // 
-            this.dtmBirthDate.Location = new System.Drawing.Point(115, 199);
+            this.dtmBirthDate.Location = new System.Drawing.Point(179, 203);
             this.dtmBirthDate.Name = "dtmBirthDate";
             this.dtmBirthDate.Size = new System.Drawing.Size(214, 20);
             this.dtmBirthDate.TabIndex = 53;
             // 
             // label12
             // 
-            this.label12.Location = new System.Drawing.Point(9, 196);
+            this.label12.Location = new System.Drawing.Point(73, 200);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(100, 23);
             this.label12.TabIndex = 52;
@@ -164,7 +164,7 @@ namespace Vormas.Forms.Pages
             // 
             this.cmbIsActive.FormattingEnabled = true;
             this.cmbIsActive.Items.AddRange(new object[] { "Yes", "No" });
-            this.cmbIsActive.Location = new System.Drawing.Point(115, 352);
+            this.cmbIsActive.Location = new System.Drawing.Point(179, 356);
             this.cmbIsActive.Name = "cmbIsActive";
             this.cmbIsActive.Size = new System.Drawing.Size(214, 21);
             this.cmbIsActive.TabIndex = 51;
@@ -173,35 +173,35 @@ namespace Vormas.Forms.Pages
             // 
             this.cmbRole.FormattingEnabled = true;
             this.cmbRole.Items.AddRange(new object[] { "1", "2" });
-            this.cmbRole.Location = new System.Drawing.Point(115, 320);
+            this.cmbRole.Location = new System.Drawing.Point(179, 324);
             this.cmbRole.Name = "cmbRole";
             this.cmbRole.Size = new System.Drawing.Size(214, 21);
             this.cmbRole.TabIndex = 50;
             // 
             // txtVerifyPassword
             // 
-            this.txtVerifyPassword.Location = new System.Drawing.Point(115, 290);
+            this.txtVerifyPassword.Location = new System.Drawing.Point(179, 294);
             this.txtVerifyPassword.Name = "txtVerifyPassword";
             this.txtVerifyPassword.Size = new System.Drawing.Size(214, 20);
             this.txtVerifyPassword.TabIndex = 49;
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(115, 228);
+            this.txtUsername.Location = new System.Drawing.Point(179, 232);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(214, 20);
             this.txtUsername.TabIndex = 48;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(115, 260);
+            this.txtPassword.Location = new System.Drawing.Point(179, 264);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(214, 20);
             this.txtPassword.TabIndex = 47;
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(9, 347);
+            this.label10.Location = new System.Drawing.Point(73, 351);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(100, 23);
             this.label10.TabIndex = 46;
@@ -210,7 +210,7 @@ namespace Vormas.Forms.Pages
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(9, 315);
+            this.label9.Location = new System.Drawing.Point(73, 319);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(100, 23);
             this.label9.TabIndex = 45;
@@ -219,7 +219,7 @@ namespace Vormas.Forms.Pages
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(9, 285);
+            this.label8.Location = new System.Drawing.Point(73, 289);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(100, 23);
             this.label8.TabIndex = 44;
@@ -228,7 +228,7 @@ namespace Vormas.Forms.Pages
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(9, 255);
+            this.label7.Location = new System.Drawing.Point(73, 259);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(100, 23);
             this.label7.TabIndex = 43;
@@ -237,7 +237,7 @@ namespace Vormas.Forms.Pages
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(9, 223);
+            this.label2.Location = new System.Drawing.Point(73, 227);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 23);
             this.label2.TabIndex = 42;
@@ -246,35 +246,35 @@ namespace Vormas.Forms.Pages
             // 
             // txtPhone
             // 
-            this.txtPhone.Location = new System.Drawing.Point(115, 163);
+            this.txtPhone.Location = new System.Drawing.Point(179, 167);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(214, 20);
             this.txtPhone.TabIndex = 41;
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(115, 129);
+            this.txtEmail.Location = new System.Drawing.Point(179, 133);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(214, 20);
             this.txtEmail.TabIndex = 40;
             // 
             // txtLastName
             // 
-            this.txtLastName.Location = new System.Drawing.Point(115, 95);
+            this.txtLastName.Location = new System.Drawing.Point(179, 99);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(214, 20);
             this.txtLastName.TabIndex = 38;
             // 
             // txtFirstName
             // 
-            this.txtFirstName.Location = new System.Drawing.Point(115, 63);
+            this.txtFirstName.Location = new System.Drawing.Point(179, 67);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(214, 20);
             this.txtFirstName.TabIndex = 37;
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(9, 161);
+            this.label5.Location = new System.Drawing.Point(73, 165);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(100, 23);
             this.label5.TabIndex = 36;
@@ -283,7 +283,7 @@ namespace Vormas.Forms.Pages
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(9, 127);
+            this.label4.Location = new System.Drawing.Point(73, 131);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(100, 23);
             this.label4.TabIndex = 35;
@@ -292,7 +292,7 @@ namespace Vormas.Forms.Pages
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(9, 93);
+            this.label1.Location = new System.Drawing.Point(73, 97);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(100, 23);
             this.label1.TabIndex = 33;
@@ -301,7 +301,7 @@ namespace Vormas.Forms.Pages
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(9, 61);
+            this.label6.Location = new System.Drawing.Point(73, 65);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(100, 23);
             this.label6.TabIndex = 32;
@@ -310,7 +310,7 @@ namespace Vormas.Forms.Pages
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(245, 432);
+            this.btnClear.Location = new System.Drawing.Point(309, 436);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 30);
             this.btnClear.TabIndex = 27;
@@ -321,7 +321,7 @@ namespace Vormas.Forms.Pages
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.IndianRed;
-            this.btnDelete.Location = new System.Drawing.Point(135, 432);
+            this.btnDelete.Location = new System.Drawing.Point(199, 436);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 30);
             this.btnDelete.TabIndex = 26;
@@ -332,7 +332,7 @@ namespace Vormas.Forms.Pages
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnSave.Location = new System.Drawing.Point(25, 432);
+            this.btnSave.Location = new System.Drawing.Point(89, 436);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 30);
             this.btnSave.TabIndex = 25;
@@ -344,9 +344,9 @@ namespace Vormas.Forms.Pages
             // 
             this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsers.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dgvUsers.Location = new System.Drawing.Point(367, 60);
+            this.dgvUsers.Location = new System.Drawing.Point(484, 60);
             this.dgvUsers.Name = "dgvUsers";
-            this.dgvUsers.Size = new System.Drawing.Size(634, 571);
+            this.dgvUsers.Size = new System.Drawing.Size(849, 735);
             this.dgvUsers.TabIndex = 5;
             this.dgvUsers.SelectionChanged += new System.EventHandler(this.dgvUsers_SelectionChanged);
             // 
@@ -360,7 +360,7 @@ namespace Vormas.Forms.Pages
             this.Controls.Add(this.pnlTop);
             this.Location = new System.Drawing.Point(15, 15);
             this.Name = "UserManagementControl";
-            this.Size = new System.Drawing.Size(1001, 631);
+            this.Size = new System.Drawing.Size(1333, 795);
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
             this.pnlInputs.ResumeLayout(false);
