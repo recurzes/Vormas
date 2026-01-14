@@ -1,5 +1,6 @@
 ﻿using System;
-using FxResources.System;
+using System.Collections.Generic;
+
 namespace Vormas.Models
 {
     public class Vehicle
@@ -17,8 +18,12 @@ namespace Vormas.Models
         public string FuelType { get; set; } 
         public int SeatingCapacity { get; set; }
         public int Odometer { get; set; }
+        public decimal CargoCapacity { get; set; }
+        public decimal FuelEfficiency { get; set; }
         public string Status { get; set; }
         public string ImagePath { get; set; }
+        public List<string> ImagePaths { get; set; } = new List<string>();
+        public List<int> FeatureIds { get; set; } = new List<int>();
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

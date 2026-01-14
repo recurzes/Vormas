@@ -10,5 +10,8 @@
         public const string Customers = "customers";
         public const string TempDashboard = "temp_dashboard";
         public const string DamageClaims = "damage_claims";
+        public const string RentalPickup = "rental_pickup";
+        public const string RentalReturn = "rental_return";
+        public const string Billing = "billing";
     }
 }

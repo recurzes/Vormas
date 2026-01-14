@@ -6,6 +6,7 @@ import FleetManagement from './pages/FleetManagement'
 import UserManagement from './pages/UserManagement'
 import RateManagement from './pages/RateManagement'
 import DamageClaims from './pages/DamageClaims'
+import Analytics from './pages/Analytics'
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
           <NavLink to="/damage-claims" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Damage</NavLink>
           <NavLink to="/calendar" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Calendar</NavLink>
           <NavLink to="/reports" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Reports</NavLink>
+          <NavLink to="/analytics" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            Analytics
+          </NavLink>
         </div>
       </nav>
 
@@ -32,6 +36,7 @@ function App() {
           <Route path="/damage-claims" element={<DamageClaims />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/reports" element={<ReportsViewer />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Routes>
       </main>
     </div>

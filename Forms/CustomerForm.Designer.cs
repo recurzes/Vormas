@@ -33,7 +33,10 @@ namespace Vormas.Forms
         {
             this.dgvCustomers = new System.Windows.Forms.DataGridView();
             this.pnlInputs = new System.Windows.Forms.Panel();
+            this.btnBrowseImage = new System.Windows.Forms.Button();
+            this.pbCustomerImage = new System.Windows.Forms.PictureBox();
             this.lblLicenseStatus = new System.Windows.Forms.Label();
+            this.btnDrivingRecords = new System.Windows.Forms.Button();
             this.btnDriversLicense = new System.Windows.Forms.Button();
             this.txtEmergencyContactPhone = new System.Windows.Forms.TextBox();
             this.chkIsBlacklisted = new System.Windows.Forms.CheckBox();
@@ -62,25 +65,39 @@ namespace Vormas.Forms
             this.btnSearch = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
+            this.ofdImage = new System.Windows.Forms.OpenFileDialog();
+            this.grpHistory = new System.Windows.Forms.GroupBox();
+            this.dgvRentalHistory = new System.Windows.Forms.DataGridView();
+            this.lblLateReturns = new System.Windows.Forms.Label();
+            this.lblDamageCount = new System.Windows.Forms.Label();
+            this.lblTotalSpent = new System.Windows.Forms.Label();
+            this.lblTotalRentals = new System.Windows.Forms.Label();
+            this.lblDrivingViolations = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).BeginInit();
             this.pnlInputs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCustomerImage)).BeginInit();
             this.pnlTop.SuspendLayout();
+            this.grpHistory.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRentalHistory)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvCustomers
             // 
             this.dgvCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCustomers.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dgvCustomers.Location = new System.Drawing.Point(386, 60);
+            this.dgvCustomers.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dgvCustomers.Location = new System.Drawing.Point(375, 60);
             this.dgvCustomers.Name = "dgvCustomers";
-            this.dgvCustomers.Size = new System.Drawing.Size(634, 393);
+            this.dgvCustomers.Size = new System.Drawing.Size(671, 357);
             this.dgvCustomers.TabIndex = 4;
             this.dgvCustomers.SelectionChanged += new System.EventHandler(this.dgvCustomers_SelectionChanged);
             // 
             // pnlInputs
             // 
             this.pnlInputs.AutoScroll = true;
+            this.pnlInputs.Controls.Add(this.btnBrowseImage);
+            this.pnlInputs.Controls.Add(this.pbCustomerImage);
             this.pnlInputs.Controls.Add(this.lblLicenseStatus);
+            this.pnlInputs.Controls.Add(this.btnDrivingRecords);
             this.pnlInputs.Controls.Add(this.btnDriversLicense);
             this.pnlInputs.Controls.Add(this.txtEmergencyContactPhone);
             this.pnlInputs.Controls.Add(this.chkIsBlacklisted);
@@ -108,8 +125,28 @@ namespace Vormas.Forms
             this.pnlInputs.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlInputs.Location = new System.Drawing.Point(0, 60);
             this.pnlInputs.Name = "pnlInputs";
-            this.pnlInputs.Size = new System.Drawing.Size(375, 393);
+            this.pnlInputs.Size = new System.Drawing.Size(375, 560);
             this.pnlInputs.TabIndex = 3;
+            // 
+            // btnBrowseImage
+            // 
+            this.btnBrowseImage.Location = new System.Drawing.Point(98, 434);
+            this.btnBrowseImage.Name = "btnBrowseImage";
+            this.btnBrowseImage.Size = new System.Drawing.Size(100, 23);
+            this.btnBrowseImage.TabIndex = 35;
+            this.btnBrowseImage.Text = "Browse Image";
+            this.btnBrowseImage.UseVisualStyleBackColor = true;
+            this.btnBrowseImage.Click += new System.EventHandler(this.btnBrowseImage_Click);
+            // 
+            // pbCustomerImage
+            // 
+            this.pbCustomerImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbCustomerImage.Location = new System.Drawing.Point(98, 324);
+            this.pbCustomerImage.Name = "pbCustomerImage";
+            this.pbCustomerImage.Size = new System.Drawing.Size(200, 100);
+            this.pbCustomerImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbCustomerImage.TabIndex = 34;
+            this.pbCustomerImage.TabStop = false;
             // 
             // lblLicenseStatus
             // 
@@ -118,6 +155,16 @@ namespace Vormas.Forms
             this.lblLicenseStatus.Size = new System.Drawing.Size(100, 23);
             this.lblLicenseStatus.TabIndex = 33;
             this.lblLicenseStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnDrivingRecords
+            // 
+            this.btnDrivingRecords.Location = new System.Drawing.Point(10, 290);
+            this.btnDrivingRecords.Name = "btnDrivingRecords";
+            this.btnDrivingRecords.Size = new System.Drawing.Size(134, 22);
+            this.btnDrivingRecords.TabIndex = 36;
+            this.btnDrivingRecords.Text = "Driving Records";
+            this.btnDrivingRecords.UseVisualStyleBackColor = true;
+            this.btnDrivingRecords.Click += new System.EventHandler(this.btnDrivingRecords_Click);
             // 
             // btnDriversLicense
             // 
@@ -295,7 +342,7 @@ namespace Vormas.Forms
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(245, 332);
+            this.btnClear.Location = new System.Drawing.Point(256, 492);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 30);
             this.btnClear.TabIndex = 27;
@@ -306,7 +353,7 @@ namespace Vormas.Forms
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.IndianRed;
-            this.btnDelete.Location = new System.Drawing.Point(135, 332);
+            this.btnDelete.Location = new System.Drawing.Point(146, 492);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 30);
             this.btnDelete.TabIndex = 26;
@@ -317,7 +364,7 @@ namespace Vormas.Forms
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnSave.Location = new System.Drawing.Point(25, 332);
+            this.btnSave.Location = new System.Drawing.Point(36, 492);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 30);
             this.btnSave.TabIndex = 25;
@@ -333,7 +380,7 @@ namespace Vormas.Forms
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(1020, 60);
+            this.pnlTop.Size = new System.Drawing.Size(1046, 60);
             this.pnlTop.TabIndex = 5;
             // 
             // btnSearch
@@ -361,22 +408,105 @@ namespace Vormas.Forms
             this.lblSearch.TabIndex = 0;
             this.lblSearch.Text = "Search:";
             // 
+            // grpHistory
+            // 
+            this.grpHistory.Controls.Add(this.dgvRentalHistory);
+            this.grpHistory.Controls.Add(this.lblLateReturns);
+            this.grpHistory.Controls.Add(this.lblDamageCount);
+            this.grpHistory.Controls.Add(this.lblTotalSpent);
+            this.grpHistory.Controls.Add(this.lblTotalRentals);
+            this.grpHistory.Dock = System.Windows.Forms.DockStyle.Top;
+            this.grpHistory.Location = new System.Drawing.Point(375, 417);
+            this.grpHistory.Name = "grpHistory";
+            this.grpHistory.Size = new System.Drawing.Size(671, 203);
+            this.grpHistory.TabIndex = 7;
+            this.grpHistory.TabStop = false;
+            this.grpHistory.Text = "Customer History";
+            // 
+            // dgvRentalHistory
+            // 
+            this.dgvRentalHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvRentalHistory.Location = new System.Drawing.Point(10, 45);
+            this.dgvRentalHistory.Name = "dgvRentalHistory";
+            this.dgvRentalHistory.ReadOnly = true;
+            this.dgvRentalHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvRentalHistory.Size = new System.Drawing.Size(656, 145);
+            this.dgvRentalHistory.TabIndex = 4;
+            // 
+            // lblLateReturns
+            // 
+            this.lblLateReturns.Location = new System.Drawing.Point(550, 20);
+            this.lblLateReturns.Name = "lblLateReturns";
+            this.lblLateReturns.Size = new System.Drawing.Size(150, 20);
+            this.lblLateReturns.TabIndex = 3;
+            this.lblLateReturns.Text = "Late Returns: 0";
+            // 
+            // lblDamageCount
+            // 
+            this.lblDamageCount.Location = new System.Drawing.Point(360, 20);
+            this.lblDamageCount.Name = "lblDamageCount";
+            this.lblDamageCount.Size = new System.Drawing.Size(180, 20);
+            this.lblDamageCount.TabIndex = 2;
+            this.lblDamageCount.Text = "Damages: 0 (0.00)";
+            // 
+            // lblTotalSpent
+            // 
+            this.lblTotalSpent.Location = new System.Drawing.Point(170, 20);
+            this.lblTotalSpent.Name = "lblTotalSpent";
+            this.lblTotalSpent.Size = new System.Drawing.Size(180, 20);
+            this.lblTotalSpent.TabIndex = 1;
+            this.lblTotalSpent.Text = "Total Spent: 0.00";
+            // 
+            // lblTotalRentals
+            // 
+            this.lblTotalRentals.Location = new System.Drawing.Point(10, 20);
+            this.lblTotalRentals.Name = "lblTotalRentals";
+            this.lblTotalRentals.Size = new System.Drawing.Size(150, 20);
+            this.lblTotalRentals.TabIndex = 0;
+            this.lblTotalRentals.Text = "Total Rentals: 0";
+            // 
+            // lblDrivingViolations
+            // 
+            this.lblDrivingViolations.Location = new System.Drawing.Point(710, 20);
+            this.lblDrivingViolations.Name = "lblDrivingViolations";
+            this.lblDrivingViolations.Size = new System.Drawing.Size(200, 20);
+            this.lblDrivingViolations.TabIndex = 5;
+            this.lblDrivingViolations.Text = "Violations: 0 (Major: 0)";
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.grpHistory);
             this.Controls.Add(this.dgvCustomers);
             this.Controls.Add(this.pnlInputs);
             this.Controls.Add(this.pnlTop);
             this.Name = "CustomerForm";
-            this.Size = new System.Drawing.Size(1020, 453);
+            this.Size = new System.Drawing.Size(1046, 620);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomers)).EndInit();
             this.pnlInputs.ResumeLayout(false);
             this.pnlInputs.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCustomerImage)).EndInit();
             this.pnlTop.ResumeLayout(false);
             this.pnlTop.PerformLayout();
+            this.grpHistory.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvRentalHistory)).EndInit();
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.GroupBox grpHistory;
+        private System.Windows.Forms.DataGridView dgvRentalHistory;
+        private System.Windows.Forms.Label lblDrivingViolations;
+        private System.Windows.Forms.Label lblLateReturns;
+        private System.Windows.Forms.Label lblDamageCount;
+        private System.Windows.Forms.Label lblTotalSpent;
+        private System.Windows.Forms.Label lblTotalRentals;
+
+        private System.Windows.Forms.OpenFileDialog ofdImage;
+
+        private System.Windows.Forms.Button btnBrowseImage;
+        private System.Windows.Forms.Button btnDrivingRecords;
+        private System.Windows.Forms.PictureBox pbCustomerImage;
 
         private System.Windows.Forms.Label lblLicenseStatus;
 
