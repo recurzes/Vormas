@@ -45,6 +45,28 @@ function ReactNavButton({ route, children, onActivate, activeRoute }) {
   )
 }
 
+function UserActions({ onReactActivate }) {
+  const handleProfileClick = () => {
+    sendToWinForms('navigate:/profile')
+    if (onReactActivate) onReactActivate('/profile')
+  }
+
+  const handleLogout = () => {
+    sendToWinForms('logout')
+  }
+
+  return (
+    <div className="user-actions">
+      <button className="nav-link nav-button" onClick={handleProfileClick}>
+        Profile
+      </button>
+      <button className="btn-logout" onClick={handleLogout}>
+        Logout
+      </button>
+    </div>
+  )
+}
+
 export default function RentalAgentHeader({ onWinFormActivate, onReactActivate, activeWinForm, activeRoute }) {
   const [searchParams] = useSearchParams()
   const isHeaderMode = searchParams.get('mode') === 'agent-header'
@@ -63,6 +85,7 @@ export default function RentalAgentHeader({ onWinFormActivate, onReactActivate, 
         <WinFormNavButton formName="openReserve" activeWinForm={activeWinForm} onActivate={onWinFormActivate}>Reserve</WinFormNavButton>
         <WinFormNavButton formName="openReturn" activeWinForm={activeWinForm} onActivate={onWinFormActivate}>Return</WinFormNavButton>
       </div>
+      <UserActions onReactActivate={onReactActivate} />
     </nav>
   )
 }

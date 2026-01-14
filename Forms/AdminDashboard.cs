@@ -17,11 +17,12 @@ namespace Vormas.Forms
         private readonly IVehicleService _vehicleService;
         private readonly IRateConfigurationService _rateConfigurationService;
         private readonly IDamageClaimsService _damageClaimsService;
+        private readonly INavigationService _navigation;
         private WebViewControl _headerWebView;
         private WebViewControl _contentWebView;
         private Control _currentWinFormsControl;
 
-        public AdminDashboard(ISessionService session, IAuthService authService, IUserManager userManager, IVehicleService vehicleService, IRateConfigurationService rateConfigurationService, IDamageClaimsService damageClaimsService)
+        public AdminDashboard(ISessionService session, IAuthService authService, IUserManager userManager, IVehicleService vehicleService, IRateConfigurationService rateConfigurationService, IDamageClaimsService damageClaimsService, INavigationService navigation)
         {
             _session = session;
             InitializeComponent();
@@ -31,18 +32,21 @@ namespace Vormas.Forms
             _vehicleService = vehicleService;
             _rateConfigurationService = rateConfigurationService;
             _damageClaimsService = damageClaimsService;
+            _navigation = navigation;
             
             InitializeHybridLayout();
         }
 
         private void InitializeHybridLayout()
         {
-            _headerWebView = new WebViewControl("/?mode=header");
+            var bridge = new BackendBridge(_session, null, _vehicleService, null, null, _damageClaimsService, null, _userManager);
+
+            _headerWebView = new WebViewControl("/?mode=header", bridge);
             _headerWebView.Dock = DockStyle.Fill;
             _headerWebView.OnFormRequest += HandleFormRequest;
             pnlHeader.Controls.Add(_headerWebView);
             
-            _contentWebView = new WebViewControl("/?mode=content");
+            _contentWebView = new WebViewControl("/?mode=content", bridge);
             _contentWebView.Dock = DockStyle.Fill;
             _contentWebView.OnFormRequest += HandleFormRequest;
             pnlContent.Controls.Add(_contentWebView);
@@ -74,7 +78,16 @@ namespace Vormas.Forms
                 case "showReact":
                     ShowReactContent();
                     break;
+                case "logout":
+                    HandleLogout();
+                    break;
             }
+        }
+
+        private void HandleLogout()
+        {
+            _session.ClearSession();
+            _navigation.Navigate(Routes.UserLogin);
         }
 
         private void NavigateContent(string route)

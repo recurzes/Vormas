@@ -226,6 +226,7 @@
     <Compile Include="Forms\VehicleForm.Designer.cs">
       <DependentUpon>VehicleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\BackendBridge.cs" />
     <Compile Include="Helpers\DataReaderMapper.cs" />
     <Compile Include="Helpers\MySqlHelper.cs" />
     <Compile Include="Form1.cs">

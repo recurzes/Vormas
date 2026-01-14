@@ -10,12 +10,15 @@ namespace Vormas.Forms.Controls
         private WebView2 _webView;
         private string _baseUrl = "http://localhost:5173";
         private string _initialRoute;
+        private object _backendBridge;
+
 
         public event EventHandler<string> OnFormRequest;
 
-        public WebViewControl(string initialRoute = "")
+        public WebViewControl(string initialRoute = "", object backendBridge = null)
         {
             _initialRoute = initialRoute;
+            _backendBridge = backendBridge;
             InitializeComponent();
             
             _webView = new WebView2();
@@ -40,6 +43,11 @@ namespace Vormas.Forms.Controls
             try
             {
                 await _webView.EnsureCoreWebView2Async(null);
+
+                if (_backendBridge != null)
+                {
+                    _webView.CoreWebView2.AddHostObjectToScript("backend", _backendBridge);
+                }
 
                 _webView.CoreWebView2.WebMessageReceived += OnWebMessageReceived;
 

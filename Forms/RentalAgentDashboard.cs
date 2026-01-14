@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Vormas.Forms.Controls;
+using Vormas.Helpers;
 using Vormas.Interfaces;
 using Vormas.Navigation;
 
@@ -14,6 +15,7 @@ namespace Vormas.Forms
         private readonly IReservationService _reservationService;
         private readonly IDamageClaimsService _damageClaimsService;
         private readonly IBillingService _billingService;
+        private readonly IUserManager _userManager;
         private readonly INavigationService _navigationService;
         private WebViewControl _headerWebView;
         private WebViewControl _contentWebView;
@@ -26,7 +28,8 @@ namespace Vormas.Forms
             IReservationService reservationService,
             IDamageClaimsService damageClaimsService,
             IBillingService billingService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            IUserManager userManager)
         {
             _session = session;
             _customerService = customerService;
@@ -35,6 +38,7 @@ namespace Vormas.Forms
             _damageClaimsService = damageClaimsService;
             _billingService = billingService;
             _navigationService = navigationService;
+            _userManager = userManager;
 
             InitializeComponent();
             InitializeHybridLayout();
@@ -42,12 +46,14 @@ namespace Vormas.Forms
 
         private void InitializeHybridLayout()
         {
-            _headerWebView = new WebViewControl("/?mode=agent-header");
+            var bridge = new BackendBridge(_session, _customerService, null, _reservationService, _rentalService, _damageClaimsService, _billingService, _userManager);
+
+            _headerWebView = new WebViewControl("/?mode=agent-header", bridge);
             _headerWebView.Dock = DockStyle.Fill;
             _headerWebView.OnFormRequest += HandleFormRequest;
             pnlHeader.Controls.Add(_headerWebView);
 
-            _contentWebView = new WebViewControl("/analytics?mode=content");
+            _contentWebView = new WebViewControl("/analytics?mode=content", bridge);
             _contentWebView.Dock = DockStyle.Fill;
             _contentWebView.OnFormRequest += HandleFormRequest;
             pnlContent.Controls.Add(_contentWebView);
@@ -79,7 +85,16 @@ namespace Vormas.Forms
                 case "showReact":
                     ShowReactContent();
                     break;
+                case "logout":
+                    HandleLogout();
+                    break;
             }
+        }
+
+        private void HandleLogout()
+        {
+            _session.ClearSession();
+            _navigationService.Navigate(Routes.UserLogin);
         }
 
         private void NavigateContent(string route)
