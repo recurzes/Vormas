@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { bridge } from '../api/bridge'
 
-const isWebView2 = () => !!window.chrome?.webview?.postMessage
+const isWebView2 = () => !!window.chrome?.webview?.hostObjects?.backend
 
 function Profile() {
   const [searchParams] = useSearchParams()
@@ -24,9 +25,8 @@ function Profile() {
 
   const fetchUserProfile = async () => {
     try {
-      const res = await fetch('/api/profile')
-      if (res.ok) {
-        const data = await res.json()
+      if (isWebView2()) {
+        const data = await bridge.getUserProfile()
         setUser({
           firstName: data.firstName || '',
           lastName: data.lastName || '',
@@ -35,6 +35,19 @@ function Profile() {
           dateOfBirth: data.dateOfBirth ? data.dateOfBirth.split('T')[0] : '',
           username: data.username || ''
         })
+      } else {
+        const res = await fetch('/api/profile')
+        if (res.ok) {
+          const data = await res.json()
+          setUser({
+            firstName: data.firstName || '',
+            lastName: data.lastName || '',
+            email: data.email || '',
+            phone: data.phone || '',
+            dateOfBirth: data.dateOfBirth ? data.dateOfBirth.split('T')[0] : '',
+            username: data.username || ''
+          })
+        }
       }
     } catch (error) {
       console.log('Profile fetch error:', error.message)
@@ -52,15 +65,24 @@ function Profile() {
     setSaving(true)
     setMessage('')
     try {
-      const res = await fetch('/api/profile', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-      })
-      if (res.ok) {
-        setMessage('Profile updated successfully!')
+      if (isWebView2()) {
+        const result = await bridge.updateUserProfile(user)
+        if (result.success) {
+          setMessage('Profile updated successfully!')
+        } else {
+          setMessage('Failed to update profile')
+        }
       } else {
-        setMessage('Failed to update profile')
+        const res = await fetch('/api/profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(user)
+        })
+        if (res.ok) {
+          setMessage('Profile updated successfully!')
+        } else {
+          setMessage('Failed to update profile')
+        }
       }
     } catch (error) {
       setMessage('Error saving profile: ' + error.message)
