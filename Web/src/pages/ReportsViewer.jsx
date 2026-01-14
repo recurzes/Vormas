@@ -187,7 +187,7 @@ function ReportsViewer() {
     autoTable(doc, {
       startY: yPos,
       head: [['Metric', 'Value', 'Trend']],
-      body: kpiData.map(k => [k.label, k.value, k.trend]),
+      body: kpiData.map(k => [k.label, k.value.replace(/₱/g, 'PHP '), k.trend]),
       headStyles: { fillColor: [79, 70, 229], textColor: 255 },
       alternateRowStyles: { fillColor: [248, 250, 252] },
       margin: { left: 14, right: 14 }
@@ -204,7 +204,7 @@ function ReportsViewer() {
     autoTable(doc, {
       startY: yPos,
       head: [['Date', 'Revenue (PHP)']],
-      body: revenueData.map(r => [r.date, `₱${r.revenue.toLocaleString()}`]),
+      body: revenueData.map(r => [r.date, `PHP ${r.revenue.toLocaleString()}`]),
       headStyles: { fillColor: [79, 70, 229], textColor: 255 },
       alternateRowStyles: { fillColor: [248, 250, 252] },
       margin: { left: 14, right: 14 }
@@ -251,7 +251,7 @@ function ReportsViewer() {
         row.customer,
         row.vehicle,
         row.status,
-        `₱${row.amount.toLocaleString()}`
+        `PHP ${row.amount.toLocaleString()}`
       ]),
       headStyles: { fillColor: [79, 70, 229], textColor: 255 },
       alternateRowStyles: { fillColor: [248, 250, 252] },

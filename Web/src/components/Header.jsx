@@ -47,7 +47,7 @@ function WinFormNavButton({ formName, children, activeWinForm, onActivate }) {
   )
 }
 
-function ReactNavLink({ to, children, onActivate, isHeaderMode }) {
+function ReactNavLink({ to, children, onActivate, isHeaderMode, activeRoute }) {
   const [isInWebView] = useState(isWebView2())
   
   const handleClick = (e) => {
@@ -56,15 +56,17 @@ function ReactNavLink({ to, children, onActivate, isHeaderMode }) {
         e.preventDefault()
         sendToWinForms(`navigate:${to}`)
       }
-      if (onActivate) onActivate()
+      if (onActivate) onActivate(to)
     }
   }
+  
+  const isActive = activeRoute === to
   
   if (isInWebView && isHeaderMode) {
     return (
       <button 
         onClick={handleClick} 
-        className="nav-link nav-button"
+        className={`nav-link nav-button ${isActive ? 'active' : ''}`}
       >
         {children}
       </button>
@@ -82,7 +84,7 @@ function ReactNavLink({ to, children, onActivate, isHeaderMode }) {
   )
 }
 
-export default function Header({ onWinFormActivate, onReactActivate, activeWinForm }) {
+export default function Header({ onWinFormActivate, onReactActivate, activeWinForm, activeRoute }) {
   const [searchParams] = useSearchParams()
   const isHeaderMode = searchParams.get('mode') === 'header'
   
@@ -90,14 +92,14 @@ export default function Header({ onWinFormActivate, onReactActivate, activeWinFo
     <nav className="nav">
       <span className="nav-brand">Vormas System</span>
       <div className="nav-links">
-        <ReactNavLink to="/" onActivate={onReactActivate} isHeaderMode={isHeaderMode}>Dashboard</ReactNavLink>
+        <ReactNavLink to="/" onActivate={onReactActivate} isHeaderMode={isHeaderMode} activeRoute={activeRoute}>Dashboard</ReactNavLink>
         <WinFormNavButton formName="openFleet" activeWinForm={activeWinForm} onActivate={onWinFormActivate}>Fleet</WinFormNavButton>
         <WinFormNavButton formName="openUsers" activeWinForm={activeWinForm} onActivate={onWinFormActivate}>Users</WinFormNavButton>
         <WinFormNavButton formName="openRates" activeWinForm={activeWinForm} onActivate={onWinFormActivate}>Rates</WinFormNavButton>
         <WinFormNavButton formName="openDamage" activeWinForm={activeWinForm} onActivate={onWinFormActivate}>Damage</WinFormNavButton>
-        <ReactNavLink to="/calendar" onActivate={onReactActivate} isHeaderMode={isHeaderMode}>Calendar</ReactNavLink>
-        <ReactNavLink to="/reports" onActivate={onReactActivate} isHeaderMode={isHeaderMode}>Reports</ReactNavLink>
-        <ReactNavLink to="/analytics" onActivate={onReactActivate} isHeaderMode={isHeaderMode}>Analytics</ReactNavLink>
+        <ReactNavLink to="/calendar" onActivate={onReactActivate} isHeaderMode={isHeaderMode} activeRoute={activeRoute}>Calendar</ReactNavLink>
+        <ReactNavLink to="/reports" onActivate={onReactActivate} isHeaderMode={isHeaderMode} activeRoute={activeRoute}>Reports</ReactNavLink>
+        <ReactNavLink to="/analytics" onActivate={onReactActivate} isHeaderMode={isHeaderMode} activeRoute={activeRoute}>Analytics</ReactNavLink>
       </div>
     </nav>
   )

@@ -20,6 +20,7 @@ import ReportsForm from './pages/ReportsForm'
 function App() {
   const [isInWebView] = useState(isWebView2())
   const [activeWinForm, setActiveWinForm] = useState(null)
+  const [activeRoute, setActiveRoute] = useState('/')
   const [searchParams] = useSearchParams()
   
   const mode = searchParams.get('mode')
@@ -41,10 +42,12 @@ function App() {
 
   const handleWinFormActivate = useCallback((formName) => {
     setActiveWinForm(formName)
+    setActiveRoute(null)
   }, [])
 
-  const handleReactActivate = useCallback(() => {
+  const handleReactActivate = useCallback((route) => {
     setActiveWinForm(null)
+    setActiveRoute(route)
   }, [])
 
   if (isHeaderOnly) {
@@ -54,6 +57,7 @@ function App() {
           onWinFormActivate={handleWinFormActivate}
           onReactActivate={handleReactActivate}
           activeWinForm={activeWinForm}
+          activeRoute={activeRoute}
         />
       </div>
     )
@@ -66,6 +70,7 @@ function App() {
           onWinFormActivate={handleWinFormActivate}
           onReactActivate={handleReactActivate}
           activeWinForm={activeWinForm}
+          activeRoute={activeRoute}
         />
       )}
 
