@@ -38,8 +38,10 @@ namespace Vormas
             IRentalService rentalService = new RentalService(rentalRepository);
             var billingDbContext = new BillingDbContext();
             IBillingService billingService = new BillingService(billingDbContext);
+            IReservationRepository reservationRepository = new ReservationDbContext();
+            IReservationService reservationService = new ReservationService(reservationRepository);
             
-            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService, rateConfigurationService, damageClaimsService, rentalService, billingService));
+            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService, rateConfigurationService, damageClaimsService, rentalService, billingService, reservationService));
         }
     }
 }

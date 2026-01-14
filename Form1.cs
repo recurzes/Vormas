@@ -22,8 +22,9 @@ namespace Vormas
         private readonly IDamageClaimsService _damageClaimsService;
         private readonly IRentalService _rentalService;
         private readonly IBillingService _billingService;
+        private readonly IReservationService _reservationService;
 
-        public Form1(IUserManager userManager, IAuthService authService, ISessionService sessionService, IVehicleService vehicleService, ICustomerService customerService, IRateConfigurationService rateConfigurationService, IDamageClaimsService damageClaimsService, IRentalService rentalService, IBillingService billingService)
+        public Form1(IUserManager userManager, IAuthService authService, ISessionService sessionService, IVehicleService vehicleService, ICustomerService customerService, IRateConfigurationService rateConfigurationService, IDamageClaimsService damageClaimsService, IRentalService rentalService, IBillingService billingService, IReservationService reservationService)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _authService = authService ?? throw new ArgumentNullException(nameof(authService));
@@ -35,6 +36,7 @@ namespace Vormas
             _damageClaimsService = damageClaimsService ?? throw new ArgumentNullException(nameof(damageClaimsService));
             _rentalService = rentalService ?? throw new ArgumentNullException(nameof(rentalService));
             _billingService = billingService ?? throw new ArgumentNullException(nameof(billingService));
+            _reservationService = reservationService ?? throw new ArgumentNullException(nameof(reservationService));
             
             InitializeComponent();
             InitializeNavigation();
@@ -52,6 +54,7 @@ namespace Vormas
                 { Routes.DamageClaims, () => new DamageClaimsForm(_damageClaimsService, _sessionService)},
                 { Routes.RentalPickup, () => new PickupForm(_rentalService, _sessionService)},
                 { Routes.Billing, () => new BillingForm(_billingService, _sessionService)},
+                { Routes.Reservation, () => new ReservationForm(_reservationService, _sessionService)},
             };
             
             _navigation = new NavigationService(contentHost, routes);
@@ -60,7 +63,7 @@ namespace Vormas
             routes[Routes.TempDashboard] = () => new Dashboard(_navigation);
             routes[Routes.RentalReturn] = () => new ReturnForm(_rentalService, _damageClaimsService, _sessionService, _billingService, _navigation);
             
-            _navigation.Navigate(Routes.Vehicles);
+            _navigation.Navigate(Routes.Reservation);
         }
 
         public INavigationService Navigator => _navigation;
