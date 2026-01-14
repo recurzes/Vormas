@@ -10,6 +10,37 @@ export const bridge = {
         return data;
     },
 
+    async getUserProfile() {
+        if (!window.chrome?.webview?.hostObjects?.backend) {
+            console.warn("Backend bridge not found (dev mode?)");
+            // Return mock profile for dev
+            return {
+                firstName: "Rental",
+                lastName: "Agent",
+                email: "agent@vormas.com",
+                phone: "555-0123",
+                dateOfBirth: "1990-01-01",
+                username: "agent1",
+                roleId: 2
+            };
+        }
+        const json = await window.chrome.webview.hostObjects.backend.GetUserProfile();
+        const data = JSON.parse(json);
+        if (data.error) throw new Error(data.error);
+        return data;
+    },
+
+    async updateUserProfile(profileData) {
+        if (!window.chrome?.webview?.hostObjects?.backend) {
+            console.warn("Backend bridge not found (dev mode?)");
+            return { success: true };
+        }
+        const json = await window.chrome.webview.hostObjects.backend.UpdateUserProfile(JSON.stringify(profileData));
+        const data = JSON.parse(json);
+        if (data.error) throw new Error(data.error);
+        return data;
+    },
+
     async getVehicles() {
         if (!window.chrome?.webview?.hostObjects?.backend) {
             console.warn("Backend bridge not found (dev mode?)");

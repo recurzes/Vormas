@@ -39,12 +39,14 @@ namespace Vormas.Forms
 
         private void InitializeHybridLayout()
         {
-            _headerWebView = new WebViewControl("/?mode=header");
+            var bridge = new BackendBridge(_session, null, _vehicleService, null, null, _damageClaimsService, null, _userManager);
+
+            _headerWebView = new WebViewControl("/?mode=header", bridge);
             _headerWebView.Dock = DockStyle.Fill;
             _headerWebView.OnFormRequest += HandleFormRequest;
             pnlHeader.Controls.Add(_headerWebView);
             
-            _contentWebView = new WebViewControl("/?mode=content");
+            _contentWebView = new WebViewControl("/?mode=content", bridge);
             _contentWebView.Dock = DockStyle.Fill;
             _contentWebView.OnFormRequest += HandleFormRequest;
             pnlContent.Controls.Add(_contentWebView);

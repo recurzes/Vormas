@@ -196,9 +196,6 @@
     <Compile Include="Forms\RentalAgentDashboard.Designer.cs">
       <DependentUpon>RentalAgentDashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Controls\WebViewControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Forms\ReturnForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -229,6 +226,7 @@
     <Compile Include="Forms\VehicleForm.Designer.cs">
       <DependentUpon>VehicleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\BackendBridge.cs" />
     <Compile Include="Helpers\DataReaderMapper.cs" />
     <Compile Include="Helpers\MySqlHelper.cs" />
     <Compile Include="Form1.cs">
