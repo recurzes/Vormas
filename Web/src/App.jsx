@@ -1,6 +1,7 @@
 import { Routes, Route, useSearchParams } from 'react-router-dom'
 import { useEffect, useState, useCallback } from 'react'
 import Header, { isWebView2 } from './components/Header'
+import RentalAgentHeader from './components/RentalAgentHeader'
 import Dashboard from './pages/Dashboard'
 import Calendar from './pages/Calendar'
 import ReportsViewer from './pages/ReportsViewer'
@@ -16,6 +17,7 @@ import ReturnForm from './pages/ReturnForm'
 import BillingForm from './pages/BillingForm'
 import MaintenanceForm from './pages/MaintenanceForm'
 import ReportsForm from './pages/ReportsForm'
+import Profile from './pages/Profile'
 
 function App() {
   const [isInWebView] = useState(isWebView2())
@@ -25,6 +27,7 @@ function App() {
   
   const mode = searchParams.get('mode')
   const isHeaderOnly = mode === 'header'
+  const isAgentHeaderOnly = mode === 'agent-header'
   const isContentOnly = mode === 'content'
 
   useEffect(() => {
@@ -49,6 +52,19 @@ function App() {
     setActiveWinForm(null)
     setActiveRoute(route)
   }, [])
+
+  if (isAgentHeaderOnly) {
+    return (
+      <div className="app header-only">
+        <RentalAgentHeader 
+          onWinFormActivate={handleWinFormActivate}
+          onReactActivate={handleReactActivate}
+          activeWinForm={activeWinForm}
+          activeRoute={activeRoute}
+        />
+      </div>
+    )
+  }
 
   if (isHeaderOnly) {
     return (
@@ -95,6 +111,7 @@ function App() {
           <Route path="/maintenance" element={<MaintenanceForm />} />
           <Route path="/reports-view" element={<ReportsForm />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
     </div>
