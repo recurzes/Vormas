@@ -118,42 +118,6 @@ function ReactNavLink({ to, children, onActivate, isHeaderMode, activeRoute }) {
   )
 }
 
-function UserActions({ isHeaderMode, onReactActivate }) {
-  const [isInWebView] = useState(isWebView2())
-
-  const handleProfileClick = () => {
-    if (isInWebView && isHeaderMode) {
-      sendToWinForms('navigate:/profile')
-    }
-    if (onReactActivate) onReactActivate('/profile')
-  }
-
-  const handleLogout = () => {
-    if (isInWebView) {
-      sendToWinForms('logout')
-    } else {
-      window.location.href = '/'
-    }
-  }
-
-  return (
-    <div className="user-actions">
-      {isInWebView && isHeaderMode ? (
-        <button className="nav-link nav-button" onClick={handleProfileClick}>
-          Profile
-        </button>
-      ) : (
-        <NavLink to="/profile" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-          Profile
-        </NavLink>
-      )}
-      <button className="btn-logout" onClick={handleLogout}>
-        Logout
-      </button>
-    </div>
-  )
-}
-
 export default function Header({ onWinFormActivate, onReactActivate, activeWinForm, activeRoute }) {
   const [searchParams] = useSearchParams()
   const isHeaderMode = searchParams.get('mode') === 'header' || searchParams.get('mode') === 'agent-header'
