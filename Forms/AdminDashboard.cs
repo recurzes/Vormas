@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Vormas.Forms.Pages;
+using Vormas.Forms.Controls;
 using Vormas.Helpers;
 using Vormas.Navigation;
 using Vormas.Interfaces;
@@ -16,6 +17,9 @@ namespace Vormas.Forms
         private readonly IVehicleService _vehicleService;
         private readonly IRateConfigurationService _rateConfigurationService;
         private readonly IDamageClaimsService _damageClaimsService;
+        private WebViewControl _headerWebView;
+        private WebViewControl _contentWebView;
+        private Control _currentWinFormsControl;
 
         public AdminDashboard(ISessionService session, IAuthService authService, IUserManager userManager, IVehicleService vehicleService, IRateConfigurationService rateConfigurationService, IDamageClaimsService damageClaimsService)
         {
@@ -28,32 +32,84 @@ namespace Vormas.Forms
             _rateConfigurationService = rateConfigurationService;
             _damageClaimsService = damageClaimsService;
             
-            _controls.LoadUserControl(pnlPages, new ReportsForm());
+            InitializeHybridLayout();
         }
 
-        private void btnDamageClaims_Click(object sender, EventArgs e)
+        private void InitializeHybridLayout()
         {
-            _controls.LoadUserControl(pnlPages, new DamageClaimsForm(_damageClaimsService, _session));
+            _headerWebView = new WebViewControl("/?mode=header");
+            _headerWebView.Dock = DockStyle.Fill;
+            _headerWebView.OnFormRequest += HandleFormRequest;
+            pnlHeader.Controls.Add(_headerWebView);
+            
+            _contentWebView = new WebViewControl("/?mode=content");
+            _contentWebView.Dock = DockStyle.Fill;
+            _contentWebView.OnFormRequest += HandleFormRequest;
+            pnlContent.Controls.Add(_contentWebView);
         }
 
-        private void btnUserManagement_Click(object sender, EventArgs e)
+        private void HandleFormRequest(object sender, string formName)
         {
-            _controls.LoadUserControl(pnlPages, new UserManagementControl(_authService, _userManager));
+            if (formName.StartsWith("navigate:"))
+            {
+                string route = formName.Substring("navigate:".Length);
+                NavigateContent(route);
+                return;
+            }
+            
+            switch (formName)
+            {
+                case "openFleet":
+                    ShowWinFormsControl(new VehicleForm(_vehicleService));
+                    break;
+                case "openUsers":
+                    ShowWinFormsControl(new UserManagementControl(_authService, _userManager));
+                    break;
+                case "openRates":
+                    ShowWinFormsControl(new RateConfigurationForm(_rateConfigurationService));
+                    break;
+                case "openDamage":
+                    ShowWinFormsControl(new DamageClaimsForm(_damageClaimsService, _session));
+                    break;
+                case "showReact":
+                    ShowReactContent();
+                    break;
+            }
         }
 
-        private void btnFleetManagement_Click(object sender, EventArgs e)
+        private void NavigateContent(string route)
         {
-            _controls.LoadUserControl(pnlPages, new VehicleForm(_vehicleService));
+            ShowReactContent();
+            _contentWebView.NavigateToRoute(route + "?mode=content");
         }
 
-        private void btnRateManagement_Click(object sender, EventArgs e)
+        private void ShowWinFormsControl(Control winFormsControl)
         {
-            _controls.LoadUserControl(pnlPages, new RateConfigurationForm(_rateConfigurationService));
+            if (_currentWinFormsControl != null)
+            {
+                pnlContent.Controls.Remove(_currentWinFormsControl);
+                _currentWinFormsControl.Dispose();
+            }
+            
+            _contentWebView.Visible = false;
+            
+            _currentWinFormsControl = winFormsControl;
+            _currentWinFormsControl.Dock = DockStyle.Fill;
+            pnlContent.Controls.Add(_currentWinFormsControl);
+            _currentWinFormsControl.BringToFront();
         }
 
-        private void btnReports_Click(object sender, EventArgs e)
+        private void ShowReactContent()
         {
-            _controls.LoadUserControl(pnlPages, new ReportsForm());
+            if (_currentWinFormsControl != null)
+            {
+                pnlContent.Controls.Remove(_currentWinFormsControl);
+                _currentWinFormsControl.Dispose();
+                _currentWinFormsControl = null;
+            }
+            
+            _contentWebView.Visible = true;
+            _contentWebView.BringToFront();
         }
     }
 }

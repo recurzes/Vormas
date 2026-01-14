@@ -1,23 +1,35 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
+using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
 
-
-namespace Vormas.Forms
+namespace Vormas.Forms.Controls
 {
-    public partial class ReportsForm : UserControl
+    public partial class WebViewControl : UserControl
     {
         private WebView2 _webView;
-        private string _currentUrl;
+        private string _baseUrl = "http://localhost:5173";
+        private string _initialRoute;
 
-        public ReportsForm()
+        public event EventHandler<string> OnFormRequest;
+
+        public WebViewControl(string initialRoute = "")
         {
+            _initialRoute = initialRoute;
             InitializeComponent();
-
+            
             _webView = new WebView2();
-            _currentUrl = "http://localhost:5173";
-
             InitializeWebView();
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Name = "WebViewControl";
+            this.Size = new System.Drawing.Size(800, 600);
+            this.ResumeLayout(false);
         }
 
         private async void InitializeWebView()
@@ -29,30 +41,18 @@ namespace Vormas.Forms
             {
                 await _webView.EnsureCoreWebView2Async(null);
 
+                _webView.CoreWebView2.WebMessageReceived += OnWebMessageReceived;
+
                 _webView.CoreWebView2.NavigationCompleted += (sender, e) =>
                 {
                     if (!e.IsSuccess)
                     {
-                        System.Diagnostics.Debug.WriteLine($"Navigation failed: {e.WebErrorStatus}");
-
-                        MessageBox.Show(
-                            @$"Failed to load dashboard: {e.WebErrorStatus}\n\n" +
-                            @$"Please ensure:\n" +
-                            @$"1. The dev server is running on {_currentUrl}\n" +
-                            @$"2. Run 'npm run dev' in the reports-dashboard folder\n" +
-                            @$"3. Wait for the server to fully start before clicking Reports",
-                            @"Dashboard Error",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning
-                        );
-
                         ShowErrorMessage($"WebErrorStatus: {e.WebErrorStatus}");
                     }
                 };
 
-                await System.Threading.Tasks.Task.Delay(1000);
-
-                _webView.CoreWebView2.Navigate(_currentUrl);
+                string fullUrl = $"{_baseUrl}/{_initialRoute.TrimStart('/')}";
+                _webView.CoreWebView2.Navigate(fullUrl);
             }
             catch (Exception ex)
             {
@@ -62,13 +62,36 @@ namespace Vormas.Forms
                     @$"Failed to initialize dashboard:\n{ex.Message}\n\n" +
                     @$"Please ensure:\n" +
                     @$"1. WebView2 Runtime is installed\n" +
-                    @$"2. The dev server is running on {_currentUrl}",
+                    @$"2. The dev server is running on {_baseUrl}",
                     @"Dashboard Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );
 
                 ShowErrorMessage(ex.Message);
+            }
+        }
+
+        private void OnWebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs e)
+        {
+            string message = e.TryGetWebMessageAsString();
+            OnFormRequest?.Invoke(this, message);
+        }
+
+        public void SendMessageToReact(string message)
+        {
+            if (_webView?.CoreWebView2 != null)
+            {
+                _webView.CoreWebView2.PostWebMessageAsString(message);
+            }
+        }
+
+        public void NavigateToRoute(string route)
+        {
+            if (_webView?.CoreWebView2 != null)
+            {
+                string fullUrl = $"{_baseUrl}/{route.TrimStart('/')}";
+                _webView.CoreWebView2.Navigate(fullUrl);
             }
         }
 
@@ -115,15 +138,13 @@ namespace Vormas.Forms
 </head>
 <body>
     <div class='container'>
-        <h2>⚠️ Reports Dashboard Unavailable</h2>
-        <p>The React dashboard server is not running.</p>
+        <h2>⚠️ Dashboard Unavailable</h2>
+        <p>The React dev server is not running.</p>
         <div class='steps'>
             <strong>To start the dashboard:</strong>
             <ol>
-                <li>Open a terminal in the <code>reports-dashboard</code> folder</li>
-                <li>Run: <code>npm install</code></li>
+                <li>Open a terminal in the <code>Web</code> folder</li>
                 <li>Run: <code>npm run dev</code></li>
-                <li>Click the Reports button again</li>
             </ol>
         </div>
         {(details != null ? $"<p style='font-size:12px;margin-top:20px;'>Error: {details}</p>" : "")}
@@ -137,29 +158,15 @@ namespace Vormas.Forms
             }
             catch
             {
-                
                 var label = new Label
                 {
-                    Text = @"Reports Dashboard not available.\nPlease start the React dev server.",
+                    Text = @"Dashboard not available.\nPlease start the React dev server.",
                     Dock = DockStyle.Fill,
                     TextAlign = System.Drawing.ContentAlignment.MiddleCenter
                 };
                 Controls.Add(label);
+                label.BringToFront();
             }
-        }
-        
-        
-        public void NavigateTo(string route)
-        {
-            if (_webView?.CoreWebView2 != null)
-            {
-                _webView.CoreWebView2.Navigate($"{_currentUrl}/{route.TrimStart('/')}");
-            }
-        }
-        
-        public void RefreshPage()
-        {
-            _webView?.CoreWebView2?.Reload();
         }
     }
 }

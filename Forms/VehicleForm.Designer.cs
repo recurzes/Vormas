@@ -15,10 +15,25 @@
 
         #region Windows Form Designer generated code
 
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
             this.dgvVehicles = new System.Windows.Forms.DataGridView();
             this.pnlInputs = new System.Windows.Forms.Panel();
+            this.btnRetire = new System.Windows.Forms.Button();
+            this.btnRemoveImage = new System.Windows.Forms.Button();
+            this.btnAddImage = new System.Windows.Forms.Button();
+            this.lstImages = new System.Windows.Forms.ListBox();
+            this.lblImages = new System.Windows.Forms.Label();
+            this.clbFeatures = new System.Windows.Forms.CheckedListBox();
+            this.lblFeatures = new System.Windows.Forms.Label();
+            this.txtFuelEfficiency = new System.Windows.Forms.TextBox();
+            this.lblFuelEfficiency = new System.Windows.Forms.Label();
+            this.txtCargoCapacity = new System.Windows.Forms.TextBox();
+            this.lblCargoCapacity = new System.Windows.Forms.Label();
             this.txtCurrentMileage = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtVehicleCode = new System.Windows.Forms.TextBox();
@@ -55,17 +70,6 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
             this.ofdImage = new System.Windows.Forms.OpenFileDialog();
-            this.txtCargoCapacity = new System.Windows.Forms.TextBox();
-            this.lblCargoCapacity = new System.Windows.Forms.Label();
-            this.txtFuelEfficiency = new System.Windows.Forms.TextBox();
-            this.lblFuelEfficiency = new System.Windows.Forms.Label();
-            this.clbFeatures = new System.Windows.Forms.CheckedListBox();
-            this.lblFeatures = new System.Windows.Forms.Label();
-            this.lstImages = new System.Windows.Forms.ListBox();
-            this.lblImages = new System.Windows.Forms.Label();
-            this.btnAddImage = new System.Windows.Forms.Button();
-            this.btnRemoveImage = new System.Windows.Forms.Button();
-            this.btnRetire = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVehicles)).BeginInit();
             this.pnlInputs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbVehicleImage)).BeginInit();
@@ -76,9 +80,9 @@
             // 
             this.dgvVehicles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVehicles.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dgvVehicles.Location = new System.Drawing.Point(420, 60);
+            this.dgvVehicles.Location = new System.Drawing.Point(548, 60);
             this.dgvVehicles.Name = "dgvVehicles";
-            this.dgvVehicles.Size = new System.Drawing.Size(581, 640);
+            this.dgvVehicles.Size = new System.Drawing.Size(785, 735);
             this.dgvVehicles.TabIndex = 1;
             this.dgvVehicles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVehicles_CellContentClick);
             // 
@@ -130,8 +134,106 @@
             this.pnlInputs.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlInputs.Location = new System.Drawing.Point(0, 60);
             this.pnlInputs.Name = "pnlInputs";
-            this.pnlInputs.Size = new System.Drawing.Size(420, 640);
+            this.pnlInputs.Size = new System.Drawing.Size(516, 735);
             this.pnlInputs.TabIndex = 0;
+            // 
+            // btnRetire
+            // 
+            this.btnRetire.BackColor = System.Drawing.Color.DarkOrange;
+            this.btnRetire.Location = new System.Drawing.Point(210, 660);
+            this.btnRetire.Name = "btnRetire";
+            this.btnRetire.Size = new System.Drawing.Size(75, 30);
+            this.btnRetire.TabIndex = 50;
+            this.btnRetire.Text = "Retire";
+            this.btnRetire.UseVisualStyleBackColor = false;
+            this.btnRetire.Click += new System.EventHandler(this.btnRetire_Click);
+            // 
+            // btnRemoveImage
+            // 
+            this.btnRemoveImage.Location = new System.Drawing.Point(210, 615);
+            this.btnRemoveImage.Name = "btnRemoveImage";
+            this.btnRemoveImage.Size = new System.Drawing.Size(75, 23);
+            this.btnRemoveImage.TabIndex = 41;
+            this.btnRemoveImage.Text = "Remove";
+            this.btnRemoveImage.UseVisualStyleBackColor = true;
+            this.btnRemoveImage.Click += new System.EventHandler(this.btnRemoveImage_Click);
+            // 
+            // btnAddImage
+            // 
+            this.btnAddImage.Location = new System.Drawing.Point(120, 615);
+            this.btnAddImage.Name = "btnAddImage";
+            this.btnAddImage.Size = new System.Drawing.Size(75, 23);
+            this.btnAddImage.TabIndex = 40;
+            this.btnAddImage.Text = "Add";
+            this.btnAddImage.UseVisualStyleBackColor = true;
+            this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
+            // 
+            // lstImages
+            // 
+            this.lstImages.FormattingEnabled = true;
+            this.lstImages.Location = new System.Drawing.Point(120, 555);
+            this.lstImages.Name = "lstImages";
+            this.lstImages.Size = new System.Drawing.Size(200, 56);
+            this.lstImages.TabIndex = 39;
+            this.lstImages.SelectedIndexChanged += new System.EventHandler(this.lstImages_SelectedIndexChanged);
+            // 
+            // lblImages
+            // 
+            this.lblImages.AutoSize = true;
+            this.lblImages.Location = new System.Drawing.Point(10, 555);
+            this.lblImages.Name = "lblImages";
+            this.lblImages.Size = new System.Drawing.Size(44, 13);
+            this.lblImages.TabIndex = 38;
+            this.lblImages.Text = "Images:";
+            // 
+            // clbFeatures
+            // 
+            this.clbFeatures.FormattingEnabled = true;
+            this.clbFeatures.Location = new System.Drawing.Point(120, 340);
+            this.clbFeatures.Name = "clbFeatures";
+            this.clbFeatures.Size = new System.Drawing.Size(200, 79);
+            this.clbFeatures.TabIndex = 37;
+            // 
+            // lblFeatures
+            // 
+            this.lblFeatures.AutoSize = true;
+            this.lblFeatures.Location = new System.Drawing.Point(10, 340);
+            this.lblFeatures.Name = "lblFeatures";
+            this.lblFeatures.Size = new System.Drawing.Size(51, 13);
+            this.lblFeatures.TabIndex = 36;
+            this.lblFeatures.Text = "Features:";
+            // 
+            // txtFuelEfficiency
+            // 
+            this.txtFuelEfficiency.Location = new System.Drawing.Point(230, 311);
+            this.txtFuelEfficiency.Name = "txtFuelEfficiency";
+            this.txtFuelEfficiency.Size = new System.Drawing.Size(90, 20);
+            this.txtFuelEfficiency.TabIndex = 34;
+            // 
+            // lblFuelEfficiency
+            // 
+            this.lblFuelEfficiency.AutoSize = true;
+            this.lblFuelEfficiency.Location = new System.Drawing.Point(217, 314);
+            this.lblFuelEfficiency.Name = "lblFuelEfficiency";
+            this.lblFuelEfficiency.Size = new System.Drawing.Size(35, 13);
+            this.lblFuelEfficiency.TabIndex = 35;
+            this.lblFuelEfficiency.Text = "km/L:";
+            // 
+            // txtCargoCapacity
+            // 
+            this.txtCargoCapacity.Location = new System.Drawing.Point(120, 311);
+            this.txtCargoCapacity.Name = "txtCargoCapacity";
+            this.txtCargoCapacity.Size = new System.Drawing.Size(90, 20);
+            this.txtCargoCapacity.TabIndex = 32;
+            // 
+            // lblCargoCapacity
+            // 
+            this.lblCargoCapacity.AutoSize = true;
+            this.lblCargoCapacity.Location = new System.Drawing.Point(10, 314);
+            this.lblCargoCapacity.Name = "lblCargoCapacity";
+            this.lblCargoCapacity.Size = new System.Drawing.Size(78, 13);
+            this.lblCargoCapacity.TabIndex = 33;
+            this.lblCargoCapacity.Text = "Cargo Cap. (L):";
             // 
             // txtCurrentMileage
             // 
@@ -405,104 +507,6 @@
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click_1);
             // 
-            // btnRetire
-            // 
-            this.btnRetire.BackColor = System.Drawing.Color.DarkOrange;
-            this.btnRetire.Location = new System.Drawing.Point(210, 660);
-            this.btnRetire.Name = "btnRetire";
-            this.btnRetire.Size = new System.Drawing.Size(75, 30);
-            this.btnRetire.TabIndex = 50;
-            this.btnRetire.Text = "Retire";
-            this.btnRetire.UseVisualStyleBackColor = false;
-            this.btnRetire.Click += new System.EventHandler(this.btnRetire_Click);
-            // 
-            // txtCargoCapacity
-            // 
-            this.txtCargoCapacity.Location = new System.Drawing.Point(120, 311);
-            this.txtCargoCapacity.Name = "txtCargoCapacity";
-            this.txtCargoCapacity.Size = new System.Drawing.Size(90, 20);
-            this.txtCargoCapacity.TabIndex = 32;
-            // 
-            // lblCargoCapacity
-            // 
-            this.lblCargoCapacity.AutoSize = true;
-            this.lblCargoCapacity.Location = new System.Drawing.Point(10, 314);
-            this.lblCargoCapacity.Name = "lblCargoCapacity";
-            this.lblCargoCapacity.Size = new System.Drawing.Size(84, 13);
-            this.lblCargoCapacity.TabIndex = 33;
-            this.lblCargoCapacity.Text = "Cargo Cap. (L):";
-            // 
-            // txtFuelEfficiency
-            // 
-            this.txtFuelEfficiency.Location = new System.Drawing.Point(230, 311);
-            this.txtFuelEfficiency.Name = "txtFuelEfficiency";
-            this.txtFuelEfficiency.Size = new System.Drawing.Size(90, 20);
-            this.txtFuelEfficiency.TabIndex = 34;
-            // 
-            // lblFuelEfficiency
-            // 
-            this.lblFuelEfficiency.AutoSize = true;
-            this.lblFuelEfficiency.Location = new System.Drawing.Point(217, 314);
-            this.lblFuelEfficiency.Name = "lblFuelEfficiency";
-            this.lblFuelEfficiency.Size = new System.Drawing.Size(60, 13);
-            this.lblFuelEfficiency.TabIndex = 35;
-            this.lblFuelEfficiency.Text = "km/L:";
-            // 
-            // lblFeatures
-            // 
-            this.lblFeatures.AutoSize = true;
-            this.lblFeatures.Location = new System.Drawing.Point(10, 340);
-            this.lblFeatures.Name = "lblFeatures";
-            this.lblFeatures.Size = new System.Drawing.Size(51, 13);
-            this.lblFeatures.TabIndex = 36;
-            this.lblFeatures.Text = "Features:";
-            // 
-            // clbFeatures
-            // 
-            this.clbFeatures.FormattingEnabled = true;
-            this.clbFeatures.Location = new System.Drawing.Point(120, 340);
-            this.clbFeatures.Name = "clbFeatures";
-            this.clbFeatures.Size = new System.Drawing.Size(200, 79);
-            this.clbFeatures.TabIndex = 37;
-            // 
-            // lblImages
-            // 
-            this.lblImages.AutoSize = true;
-            this.lblImages.Location = new System.Drawing.Point(10, 555);
-            this.lblImages.Name = "lblImages";
-            this.lblImages.Size = new System.Drawing.Size(44, 13);
-            this.lblImages.TabIndex = 38;
-            this.lblImages.Text = "Images:";
-            // 
-            // lstImages
-            // 
-            this.lstImages.FormattingEnabled = true;
-            this.lstImages.Location = new System.Drawing.Point(120, 555);
-            this.lstImages.Name = "lstImages";
-            this.lstImages.Size = new System.Drawing.Size(200, 56);
-            this.lstImages.TabIndex = 39;
-            this.lstImages.SelectedIndexChanged += new System.EventHandler(this.lstImages_SelectedIndexChanged);
-            // 
-            // btnAddImage
-            // 
-            this.btnAddImage.Location = new System.Drawing.Point(120, 615);
-            this.btnAddImage.Name = "btnAddImage";
-            this.btnAddImage.Size = new System.Drawing.Size(75, 23);
-            this.btnAddImage.TabIndex = 40;
-            this.btnAddImage.Text = "Add";
-            this.btnAddImage.UseVisualStyleBackColor = true;
-            this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
-            // 
-            // btnRemoveImage
-            // 
-            this.btnRemoveImage.Location = new System.Drawing.Point(210, 615);
-            this.btnRemoveImage.Name = "btnRemoveImage";
-            this.btnRemoveImage.Size = new System.Drawing.Size(75, 23);
-            this.btnRemoveImage.TabIndex = 41;
-            this.btnRemoveImage.Text = "Remove";
-            this.btnRemoveImage.UseVisualStyleBackColor = true;
-            this.btnRemoveImage.Click += new System.EventHandler(this.btnRemoveImage_Click);
-            // 
             // pnlTop
             // 
             this.pnlTop.Controls.Add(this.btnSearch);
@@ -511,7 +515,7 @@
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(1001, 60);
+            this.pnlTop.Size = new System.Drawing.Size(1333, 60);
             this.pnlTop.TabIndex = 2;
             // 
             // btnSearch
@@ -554,7 +558,7 @@
             this.Controls.Add(this.pnlInputs);
             this.Controls.Add(this.pnlTop);
             this.Name = "VehicleForm";
-            this.Size = new System.Drawing.Size(1001, 700);
+            this.Size = new System.Drawing.Size(1333, 795);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVehicles)).EndInit();
             this.pnlInputs.ResumeLayout(false);
             this.pnlInputs.PerformLayout();
