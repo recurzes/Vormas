@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { format } from 'date-fns'
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, BarChart, Bar, Legend
+  PieChart, Pie, Cell, Legend
 } from 'recharts'
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
@@ -11,57 +10,10 @@ import '../styles/ReportsViewer.css'
 
 
 function ReportsViewer() {
-  const [reportCategory, setReportCategory] = useState('basic')
-  const navigate = useNavigate()
   const [timeRange, setTimeRange] = useState('30d')
   const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [isLiveData, setIsLiveData] = useState(false)
   const [exportFormat, setExportFormat] = useState('csv')
 
-  const reportCategories = {
-    basic: {
-      label: 'Basic Reports',
-      types: [
-        { value: 'rentals', label: 'All Rentals' },
-        { value: 'invoices', label: 'Invoices' },
-        { value: 'damages', label: 'Damage Claims' },
-        { value: 'customers', label: 'Customers' }
-      ]
-    },
-    fleet: {
-      label: 'Fleet Reports',
-      types: [
-        { value: 'fleet-by-category', label: 'Vehicles by Category' },
-        { value: 'fleet-maintenance', label: 'Vehicles Under Maintenance' },
-        { value: 'fleet-utilization', label: 'Fleet Utilization Rate' }
-      ]
-    },
-    rental: {
-      label: 'Rental Reports',
-      types: [
-        { value: 'active-rentals', label: 'Active Rentals' },
-        { value: 'daily-rentals', label: 'Daily Rentals Summary' },
-        { value: 'rentals-by-category', label: 'Rentals by Category' },
-        { value: 'rental-duration', label: 'Rental Duration Analysis' }
-      ]
-    },
-    operational: {
-      label: 'Operational Reports',
-      types: [
-        { value: 'popular-vehicles', label: 'Most Popular Vehicles' },
-        { value: 'late-returns', label: 'Late Returns' },
-        { value: 'revenue-per-vehicle', label: 'Revenue per Vehicle' }
-      ]
-    }
-  }
-
-  const statusOptions = {
-    rentals: ['Active', 'Completed', 'Cancelled', 'Overdue'],
-    invoices: ['Unpaid', 'PartiallyPaid', 'Paid', 'Refunded'],
-    damages: ['PendingApproval', 'Approved', 'Rejected'],
-    customers: ['Individual', 'Corporate', 'Frequent', 'Blacklisted']
-  }
 
   // KPI Data for the dashboard cards
   const kpiData = [
@@ -99,13 +51,7 @@ function ReportsViewer() {
     { id: 'R-1005', date: '2026-01-09', customer: 'Carlos Mendoza', vehicle: 'Nissan Almera', status: 'Completed', amount: 9500 }
   ]
 
-  const fetchReport = async () => {
-    setLoading(true)
-    setTimeout(() => {
-      setData(mockTableData)
-      setLoading(false)
-    }, 500)
-  };
+
 
   const downloadReport = () => {
     // Build CSV content
