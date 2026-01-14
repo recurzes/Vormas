@@ -121,6 +121,29 @@ body {
   color: white;
 }
 
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.btn-logout {
+  padding: 8px 16px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s ease;
+}
+
+.btn-logout:hover {
+  background: #b91c1c;
+}
+
 .main-content {
   padding: 24px;
   max-width: 1400px;

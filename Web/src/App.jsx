@@ -16,6 +16,7 @@ import ReturnForm from './pages/ReturnForm'
 import BillingForm from './pages/BillingForm'
 import MaintenanceForm from './pages/MaintenanceForm'
 import ReportsForm from './pages/ReportsForm'
+import Profile from './pages/Profile'
 
 function App() {
   const [isInWebView] = useState(isWebView2())
@@ -95,6 +96,7 @@ function App() {
           <Route path="/maintenance" element={<MaintenanceForm />} />
           <Route path="/reports-view" element={<ReportsForm />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
     </div>
