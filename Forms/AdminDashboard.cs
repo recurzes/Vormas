@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using Vormas.Forms.Controls;
 using Vormas.Forms.Pages;
+using Vormas.Forms.Controls;
 using Vormas.Helpers;
 using Vormas.Navigation;
 using Vormas.Interfaces;
