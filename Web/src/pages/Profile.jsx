@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
-import { bridge } from '../api/bridge'
+import { useSearchParams } from 'react-router-dom'
+
+const isWebView2 = () => !!window.chrome?.webview?.postMessage
 
 function Profile() {
+  const [searchParams] = useSearchParams()
+  const isContentOnly = searchParams.get('mode') === 'content'
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
@@ -20,18 +24,20 @@ function Profile() {
 
   const fetchUserProfile = async () => {
     try {
-      const data = await bridge.getUserProfile()
-      setUser({
-        firstName: data.firstName || '',
-        lastName: data.lastName || '',
-        email: data.email || '',
-        phone: data.phone || '',
-        dateOfBirth: data.dateOfBirth || '',
-        username: data.username || ''
-      })
+      const res = await fetch('/api/profile')
+      if (res.ok) {
+        const data = await res.json()
+        setUser({
+          firstName: data.firstName || '',
+          lastName: data.lastName || '',
+          email: data.email || '',
+          phone: data.phone || '',
+          dateOfBirth: data.dateOfBirth ? data.dateOfBirth.split('T')[0] : '',
+          username: data.username || ''
+        })
+      }
     } catch (error) {
       console.log('Profile fetch error:', error.message)
-      setMessage('Failed to load profile: ' + error.message)
     } finally {
       setLoading(false)
     }
@@ -46,8 +52,16 @@ function Profile() {
     setSaving(true)
     setMessage('')
     try {
-        await bridge.updateUserProfile(user)
+      const res = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      })
+      if (res.ok) {
         setMessage('Profile updated successfully!')
+      } else {
+        setMessage('Failed to update profile')
+      }
     } catch (error) {
       setMessage('Error saving profile: ' + error.message)
     } finally {
@@ -140,16 +154,14 @@ function Profile() {
             </div>
           )}
           
-          <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'flex-end' }}>
-            <button 
-              className="btn btn-primary" // Assuming this class exists from user management or similar
-              onClick={handleSave}
-              disabled={saving}
-              style={{ minWidth: '120px', padding: '10px 20px', background: '#3b82f6', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-            >
-              {saving ? 'Saving...' : 'Save Changes'}
-            </button>
-          </div>
+          <button 
+            onClick={handleSave} 
+            className="btn btn-primary"
+            disabled={saving}
+            style={{ marginTop: '8px' }}
+          >
+            {saving ? 'Saving...' : 'Save Changes'}
+          </button>
         </div>
       </div>
     </div>

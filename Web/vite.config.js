@@ -226,6 +226,42 @@ function apiPlugin() {
         const data = Array.isArray(result) ? result[0] : result
         sendJson(res, data)
       })
+
+      // Profile endpoint
+      server.middlewares.use('/api/profile', async (req, res, next) => {
+        const mockProfile = {
+          userId: 1,
+          username: 'admin',
+          firstName: 'Lance Sebastian',
+          lastName: 'Limbaros',
+          email: 'admin@company.com',
+          phone: '09700651307',
+          dateOfBirth: '2004-08-06'
+        }
+
+        if (req.method === 'GET') {
+          // For now, return mock data. In production, this would use session userId
+          const result = await callProcedure('prcGetUserProfile', [1], [mockProfile])
+          const data = Array.isArray(result) ? result[0] : result
+          sendJson(res, data)
+        } else if (req.method === 'PUT') {
+          let body = ''
+          req.on('data', chunk => { body += chunk })
+          req.on('end', async () => {
+            try {
+              const profileData = JSON.parse(body)
+              // In production, this would update the database
+              console.log('Profile update:', profileData)
+              sendJson(res, { success: true, message: 'Profile updated' })
+            } catch (err) {
+              res.statusCode = 400
+              sendJson(res, { error: 'Invalid JSON' })
+            }
+          })
+        } else {
+          next()
+        }
+      })
     }
   }
 }
