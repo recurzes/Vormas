@@ -1,4 +1,5 @@
 import { Routes, Route, NavLink, useLocation } from 'react-router-dom'
+import { useEffect, useState, useCallback } from 'react'
 import Dashboard from './pages/Dashboard'
 import Calendar from './pages/Calendar'
 import ReportsViewer from './pages/ReportsViewer'
@@ -15,36 +16,137 @@ import BillingForm from './pages/BillingForm'
 import MaintenanceForm from './pages/MaintenanceForm'
 import ReportsForm from './pages/ReportsForm'
 
+const isWebView2 = () => !!window.chrome?.webview?.postMessage
+
+const sendToWinForms = (message) => {
+  if (isWebView2()) {
+    window.chrome.webview.postMessage(message)
+    return true
+  }
+  return false
+}
+
+function WinFormNavButton({ formName, children, onActivate }) {
+  const [isInWebView] = useState(isWebView2())
+  
+  const handleClick = () => {
+    sendToWinForms(formName)
+    if (onActivate) onActivate(formName)
+  }
+  
+  if (!isInWebView) {
+    const routeMap = {
+      'openFleet': '/fleet',
+      'openUsers': '/users',
+      'openRates': '/rates',
+      'openDamage': '/damage-claims'
+    }
+    return (
+      <NavLink 
+        to={routeMap[formName]} 
+        className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+      >
+        {children}
+      </NavLink>
+    )
+  }
+
+  return (
+    <button 
+      onClick={handleClick} 
+      className="nav-link nav-button"
+    >
+      {children}
+    </button>
+  )
+}
+
+function ReactNavLink({ to, children, onActivate }) {
+  const [isInWebView] = useState(isWebView2())
+  
+  const handleClick = () => {
+    if (isInWebView && onActivate) {
+      sendToWinForms('showReact')
+      onActivate()
+    }
+  }
+  
+  return (
+    <NavLink 
+      to={to} 
+      onClick={handleClick}
+      className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+    >
+      {children}
+    </NavLink>
+  )
+}
+
 function App() {
   const location = useLocation()
   const agentRoutes = ['/agent', '/reservation', '/rental', '/return', '/billing', '/maintenance', '/reports-view']
   const isAgent = agentRoutes.some(path => location.pathname.startsWith(path))
+  const [isInWebView] = useState(isWebView2())
+  const [winFormsActive, setWinFormsActive] = useState(false)
+  const [activeWinForm, setActiveWinForm] = useState(null)
+
+  useEffect(() => {
+    if (isInWebView) {
+      const handleMessage = (event) => {
+        const message = event.data
+        if (message === 'winFormsActive:true') {
+          setWinFormsActive(true)
+        } else if (message === 'winFormsActive:false') {
+          setWinFormsActive(false)
+          setActiveWinForm(null)
+        }
+      }
+      window.chrome.webview.addEventListener('message', handleMessage)
+      return () => window.chrome.webview.removeEventListener('message', handleMessage)
+    }
+  }, [isInWebView])
+
+  const handleWinFormActivate = useCallback((formName) => {
+    setActiveWinForm(formName)
+    setWinFormsActive(true)
+  }, [])
+
+  const handleReactActivate = useCallback(() => {
+    setActiveWinForm(null)
+    setWinFormsActive(false)
+  }, [])
+
+  const getWinFormButtonClass = (formName) => {
+    return activeWinForm === formName ? 'nav-link nav-button active' : 'nav-link nav-button'
+  }
 
   return (
     <div className="app">
       <nav className="nav">
         <span className="nav-brand">Vormas System</span>
         <div className="nav-links">
-          <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Dashboard</NavLink>
-          <NavLink to="/fleet" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Fleet</NavLink>
-          <NavLink to="/users" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Users</NavLink>
-          <NavLink to="/rates" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Rates</NavLink>
-          <NavLink to="/damage-claims" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Damage</NavLink>
-          <NavLink to="/calendar" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Calendar</NavLink>
-          <NavLink to="/reports" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Reports</NavLink>
-          <NavLink to="/analytics" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
-            Analytics
-          </NavLink>
+          <ReactNavLink to="/" onActivate={handleReactActivate}>Dashboard</ReactNavLink>
+          <WinFormNavButton formName="openFleet" onActivate={handleWinFormActivate}>Fleet</WinFormNavButton>
+          <WinFormNavButton formName="openUsers" onActivate={handleWinFormActivate}>Users</WinFormNavButton>
+          <WinFormNavButton formName="openRates" onActivate={handleWinFormActivate}>Rates</WinFormNavButton>
+          <WinFormNavButton formName="openDamage" onActivate={handleWinFormActivate}>Damage</WinFormNavButton>
+          <ReactNavLink to="/calendar" onActivate={handleReactActivate}>Calendar</ReactNavLink>
+          <ReactNavLink to="/reports" onActivate={handleReactActivate}>Reports</ReactNavLink>
+          <ReactNavLink to="/analytics" onActivate={handleReactActivate}>Analytics</ReactNavLink>
         </div>
       </nav>
 
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/fleet" element={<FleetManagement />} />
-          <Route path="/users" element={<UserManagement />} />
-          <Route path="/rates" element={<RateManagement />} />
-          <Route path="/damage-claims" element={<DamageClaims />} />
+          {!isInWebView && (
+            <>
+              <Route path="/fleet" element={<FleetManagement />} />
+              <Route path="/users" element={<UserManagement />} />
+              <Route path="/rates" element={<RateManagement />} />
+              <Route path="/damage-claims" element={<DamageClaims />} />
+            </>
+          )}
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/reports" element={<ReportsViewer />} />
           <Route path="/agent" element={<RentalAgent />} />

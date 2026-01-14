@@ -90,6 +90,23 @@ body {
   color: white;
 }
 
+.nav-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.nav-button:hover {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+.nav-button.active {
+  background: var(--accent);
+  color: white;
+}
+
 .main-content {
   padding: 24px;
   max-width: 1400px;

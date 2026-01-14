@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
 
 namespace Vormas.Forms.Controls
@@ -9,6 +10,8 @@ namespace Vormas.Forms.Controls
         private WebView2 _webView;
         private string _baseUrl = "http://localhost:5173";
         private string _initialRoute;
+
+        public event EventHandler<string> OnFormRequest;
 
         public WebViewControl(string initialRoute = "")
         {
@@ -38,6 +41,8 @@ namespace Vormas.Forms.Controls
             {
                 await _webView.EnsureCoreWebView2Async(null);
 
+                _webView.CoreWebView2.WebMessageReceived += OnWebMessageReceived;
+
                 _webView.CoreWebView2.NavigationCompleted += (sender, e) =>
                 {
                     if (!e.IsSuccess)
@@ -46,7 +51,6 @@ namespace Vormas.Forms.Controls
                     }
                 };
 
-                // Navigate to the initial route
                 string fullUrl = $"{_baseUrl}/{_initialRoute.TrimStart('/')}";
                 _webView.CoreWebView2.Navigate(fullUrl);
             }
@@ -65,6 +69,29 @@ namespace Vormas.Forms.Controls
                 );
 
                 ShowErrorMessage(ex.Message);
+            }
+        }
+
+        private void OnWebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs e)
+        {
+            string message = e.TryGetWebMessageAsString();
+            OnFormRequest?.Invoke(this, message);
+        }
+
+        public void SendMessageToReact(string message)
+        {
+            if (_webView?.CoreWebView2 != null)
+            {
+                _webView.CoreWebView2.PostWebMessageAsString(message);
+            }
+        }
+
+        public void NavigateToRoute(string route)
+        {
+            if (_webView?.CoreWebView2 != null)
+            {
+                string fullUrl = $"{_baseUrl}/{route.TrimStart('/')}";
+                _webView.CoreWebView2.Navigate(fullUrl);
             }
         }
 
