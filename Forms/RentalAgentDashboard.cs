@@ -82,6 +82,9 @@ namespace Vormas.Forms
                 case "openReturn":
                     ShowWinFormsControl(new ReturnForm(_rentalService, _damageClaimsService, _session, _billingService, _navigationService));
                     break;
+                case "openInvoice":
+                    ShowWinFormsControl(new BillingForm(_billingService, _session));
+                    break;
                 case "showReact":
                     ShowReactContent();
                     break;
@@ -93,8 +96,17 @@ namespace Vormas.Forms
 
         private void HandleLogout()
         {
-            _session.ClearSession();
-            _navigationService.Navigate(Routes.UserLogin);
+            var result = MessageBox.Show(
+                "Are you sure you want to logout?",
+                "Logout Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                _session.ClearSession();
+                _navigationService.Navigate(Routes.UserLogin);
+            }
         }
 
         private void NavigateContent(string route)

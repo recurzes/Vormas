@@ -70,6 +70,7 @@ namespace Vormas.Database
         {
             int rowsAffected = DbCommandHelper.ExecuteNonQuery(_connStr, "prcUpdateRateConfiguration", cmd =>
             {
+                cmd.Parameters.AddWithValue("p_RateConfigId", rateConfiguration.RateConfigId);
                 cmd.Parameters.AddWithValue("p_CategoryId", rateConfiguration.CategoryId);
                 cmd.Parameters.AddWithValue("p_DailyRate", rateConfiguration.DailyRate);
                 cmd.Parameters.AddWithValue("p_WeeklyRate", rateConfiguration.WeeklyRate);
@@ -80,6 +81,14 @@ namespace Vormas.Database
             });
 
             return rowsAffected;
+        }
+
+        public void DeleteRateConfiguration(int rateConfigId)
+        {
+            DbCommandHelper.ExecuteNonQuery(_connStr, "prcDeleteRateConfiguration", cmd =>
+            {
+                cmd.Parameters.AddWithValue("p_RateConfigId", rateConfigId);
+            });
         }
     }
 }

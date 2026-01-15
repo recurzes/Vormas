@@ -22,14 +22,40 @@ namespace Vormas.Forms.Pages
             _userManager = userManager ?? throw new ArgumentException(nameof(userManager));
             
             InitializeData();
+
+            // Apply styles
+            btnSave.BackColor = Helpers.DesignTokens.PrimaryButton;
+            btnDelete.BackColor = Helpers.DesignTokens.DestructiveButton;
+            btnClear.BackColor = Helpers.DesignTokens.NeutralButton;
         }
         
         private void InitializeData()
         {
             if (_userManager == null) return;
     
+            InitializeRoles();
             ConfigureGrid();
             LoadUsers();
+        }
+
+        public class RoleItem
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+        }
+
+        private void InitializeRoles()
+        {
+            var roles = new System.Collections.Generic.List<RoleItem> 
+            {
+                new RoleItem { Id = 1, Name = "Admin" },
+                new RoleItem { Id = 2, Name = "Rental Agent" }
+            };
+            
+            cmbRole.DataSource = roles;
+            cmbRole.DisplayMember = "Name";
+            cmbRole.ValueMember = "Id";
+            cmbRole.SelectedIndex = -1;
         }
 
         private void ConfigureGrid()
@@ -37,7 +63,9 @@ namespace Vormas.Forms.Pages
             dgvUsers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUsers.MultiSelect = false;
             dgvUsers.ReadOnly = true;
+            dgvUsers.AllowUserToAddRows = false;
             dgvUsers.AutoGenerateColumns = false;
+            dgvUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
                 { DataPropertyName = "UserId", HeaderText = @"User Id", Width = 80 });
@@ -74,8 +102,8 @@ namespace Vormas.Forms.Pages
             txtPhone.Text = user.Phone;
             txtUsername.Text = user.UserName;
             dtmBirthDate.Value = user.DateOfBirth;
-            cmbRole.SelectedItem = user.RoleId;
-            cmbIsActive.SelectedItem = user.IsActive;
+            cmbRole.SelectedValue = user.RoleId;
+            cmbIsActive.SelectedItem = user.IsActive ? "Yes" : "No";
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -123,7 +151,8 @@ namespace Vormas.Forms.Pages
                 _selectedUser.UserName = txtUsername.Text;
                 _selectedUser.DateOfBirth = dtmBirthDate.Value;
                 _selectedUser.PasswordHash = txtPassword.Text;
-                if (cmbRole.SelectedItem != null && int.TryParse(cmbRole.SelectedItem.ToString(), out int roleId))
+
+                if (cmbRole.SelectedValue != null && int.TryParse(cmbRole.SelectedValue.ToString(), out int roleId))
                 {
                     _selectedUser.RoleId = roleId;
                 }

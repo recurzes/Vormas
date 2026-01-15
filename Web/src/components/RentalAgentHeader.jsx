@@ -84,6 +84,7 @@ export default function RentalAgentHeader({ onWinFormActivate, onReactActivate, 
         <WinFormNavButton formName="openRent" activeWinForm={activeWinForm} onActivate={onWinFormActivate}>Rent</WinFormNavButton>
         <WinFormNavButton formName="openReserve" activeWinForm={activeWinForm} onActivate={onWinFormActivate}>Reserve</WinFormNavButton>
         <WinFormNavButton formName="openReturn" activeWinForm={activeWinForm} onActivate={onWinFormActivate}>Return</WinFormNavButton>
+        <WinFormNavButton formName="openInvoice" activeWinForm={activeWinForm} onActivate={onWinFormActivate}>Invoice</WinFormNavButton>
       </div>
       <UserActions onReactActivate={onReactActivate} />
     </nav>

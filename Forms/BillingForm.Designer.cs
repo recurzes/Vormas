@@ -266,10 +266,7 @@ namespace Vormas.Forms
             this.cmbPaymentMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPaymentMethod.FormattingEnabled = true;
             this.cmbPaymentMethod.Items.AddRange(new object[] {
-            "Cash",
-            "Card",
-            "Transfer",
-            "Check"});
+            "Cash"});
             this.cmbPaymentMethod.Location = new System.Drawing.Point(225, 38);
             this.cmbPaymentMethod.Name = "cmbPaymentMethod";
             this.cmbPaymentMethod.Size = new System.Drawing.Size(121, 21);

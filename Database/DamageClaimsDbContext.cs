@@ -18,6 +18,8 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("pReportedByUserId", request.ReportedByUserId);
                 cmd.Parameters.AddWithValue("pPhotoPath", request.PhotoPath);
                 cmd.Parameters.AddWithValue("pInitialCharge", request.InitialChargeAmount ?? 0);
+                cmd.Parameters.AddWithValue("pCustomDescription", request.CustomDescription);
+                cmd.Parameters.AddWithValue("pSeverity", request.Severity ?? "Moderate");
             });
         }
 

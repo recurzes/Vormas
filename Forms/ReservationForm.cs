@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using System.Drawing;
 using System.Linq;
 using Vormas.Interfaces;
 using Vormas.Models;
@@ -22,6 +23,7 @@ namespace Vormas.Forms
             _vehicleBindingSource = new BindingSource();
 
             ConfigureGrid();
+            ApplyModernStyling();
             LoadData();
             SetupEventHandlers();
         }
@@ -32,23 +34,41 @@ namespace Vormas.Forms
             dgvVehicles.MultiSelect = false;
             dgvVehicles.ReadOnly = true;
             dgvVehicles.AutoGenerateColumns = false;
+            dgvVehicles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvVehicles.RowHeadersVisible = false;
+            dgvVehicles.BackgroundColor = Color.White;
+            dgvVehicles.BorderStyle = BorderStyle.None;
+            
+            // Uniform font styling (matching other grids)
+            var headerFont = new Font("Segoe UI", 9F, FontStyle.Regular);
+            var cellFont = new Font("Segoe UI", 9F, FontStyle.Regular);
+            
+            dgvVehicles.ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+            {
+                Font = headerFont,
+                BackColor = Color.FromArgb(240, 240, 240),
+                ForeColor = Color.Black,
+                Alignment = DataGridViewContentAlignment.MiddleLeft
+            };
+            dgvVehicles.DefaultCellStyle = new DataGridViewCellStyle
+            {
+                Font = cellFont,
+                BackColor = Color.White,
+                ForeColor = Color.Black,
+                SelectionBackColor = Color.FromArgb(0, 120, 215),
+                SelectionForeColor = Color.White
+            };
+            dgvVehicles.EnableHeadersVisualStyles = false;
 
-            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "VehicleCode", HeaderText = @"Code", Width = 70 });
-            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "Make", HeaderText = @"Make", Width = 80 });
-            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "Model", HeaderText = @"Model", Width = 80 });
-            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "Year", HeaderText = @"Year", Width = 50 });
-            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "Color", HeaderText = @"Color", Width = 60 });
-            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "LicensePlate", HeaderText = @"Plate", Width = 80 });
-            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "Transmission", HeaderText = @"Trans.", Width = 70 });
-            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "SeatingCapacity", HeaderText = @"Seats", Width = 50 });
+            dgvVehicles.Columns.Clear();
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "VehicleCode", HeaderText = "Code", FillWeight = 15 });
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Make", HeaderText = "Make", FillWeight = 20 });
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Model", HeaderText = "Model", FillWeight = 20 });
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Year", HeaderText = "Year", FillWeight = 10 });
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Color", HeaderText = "Color", FillWeight = 15 });
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "LicensePlate", HeaderText = "Plate", FillWeight = 20 });
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "SeatingCapacity", HeaderText = "Seats", FillWeight = 10 });
+            dgvVehicles.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Transmission", HeaderText = "Trans", FillWeight = 15 });
 
             dgvVehicles.SelectionChanged += DgvVehicles_SelectionChanged;
         }
@@ -72,11 +92,14 @@ namespace Vormas.Forms
         {
             if (_selectedVehicle != null)
             {
-                lblSelectedVehicle.Text = $@"Selected: {_selectedVehicle.Make} {_selectedVehicle.Model} ({_selectedVehicle.VehicleCode})";
+                var customerName = cmbCustomer.Text;
+                lblSummary.Text = $@"Booking Summary: {_selectedVehicle.Make} {_selectedVehicle.Model} ({_selectedVehicle.VehicleCode}) | {customerName}";
+                lblSummary.ForeColor = Color.ForestGreen;
             }
             else
             {
-                lblSelectedVehicle.Text = @"No vehicle selected";
+                lblSummary.Text = @"Booking Summary: No vehicle selected";
+                lblSummary.ForeColor = Color.DimGray;
             }
         }
 
@@ -122,6 +145,7 @@ namespace Vormas.Forms
                     dtpStartDate.Value, dtpEndDate.Value);
                 _vehicleBindingSource.DataSource = vehicles;
                 dgvVehicles.DataSource = _vehicleBindingSource;
+                _vehicleBindingSource.ResetBindings(false);
                 _selectedVehicle = null;
                 UpdateVehicleInfo();
             }
@@ -164,6 +188,13 @@ namespace Vormas.Forms
 
             try
             {
+                if (_sessionService.CurrentUser == null)
+                {
+                    MessageBox.Show(@"User session not found. Please log in again.", @"Authentication Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 var request = new ReservationRequest
                 {
                     CustomerId = (int)cmbCustomer.SelectedValue,
@@ -205,9 +236,58 @@ namespace Vormas.Forms
             UpdateVehicleInfo();
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+
+
+        private void ApplyModernStyling()
         {
-            RefreshAvailableVehicles();
+            // Colors
+            var primaryBlue = Color.FromArgb(0, 120, 215);
+            var successGreen = Color.ForestGreen;
+            var deleteRed = Color.IndianRed;
+            var textFont = new Font("Segoe UI", 10F);
+            var headerFont = new Font("Segoe UI", 12F, FontStyle.Bold);
+
+            // Form
+            this.BackColor = Color.White;
+            this.Font = textFont;
+
+            // Titles
+            lblTitle.ForeColor = Color.Black; 
+            
+            // GroupBoxes
+            grpConfig.Font = new Font("Segoe UI", 10F);
+            grpVehicle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+
+            // Inputs
+            dtpStartDate.Font = textFont;
+            dtpEndDate.Font = textFont;
+            cmbCustomer.Font = textFont;
+            txtNotes.BorderStyle = BorderStyle.FixedSingle;
+
+            // Buttons
+            btnCreateReservation.FlatStyle = FlatStyle.Flat;
+            btnCreateReservation.BackColor = successGreen;
+            btnCreateReservation.ForeColor = Color.White;
+            btnCreateReservation.FlatAppearance.BorderSize = 0;
+            btnCreateReservation.Cursor = Cursors.Hand;
+            btnCreateReservation.Height = 35;
+
+
+
+            btnClear.FlatStyle = FlatStyle.Flat;
+            btnClear.BackColor = Color.DimGray;
+            btnClear.ForeColor = Color.White;
+            btnClear.FlatAppearance.BorderSize = 0;
+            btnClear.Cursor = Cursors.Hand;
+            btnClear.Height = 35;
+
+            // Grid Headers
+            dgvVehicles.EnableHeadersVisualStyles = false;
+            dgvVehicles.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+            dgvVehicles.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dgvVehicles.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            dgvVehicles.DefaultCellStyle.SelectionBackColor = primaryBlue;
+            dgvVehicles.DefaultCellStyle.SelectionForeColor = Color.White;
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Vormas
             routes[Routes.AdminDashboard] = () => new AdminDashboard(_sessionService, _authService, _userManager,
                 _vehicleService, _rateConfigurationService, _damageClaimsService, _navigation);
             
-            _navigation.Navigate(Routes.UserRegister);
+            _navigation.Navigate(Routes.UserLogin);
         }
 
         public INavigationService Navigator => _navigation;

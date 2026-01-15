@@ -363,3 +363,18 @@ MigrationBackup/
 FodyWeavers.xsd
 
 Web/node_modules/
+
+# Temporary Build and Diagnostic Files
+build_*.log
+build_*.txt
+*.log
+errors.txt
+diag.ps1
+search_*.txt
+minimal.log
+msbuild.log
+build_output.txt
+"SQL Script/*.sql"
+!SQL Script/*.sql
+SQL Script/dump-*.sql
+Web/dist/
