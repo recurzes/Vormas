@@ -40,11 +40,11 @@ namespace Vormas.Helpers
                     object value = reader.GetValue(ordinal);
 
                     // Handle specific type conversions
-                    if (property.PropertyType == typeof(bool) && value is sbyte)
+                    if (property.PropertyType == typeof(bool) && (value is sbyte || value is int || value is long || value is ulong || value is byte || value is short || value is ushort || value is uint))
                     {
                         property.SetValue(model, Convert.ToBoolean(value), null);
                     }
-                    else if (property.PropertyType == typeof(bool?) && value is sbyte)
+                    else if (property.PropertyType == typeof(bool?) && (value is sbyte || value is int || value is long || value is ulong || value is byte || value is short || value is ushort || value is uint))
                     {
                         property.SetValue(model, Convert.ToBoolean(value), null);
                     }
@@ -56,7 +56,16 @@ namespace Vormas.Helpers
                     {
                         // Handle nullable types
                         Type underlyingType = Nullable.GetUnderlyingType(property.PropertyType);
-                        property.SetValue(model, Convert.ChangeType(value, underlyingType), null);
+                        
+                        // Special handling for nullable bool from numeric values
+                        if (underlyingType == typeof(bool) && (value is sbyte || value is int || value is long || value is ulong || value is byte || value is short || value is ushort || value is uint))
+                        {
+                            property.SetValue(model, Convert.ToBoolean(value), null);
+                        }
+                        else
+                        {
+                            property.SetValue(model, Convert.ChangeType(value, underlyingType), null);
+                        }
                     }
                     else
                     {

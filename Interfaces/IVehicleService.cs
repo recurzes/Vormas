@@ -12,5 +12,11 @@ namespace Vormas.Interfaces
         Vehicle GetVehicleById(int vehicleId);
         IEnumerable<string> GetVehicleCategories();
         IEnumerable<string> GetVehicleStatuses();
+        List<VehicleFeature> GetAllFeatures();
+        List<int> GetVehicleFeatureIds(int vehicleId);
+        void SaveVehicleFeatures(int vehicleId, List<int> featureIds);
+        List<string> GetVehicleImages(int vehicleId);
+        void SaveVehicleImages(int vehicleId, List<string> imagePaths);
+        void RetireVehicle(int vehicleId);
     }
 }

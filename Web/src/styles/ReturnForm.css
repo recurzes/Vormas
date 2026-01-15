@@ -1,0 +1,349 @@
+/* =========================================
+   RETURN INSPECTION WIZARD
+   ========================================= */
+
+/* Reusing core wizard structure from RentalForm for consistency, 
+   but defining specific Receipt styles here */
+
+.wizard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: calc(100vh - 40px);
+    display: flex;
+    gap: 24px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* --- LEFT PANEL: WIZARD MAIN --- */
+.wizard-main {
+    flex: 1;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.wizard-header {
+    padding: 24px 32px;
+    border-bottom: 1px solid #e2e8f0;
+    background: white;
+}
+
+.wizard-title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.wizard-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* Steps */
+.wizard-steps {
+    display: flex;
+    gap: 40px;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #94a3b8;
+}
+
+.step-item.active {
+    color: #4f46e5;
+}
+
+.step-item.completed {
+    color: #166534;
+}
+
+.step-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.step-item.active .step-circle {
+    background: #4f46e5;
+    color: white;
+    box-shadow: 0 0 0 4px #e0e7ff;
+}
+
+.step-item.completed .step-circle {
+    background: #22c55e;
+    color: white;
+}
+
+.wizard-content {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
+    background: #fff;
+}
+
+.wizard-footer {
+    padding: 24px 32px;
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* --- STEP 1: INTAKE --- */
+.rental-select-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rental-select-card:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.rental-select-card.selected {
+    background: #eef2ff;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px #4f46e5;
+}
+
+.bg-red-50 {
+    background-color: #fef2f2;
+    border: 1px solid #fee2e2;
+}
+
+.text-red-700 {
+    color: #b91c1c;
+}
+
+/* --- STEP 2: INSPECTION --- */
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 16px;
+    margin-top: 24px;
+}
+
+.section-title:first-child {
+    margin-top: 0;
+}
+
+.fuel-slider-wrapper {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+}
+
+.fuel-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.damage-toggle {
+    display: flex;
+    gap: 16px;
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.toggle-btn:hover {
+    border-color: #cbd5e1;
+}
+
+.toggle-btn.yes {
+    color: #b91c1c;
+}
+
+.toggle-btn.yes.active {
+    background: #fef2f2;
+    border-color: #ef4444;
+}
+
+.toggle-btn.no {
+    color: #15803d;
+}
+
+.toggle-btn.no.active {
+    background: #dcfce7;
+    border-color: #22c55e;
+}
+
+/* --- STEP 3: SETTLEMENT --- */
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.pay-btn {
+    padding: 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-weight: 600;
+    color: #475569;
+    transition: all 0.2s;
+}
+
+.pay-btn:hover {
+    background: #f1f5f9;
+}
+
+.pay-btn.active {
+    background: #4f46e5;
+    color: white;
+    border-color: #4f46e5;
+}
+
+/* --- RIGHT PANEL: LIVE RECEIPT --- */
+.receipt-sidebar {
+    width: 340px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #e2e8f0;
+}
+
+/* Paper torn effect logic can be complex, sticking to clean card for now 
+   Adding a top colored band to simulate a receipt printer header */
+.receipt-header {
+    background: #1e293b;
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+.receipt-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.receipt-body {
+    flex: 1;
+    padding: 24px;
+    background: #fff;
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    /* Monospace for styling */
+}
+
+.receipt-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #334155;
+}
+
+.receipt-row.fee {
+    color: #b91c1c;
+    font-weight: 700;
+}
+
+.receipt-divider {
+    height: 1px;
+    border-bottom: 1px dashed #cbd5e1;
+    margin: 16px 0;
+}
+
+.receipt-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+}
+
+.total-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.total-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.deposit-badge {
+    background: #ecfccb;
+    color: #3f6212;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 16px;
+    font-weight: 600;
+    border: 1px dashed #84cc16;
+}
+
+/* Buttons */
+.btn-primary-lg {
+    width: 100%;
+    padding: 16px;
+    background: #22c55e;
+    /* Green for payment */
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary-lg:hover:not(:disabled) {
+    background: #16a34a;
+}
+
+.btn-primary-lg:disabled {
+    background: #cbd5e1;
+    cursor: not-allowed;
+}

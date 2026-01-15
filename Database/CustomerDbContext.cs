@@ -29,6 +29,7 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("@pEmergencyContactPhone",
                     customer.EmergencyContactPhone ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
+                cmd.Parameters.AddWithValue("@pImagePathMain", customer.ImagePathMain ?? (object)DBNull.Value);
             });
 
             customer.CustomerId = customerId;
@@ -119,6 +120,7 @@ namespace Vormas.Database
                     cmd.Parameters.AddWithValue("@pEmergencyContactPhone",
                         customer.EmergencyContactPhone ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
+                    cmd.Parameters.AddWithValue("@pImagePathMain", customer.ImagePathMain ?? (object)DBNull.Value);
                 }
             );
         }
@@ -253,6 +255,100 @@ namespace Vormas.Database
                     cmd.Parameters.AddWithValue("@pIssuingStateProvince", license.IssuingStateProvince);
                     cmd.Parameters.AddWithValue("@pLicenseImagePath", license.LicenseImagePath);
                     cmd.Parameters.AddWithValue("@pIsInternational", license.IsInternational);
+                }
+            );
+        }
+
+        public CustomerHistory GetCustomerHistory(int customerId)
+        {
+            return DbCommandHelper.ExecuteReader(
+                _connStr,
+                "prcGetCustomerHistory",
+                cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId),
+                reader =>
+                {
+                    if (!reader.Read()) return new CustomerHistory { CustomerId = customerId };
+                    return new CustomerHistory
+                    {
+                        CustomerId = reader.GetInt32("CustomerId"),
+                        TotalRentals = reader.GetInt32("TotalRentals"),
+                        TotalAmountSpent = reader.GetDecimal("TotalAmountSpent"),
+                        TotalDamages = reader.GetInt32("TotalDamages"),
+                        TotalDamageCharges = reader.GetDecimal("TotalDamageCharges"),
+                        LateReturns = reader.GetInt32("LateReturns"),
+                        TotalPayments = reader.GetDecimal("TotalPayments")
+                    };
+                }
+            );
+        }
+
+        public List<RentalHistoryItem> GetCustomerRentalHistory(int customerId)
+        {
+            return DbCommandHelper.ExecuteReader(
+                _connStr,
+                "prcGetCustomerRentalHistory",
+                cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId),
+                reader =>
+                {
+                    var items = new List<RentalHistoryItem>();
+                    while (reader.Read())
+                    {
+                        items.Add(new RentalHistoryItem
+                        {
+                            RentalId = reader.GetInt32("RentalId"),
+                            VehicleInfo = reader.GetString("VehicleInfo"),
+                            PickupDate = reader.GetDateTime("PickupDate"),
+                            ReturnDate = reader.IsDBNull(reader.GetOrdinal("ReturnDate")) 
+                                ? (DateTime?)null 
+                                : reader.GetDateTime("ReturnDate"),
+                            Status = reader.GetString("Status"),
+                            TotalAmount = reader.GetDecimal("TotalAmount"),
+                            WasLate = reader.GetInt32("WasLate") == 1,
+                            HasDamage = reader.GetInt32("HasDamage") == 1
+                        });
+                    }
+                    return items;
+                }
+            );
+        }
+        public List<DrivingRecord> GetDrivingRecordsByCustomerId(int customerId)
+        {
+            return DbCommandHelper.ExecuteReader(
+                _connStr,
+                "prcGetDrivingRecordsByCustomerId",
+                cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId),
+                reader => DataReaderMapper.MapToList<DrivingRecord>(reader)
+            );
+        }
+
+        public int AddDrivingRecord(DrivingRecord record)
+        {
+            return DbCommandHelper.ExecuteNonQueryLastIdReturn(
+                _connStr,
+                "prcAddDrivingRecord",
+                cmd =>
+                {
+                    cmd.Parameters.AddWithValue("@pCustomerId", record.CustomerId);
+                    cmd.Parameters.AddWithValue("@pViolationDate", record.ViolationDate);
+                    cmd.Parameters.AddWithValue("@pViolationType", record.ViolationType);
+                    cmd.Parameters.AddWithValue("@pDescription", record.Description ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@pFineAmount", record.FineAmount);
+                    cmd.Parameters.AddWithValue("@pIsMajorViolation", record.IsMajorViolation ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@pIssuingAuthority", record.IssuingAuthority ?? (object)DBNull.Value);
+                }
+            );
+        }
+
+        public (int TotalViolations, int MajorViolations) GetDrivingRecordCount(int customerId)
+        {
+            return DbCommandHelper.ExecuteReader(
+                _connStr,
+                "prcGetDrivingRecordCount",
+                cmd => cmd.Parameters.AddWithValue("@pCustomerId", customerId),
+                reader =>
+                {
+                    if (!reader.Read()) return (0, 0);
+                    return (reader.GetInt32("TotalViolations"), reader.GetInt32("MajorViolations"));
                 }
             );
         }

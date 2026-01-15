@@ -26,5 +26,12 @@ namespace Vormas.Interfaces
 
         DriverLicense GetLicenseByCustomerId(int customerId);
         int UpsertLicense(DriverLicense license);
+        
+        CustomerHistory GetCustomerHistory(int customerId);
+        List<RentalHistoryItem> GetCustomerRentalHistory(int customerId);
+        
+        List<DrivingRecord> GetDrivingRecordsByCustomerId(int customerId);
+        int AddDrivingRecord(DrivingRecord record);
+        (int TotalViolations, int MajorViolations) GetDrivingRecordCount(int customerId);
     }
 }

@@ -4,15 +4,8 @@ namespace Vormas.Forms
 {
     partial class AdminDashboard
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -25,36 +18,35 @@ namespace Vormas.Forms
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.pnlContent = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(336, 132);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 23);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Admin";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // AdminDashboard
-            // 
+            
+            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Size = new System.Drawing.Size(1183, 56);
+            this.pnlHeader.TabIndex = 0;
+            
+            this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlContent.Location = new System.Drawing.Point(0, 56);
+            this.pnlContent.Name = "pnlContent";
+            this.pnlContent.Size = new System.Drawing.Size(1183, 577);
+            this.pnlContent.TabIndex = 1;
+            
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pnlContent);
+            this.Controls.Add(this.pnlHeader);
             this.Name = "AdminDashboard";
-            this.Text = "AdminDashboard";
+            this.Size = new System.Drawing.Size(1183, 633);
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel pnlHeader;
+        private System.Windows.Forms.Panel pnlContent;
 
         #endregion
     }

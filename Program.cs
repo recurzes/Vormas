@@ -21,9 +21,14 @@ namespace Vormas
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
+            // Ensure Database is Seeded
+            Seeder.Seed();
+            
             // Manual composition / DI
             var dbContext = new UserDbContext();
             var customerDbContext = new CustomerDbContext();
+            var damageClaimsDbContext = new DamageClaimsDbContext();
+            IRateConfigurationService rateConfigurationService = new RateConfigurationDbContext();
             ICustomerRepository customerRepository = new CustomerRepository(customerDbContext);
             IVehicleRepository vehicleRepository = new VehicleDbContext();
             IUserManager userManager = new UserManager(dbContext);
@@ -31,8 +36,15 @@ namespace Vormas
             IAuthService authService = new AuthManager(userManager, sessionService);
             VehicleService vehicleService = new VehicleService(vehicleRepository);
             ICustomerService customerService = new CustomerService(customerRepository);
+            IDamageClaimsService damageClaimsService = new DamageClaimsService(damageClaimsDbContext);
+            IRentalRepository rentalRepository = new RentalDbContext();
+            IRentalService rentalService = new RentalService(rentalRepository);
+            var billingDbContext = new BillingDbContext();
+            IBillingService billingService = new BillingService(billingDbContext);
+            IReservationRepository reservationRepository = new ReservationDbContext();
+            IReservationService reservationService = new ReservationService(reservationRepository);
             
-            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService));
+            Application.Run(new Form1(userManager, authService, sessionService, vehicleService, customerService, rateConfigurationService, damageClaimsService, rentalService, billingService, reservationService));
         }
     }
 }
