@@ -70,7 +70,7 @@ namespace Vormas.Forms
                     ShowWinFormsControl(new UserManagementControl(_authService, _userManager));
                     break;
                 case "openRates":
-                    ShowWinFormsControl(new RateConfigurationForm(_rateConfigurationService));
+                    ShowWinFormsControl(new RateConfigurationForm(_rateConfigurationService, _vehicleService));
                     break;
                 case "openDamage":
                     ShowWinFormsControl(new DamageClaimsForm(_damageClaimsService, _session));
@@ -86,8 +86,17 @@ namespace Vormas.Forms
 
         private void HandleLogout()
         {
-            _session.ClearSession();
-            _navigation.Navigate(Routes.UserLogin);
+            var result = MessageBox.Show(
+                "Are you sure you want to logout?",
+                "Logout Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                _session.ClearSession();
+                _navigation.Navigate(Routes.UserLogin);
+            }
         }
 
         private void NavigateContent(string route)

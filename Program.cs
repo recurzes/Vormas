@@ -21,6 +21,9 @@ namespace Vormas
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
+            // Ensure Database is Seeded
+            Seeder.Seed();
+            
             // Manual composition / DI
             var dbContext = new UserDbContext();
             var customerDbContext = new CustomerDbContext();

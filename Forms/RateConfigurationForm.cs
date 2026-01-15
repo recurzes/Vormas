@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Vormas.Interfaces;
 using Vormas.Models;
@@ -9,26 +11,67 @@ namespace Vormas.Forms
     public partial class RateConfigurationForm : PageControl
     {
         private readonly IRateConfigurationService _rateConfigService;
+        private readonly IVehicleService _vehicleService;
         private RateConfigurations _selectedRateConfig;
         private readonly BindingSource _bindingSource;
 
-        public RateConfigurationForm(IRateConfigurationService rateConfigService)
+        public RateConfigurationForm(IRateConfigurationService rateConfigService, IVehicleService vehicleService)
         {
             InitializeComponent();
 
             _bindingSource = new BindingSource();
             _rateConfigService = rateConfigService ?? throw new ArgumentNullException(nameof(rateConfigService));
+            _vehicleService = vehicleService ?? throw new ArgumentNullException(nameof(vehicleService));
             _selectedRateConfig = new RateConfigurations();
 
             InitializeData();
+
+            // Apply styles
+            btnSave.BackColor = Helpers.DesignTokens.PrimaryButton;
+            btnDelete.BackColor = Helpers.DesignTokens.DestructiveButton;
+            btnClear.BackColor = Helpers.DesignTokens.NeutralButton;
         }
 
         private void InitializeData()
         {
             if (_rateConfigService == null) return;
 
+            LoadCategories();
             ConfigureGrid();
             LoadRateConfigs();
+        }
+        
+        private class CategoryOption
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+
+            public override string ToString()
+            {
+                return Name;
+            }
+        }
+
+        private void LoadCategories()
+        {
+            try
+            {
+                var categories = _vehicleService.GetVehicleCategories().ToList();
+                var options = new List<CategoryOption>();
+                for (int i = 0; i < categories.Count; i++)
+                {
+                    options.Add(new CategoryOption { Id = i + 1, Name = categories[i] });
+                }
+
+                cmbCategory.DataSource = options;
+                cmbCategory.DisplayMember = "Name";
+                cmbCategory.ValueMember = "Id";
+                cmbCategory.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($@"Error loading categories: {ex.Message}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadRateConfigs()
@@ -51,24 +94,71 @@ namespace Vormas.Forms
             dgvRateConfigs.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvRateConfigs.MultiSelect = false;
             dgvRateConfigs.ReadOnly = true;
+            dgvRateConfigs.AllowUserToAddRows = false;
             dgvRateConfigs.AutoGenerateColumns = false;
+            dgvRateConfigs.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             dgvRateConfigs.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "RateConfigId", HeaderText = @"Rate Config Id", Width = 80 });
+                { DataPropertyName = "RateConfigId", HeaderText = @"ID", FillWeight = 20, MinimumWidth = 30 });
+            
+            // We want to show Category Name in the grid, but the model has ID.
+            // Ideally we'd map this, but for now let's keep showing ID or try to map if possible.
+            // Since we only have ID in model, we'll stick to ID for now in the grid, or we could add a formatting handler.
             dgvRateConfigs.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "CategoryId", HeaderText = @"CategoryId", Width = 40 });
+                { DataPropertyName = "CategoryId", HeaderText = @"Category ID", FillWeight = 20, MinimumWidth = 30 });
+                
             dgvRateConfigs.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "DailyRate", HeaderText = @"Daily Rate" });
+            {
+                DataPropertyName = "DailyRate", HeaderText = @"Daily", FillWeight = 40,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "F2" }
+            });
             dgvRateConfigs.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "WeeklyRate", HeaderText = @"Weekly Rate" });
+            {
+                DataPropertyName = "WeeklyRate", HeaderText = @"Weekly", FillWeight = 40,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "F2" }
+            });
             dgvRateConfigs.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "MonthlyRate", HeaderText = @"Monthly Rate" });
+            {
+                DataPropertyName = "MonthlyRate", HeaderText = @"Monthly", FillWeight = 40,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "F2" }
+            });
             dgvRateConfigs.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "HourlyRate", HeaderText = @"Hourly Rate" });
+            {
+                DataPropertyName = "HourlyRate", HeaderText = @"Hourly", FillWeight = 40,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "F2" }
+            });
             dgvRateConfigs.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "EffectiveFrom", HeaderText = @"Effective From" });
+            {
+                DataPropertyName = "EffectiveFrom", HeaderText = @"From", FillWeight = 40,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "d" }
+            });
             dgvRateConfigs.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "EffectiveTo", HeaderText = @"Effective To", Width = 50 });
+            {
+                DataPropertyName = "EffectiveTo", HeaderText = @"To", FillWeight = 40,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "d" }
+            });
+            
+            dgvRateConfigs.CellFormatting += DgvRateConfigs_CellFormatting;
+        }
+
+        private void DgvRateConfigs_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvRateConfigs.Columns[e.ColumnIndex].DataPropertyName == "CategoryId" && e.Value != null)
+            {
+                if (int.TryParse(e.Value.ToString(), out int catId))
+                {
+                    // Map ID back to name for display
+                    if (cmbCategory.DataSource is List<CategoryOption> options)
+                    {
+                        var match = options.FirstOrDefault(o => o.Id == catId);
+                        if (match != null)
+                        {
+                            e.Value = match.Name;
+                            e.FormattingApplied = true;
+                        }
+                    }
+                }
+            }
         }
 
         private void dgvRateConfigs_SelectionChanged(object sender, EventArgs e)
@@ -82,7 +172,8 @@ namespace Vormas.Forms
         private void PopulateFields(RateConfigurations rateConfigurations)
         {
             _selectedRateConfig = rateConfigurations;
-            cmbCategory.SelectedItem = rateConfigurations.CategoryId;
+            cmbCategory.SelectedValue = rateConfigurations.CategoryId;
+            
             txtDailyRate.Text =
                 rateConfigurations.DailyRate.ToString(System.Globalization.CultureInfo.InvariantCulture);
             txtWeeklyRate.Text =
@@ -130,13 +221,8 @@ namespace Vormas.Forms
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
-                if (!int.TryParse(cmbCategory.SelectedItem.ToString(), out int categoryId))
-                {
-                    MessageBox.Show(@"Please select a valid category", @"Validation Error", MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning);
-                    return;
-                }
+                
+                int categoryId = (int)cmbCategory.SelectedValue;
 
                 _selectedRateConfig.CategoryId = categoryId;
                 _selectedRateConfig.DailyRate = dailyRate;
@@ -184,8 +270,7 @@ namespace Vormas.Forms
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
             try
             {
-                MessageBox.Show(@"Delete method not yet implemented in service", @"Info", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                _rateConfigService.DeleteRateConfiguration(_selectedRateConfig.RateConfigId);
                 LoadRateConfigs();
                 ClearInputs();
             }

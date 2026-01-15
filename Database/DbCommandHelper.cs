@@ -18,7 +18,23 @@ namespace Vormas.Database
                     
                     conn.Open();
                     object result = command.ExecuteScalar();
-                    return result != null && result != DBNull.Value ? Convert.ToInt32(result) : 0;
+                    
+                    // Handle null, DBNull, or non-numeric results gracefully
+                    if (result == null || result == DBNull.Value)
+                        return 0;
+                    
+                    // Try to convert to int, return 0 if it's not a number (e.g., status strings like "Completed")
+                    if (result is int intResult)
+                        return intResult;
+                    if (result is long longResult)
+                        return (int)longResult;
+                    if (result is decimal decimalResult)
+                        return (int)decimalResult;
+                    if (int.TryParse(result.ToString(), out int parsed))
+                        return parsed;
+                    
+                    // For string results like "Completed", return 0 (success indicator)
+                    return 0;
                 }
             }
         }

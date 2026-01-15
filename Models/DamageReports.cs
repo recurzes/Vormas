@@ -10,6 +10,8 @@ namespace Vormas.Models
         public int ReportedByUserId { get; set; }
         public string? PhotoPath { get; set; }
         public decimal? InitialChargeAmount { get; set; }
+        public string? CustomDescription { get; set; }
+        public string? Severity { get; set; }
     }
     
     public class DamageReports

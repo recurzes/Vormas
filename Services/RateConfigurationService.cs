@@ -42,5 +42,10 @@ namespace Vormas.Services
         {
             return _repository.UpdateRateConfigurations(rateConfiguration);
         }
+
+        public void DeleteRateConfiguration(int rateConfigId)
+        {
+            _repository.DeleteRateConfiguration(rateConfigId);
+        }
     }
 }

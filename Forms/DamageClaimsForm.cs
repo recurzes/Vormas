@@ -30,6 +30,15 @@ namespace Vormas.Forms
             InitializeStatusFilter();
             InitializeData();
             WireUpEvents();
+
+            // Apply styles
+            btnApprove.BackColor = Helpers.DesignTokens.PrimaryButton;
+            btnReject.BackColor = Helpers.DesignTokens.DestructiveButton;
+            btnClear.BackColor = Helpers.DesignTokens.NeutralButton;
+            btnSearch.BackColor = Helpers.DesignTokens.GridSelection; // Or Neutral, typically search is neutral or primary-ish. Let's stick to GridSelection or just Primary.
+            // Actually, for search, let's leave it or use Primary if it's the main action in that panel.
+            btnSearch.ForeColor = Color.White;
+            btnSearch.BackColor = Helpers.DesignTokens.PrimaryButton;
         }
 
         private void WireUpEvents()
@@ -47,28 +56,30 @@ namespace Vormas.Forms
             dgvDamageClaims.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDamageClaims.MultiSelect = false;
             dgvDamageClaims.ReadOnly = true;
+            dgvDamageClaims.AllowUserToAddRows = false;
             dgvDamageClaims.AutoGenerateColumns = false;
+            dgvDamageClaims.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             dgvDamageClaims.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "DamageReportId", HeaderText = @"ID", Width = 40 });
+                { DataPropertyName = "DamageReportId", HeaderText = @"ID", FillWeight = 20 });
             dgvDamageClaims.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "CustomerName", HeaderText = @"Customer", Width = 120 });
+                { DataPropertyName = "CustomerName", HeaderText = @"Customer", FillWeight = 60 });
             dgvDamageClaims.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "VehicleInfo", HeaderText = @"Vehicle", Width = 150 });
+                { DataPropertyName = "VehicleInfo", HeaderText = @"Vehicle", FillWeight = 80 });
             dgvDamageClaims.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "DamageDescription", HeaderText = @"Damage", Width = 120 });
+                { DataPropertyName = "DamageDescription", HeaderText = @"Damage", FillWeight = 80 });
             dgvDamageClaims.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "Severity", HeaderText = @"Severity", Width = 70 });
+                { DataPropertyName = "Severity", HeaderText = @"Severity", FillWeight = 40 });
             dgvDamageClaims.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "EstimatedRepairCost", HeaderText = @"Est. Cost", Width = 70,
+                DataPropertyName = "EstimatedRepairCost", HeaderText = @"Est. Cost", FillWeight = 40,
                 DefaultCellStyle = new DataGridViewCellStyle { Format = "C2" }
             });
             dgvDamageClaims.Columns.Add(new DataGridViewTextBoxColumn
-                { DataPropertyName = "Status", HeaderText = @"Status", Width = 90 });
+                { DataPropertyName = "Status", HeaderText = @"Status", FillWeight = 50 });
             dgvDamageClaims.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "CreatedAt", HeaderText = @"Reported", Width = 100,
+                DataPropertyName = "CreatedAt", HeaderText = @"Reported", FillWeight = 50,
                 DefaultCellStyle = new DataGridViewCellStyle { Format = "yyyy-MM-dd" }
             });
         }

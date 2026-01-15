@@ -19,6 +19,10 @@ namespace Vormas.Forms
         private List<InvoiceLineItem> _currentLineItems;
         private PrintDocument _printDocument;
         private int _currentPrintPage;
+        
+        private Label lblTotalPayments;
+        private Label lblTotalPaid;
+        private Label lblChange;
 
         public BillingForm(IBillingService billingService, ISessionService sessionService)
         {
@@ -33,7 +37,40 @@ namespace Vormas.Forms
             ConfigureInvoiceGrid();
             ConfigureLineItemGrid();
             SetupPrintDocument();
+            SetupExtraLabels();
             LoadInvoices();
+        }
+
+        private void SetupExtraLabels()
+        {
+            // Increase height to fit all labels
+            groupBoxTotals.Height = 160;
+            
+            // Move existing labels to top-right column
+            label11.Location = new Point(352, 20); // "Deposit Applied" title
+            lblDeposit.Location = new Point(500, 20);
+            
+            var lblPayTitle = new Label { Text = "Addtl. Payments:", AutoSize = true, Location = new Point(352, 40) };
+            lblTotalPayments = new Label { AutoSize = true, Location = new Point(500, 40), Font = new Font("Segoe UI", 9F) };
+            
+            var lblPaidTitle = new Label { Text = "Total Received:", AutoSize = true, Location = new Point(352, 60), Font = new Font("Segoe UI", 9F, FontStyle.Bold) };
+            lblTotalPaid = new Label { AutoSize = true, Location = new Point(500, 60), Font = new Font("Segoe UI", 9F, FontStyle.Bold) };
+
+            label13.Location = new Point(352, 85); // Balance Due title
+            lblBalanceDue.Location = new Point(500, 82);
+
+            var lblChangeTitle = new Label { Text = "Change:", AutoSize = true, Location = new Point(352, 110), Font = new Font("Segoe UI", 9F, FontStyle.Bold) };
+            lblChange = new Label { AutoSize = true, Location = new Point(500, 108), Font = new Font("Segoe UI", 11F, FontStyle.Bold), ForeColor = Color.Green };
+
+            label15.Location = new Point(23, 130); // Status title
+            lblStatus.Location = new Point(80, 128);
+
+            groupBoxTotals.Controls.Add(lblPayTitle);
+            groupBoxTotals.Controls.Add(lblTotalPayments);
+            groupBoxTotals.Controls.Add(lblPaidTitle);
+            groupBoxTotals.Controls.Add(lblTotalPaid);
+            groupBoxTotals.Controls.Add(lblChangeTitle);
+            groupBoxTotals.Controls.Add(lblChange);
         }
 
         public override void OnNavigatedTo()
@@ -138,6 +175,16 @@ namespace Vormas.Forms
                 if (statusFilter == "All") statusFilter = null;
 
                 var invoices = _billingService.GetAllInvoices(statusFilter);
+                
+                // Compute correct balance for each invoice (total - deposit - payments)
+                foreach (var inv in invoices)
+                {
+                    var payments = _billingService.GetPaymentsByInvoiceId(inv.InvoiceId);
+                    decimal totalPaid = inv.DepositApplied;
+                    foreach (var p in payments) totalPaid += p.Amount;
+                    inv.BalanceDue = Math.Max(0, inv.TotalAmount - totalPaid);
+                }
+                
                 _invoiceBindingSource.DataSource = invoices;
                 dgvInvoices.DataSource = _invoiceBindingSource;
 
@@ -166,8 +213,32 @@ namespace Vormas.Forms
                 lblSubtotal.Text = $@"₱{invoice.SubtotalAmount:N2}";
                 lblTax.Text = $@"₱{invoice.TaxAmount:N2}";
                 lblTotal.Text = $@"₱{invoice.TotalAmount:N2}";
+                
+                var payments = _billingService.GetPaymentsByInvoiceId(invoice.InvoiceId);
+                decimal totalPayments = 0;
+                foreach (var p in payments) totalPayments += p.Amount;
+
+                decimal totalReceived = invoice.DepositApplied + totalPayments;
+                decimal balance = Math.Max(0, invoice.TotalAmount - totalReceived);
+                decimal change = Math.Max(0, totalReceived - invoice.TotalAmount);
+
                 lblDeposit.Text = $@"₱{invoice.DepositApplied:N2}";
-                lblBalanceDue.Text = $@"₱{invoice.BalanceDue:N2}";
+                lblTotalPayments.Text = $@"₱{totalPayments:N2}";
+                lblTotalPaid.Text = $@"₱{totalReceived:N2}";
+                lblBalanceDue.Text = $@"₱{balance:N2}";
+                lblChange.Text = $@"₱{change:N2}";
+                
+                // Show last payment reference in textbox
+                if (payments.Count > 0)
+                {
+                    txtReferenceNumber.Text = payments[payments.Count - 1].ReferenceNumber ?? "";
+                }
+                else
+                {
+                    txtReferenceNumber.Text = "";
+                }
+                
+                lblBalanceDue.ForeColor = balance > 0 ? Color.DarkRed : Color.Black;
                 lblStatus.Text = invoice.Status;
                 
                 switch (invoice.Status)
@@ -295,8 +366,15 @@ namespace Vormas.Forms
             g.DrawLine(Pens.Black, leftMargin, yPos, rightMargin, yPos);
             yPos += 15;
             
-            float totalLabelX = leftMargin + 350;
-            float totalValueX = leftMargin + 450;
+            float totalLabelX = leftMargin + 300;
+            float totalValueX = leftMargin + 430;
+
+            var payments = _billingService.GetPaymentsByInvoiceId(_selectedInvoice.InvoiceId);
+            decimal totalPaymentsAmt = 0;
+            foreach (var p in payments) totalPaymentsAmt += p.Amount;
+            decimal totalReceivedAmt = _selectedInvoice.DepositApplied + totalPaymentsAmt;
+            decimal balanceAmt = Math.Max(0, _selectedInvoice.TotalAmount - totalReceivedAmt);
+            decimal changeAmt = Math.Max(0, totalReceivedAmt - _selectedInvoice.TotalAmount);
 
             g.DrawString("Subtotal:", normalFont, Brushes.Black, totalLabelX, yPos);
             g.DrawString($"₱{_selectedInvoice.SubtotalAmount:N2}", normalFont, Brushes.Black, totalValueX, yPos);
@@ -306,21 +384,59 @@ namespace Vormas.Forms
             g.DrawString($"₱{_selectedInvoice.TaxAmount:N2}", normalFont, Brushes.Black, totalValueX, yPos);
             yPos += 18;
 
-            g.DrawString("Total:", headerFont, Brushes.Black, totalLabelX, yPos);
+            g.DrawString("Total Bill:", headerFont, Brushes.Black, totalLabelX, yPos);
             g.DrawString($"₱{_selectedInvoice.TotalAmount:N2}", headerFont, Brushes.Black, totalValueX, yPos);
-            yPos += 20;
+            yPos += 25;
 
-            g.DrawString("Deposit Applied:", normalFont, Brushes.Black, totalLabelX, yPos);
-            g.DrawString($"(₱{_selectedInvoice.DepositApplied:N2})", normalFont, Brushes.Black, totalValueX, yPos);
+            g.DrawLine(Pens.Gray, totalLabelX, yPos, rightMargin, yPos);
+            yPos += 8;
+
+            g.DrawString("Deposit:", normalFont, Brushes.Black, totalLabelX, yPos);
+            g.DrawString($"₱{_selectedInvoice.DepositApplied:N2}", normalFont, Brushes.Black, totalValueX, yPos);
             yPos += 18;
 
-            g.DrawString("Balance Due:", headerFont, Brushes.Black, totalLabelX, yPos);
-            g.DrawString($"₱{_selectedInvoice.BalanceDue:N2}", headerFont, Brushes.DarkRed, totalValueX, yPos);
+            g.DrawString("Payments:", normalFont, Brushes.Black, totalLabelX, yPos);
+            g.DrawString($"₱{totalPaymentsAmt:N2}", normalFont, Brushes.Black, totalValueX, yPos);
+            yPos += 18;
+
+            g.DrawString("Total Received:", headerFont, Brushes.Black, totalLabelX, yPos);
+            g.DrawString($"₱{totalReceivedAmt:N2}", headerFont, Brushes.Black, totalValueX, yPos);
+            yPos += 25;
+
+            g.DrawLine(Pens.Black, totalLabelX, yPos, rightMargin, yPos);
+            yPos += 8;
+
+            if (balanceAmt > 0)
+            {
+                g.DrawString("Balance Due:", headerFont, Brushes.Black, totalLabelX, yPos);
+                g.DrawString($"₱{balanceAmt:N2}", headerFont, Brushes.DarkRed, totalValueX, yPos);
+            }
+            else
+            {
+                g.DrawString("Balance Due:", headerFont, Brushes.Black, totalLabelX, yPos);
+                g.DrawString("₱0.00", headerFont, Brushes.Black, totalValueX, yPos);
+                yPos += 20;
+                g.DrawString("Change:", headerFont, Brushes.Black, totalLabelX, yPos);
+                g.DrawString($"₱{changeAmt:N2}", headerFont, Brushes.Green, totalValueX, yPos);
+            }
             yPos += 30;
             
             g.DrawString($"Status: {_selectedInvoice.Status}", headerFont,
                 _selectedInvoice.Status == "Paid" ? Brushes.Green : Brushes.Red, leftMargin, yPos);
-            yPos += 40;
+            yPos += 20;
+            
+            // Print payment references
+            if (payments.Count > 0)
+            {
+                g.DrawString("Payment Reference(s):", normalFont, Brushes.Black, leftMargin, yPos);
+                yPos += 15;
+                foreach (var p in payments)
+                {
+                    g.DrawString($"  • {p.ReferenceNumber} ({p.Method}) - ₱{p.Amount:N2}", smallFont, Brushes.Gray, leftMargin, yPos);
+                    yPos += 12;
+                }
+            }
+            yPos += 20;
             
             g.DrawLine(Pens.Gray, leftMargin, yPos, rightMargin, yPos);
             yPos += 10;
@@ -340,6 +456,13 @@ namespace Vormas.Forms
                 return;
             }
 
+            if (_sessionService.CurrentUser == null)
+            {
+                MessageBox.Show(@"You must be logged in to record a payment.", @"Session Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (numPaymentAmount.Value <= 0)
             {
                 MessageBox.Show(@"Please enter a valid payment amount.", @"Validation Error",
@@ -347,10 +470,23 @@ namespace Vormas.Forms
                 return;
             }
 
-            if (numPaymentAmount.Value > _selectedInvoice.BalanceDue)
+            // Calculate actual balance (not from DB which may be stale/negative)
+            var payments = _billingService.GetPaymentsByInvoiceId(_selectedInvoice.InvoiceId);
+            decimal totalPaid = _selectedInvoice.DepositApplied;
+            foreach (var p in payments) totalPaid += p.Amount;
+            decimal actualBalance = Math.Max(0, _selectedInvoice.TotalAmount - totalPaid);
+
+            if (actualBalance <= 0)
+            {
+                MessageBox.Show(@"This invoice is already fully paid.", @"Info",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (numPaymentAmount.Value > actualBalance)
             {
                 var result = MessageBox.Show(
-                    $@"Payment amount (₱{numPaymentAmount.Value:N2}) exceeds balance due (₱{_selectedInvoice.BalanceDue:N2}). Continue?",
+                    $@"Payment amount (₱{numPaymentAmount.Value:N2}) exceeds balance due (₱{actualBalance:N2}). Continue?",
                     @"Confirm Overpayment",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result != DialogResult.Yes) return;
@@ -358,23 +494,25 @@ namespace Vormas.Forms
 
             try
             {
+                // Auto-generate reference number: CASH-InvoiceId-Timestamp
+                string autoRef = $"CASH-{_selectedInvoice.InvoiceId}-{DateTime.Now:yyyyMMddHHmmss}";
+                
                 var payment = new PaymentRequest
                 {
                     InvoiceId = _selectedInvoice.InvoiceId,
                     Amount = numPaymentAmount.Value,
-                    Method = cmbPaymentMethod.SelectedItem?.ToString() ?? "Cash",
-                    ReferenceNumber = txtReferenceNumber.Text,
+                    Method = "Cash",
+                    ReferenceNumber = autoRef,
                     ProcessedByUserId = _sessionService.CurrentUser.UserId
                 };
 
                 _billingService.RecordPayment(payment);
 
-                MessageBox.Show(@"Payment recorded successfully!", @"Success",
+                MessageBox.Show($@"Payment recorded successfully!{Environment.NewLine}Reference: {autoRef}", @"Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 
                 LoadInvoices();
                 numPaymentAmount.Value = 0;
-                txtReferenceNumber.Text = "";
             }
             catch (Exception ex)
             {
@@ -398,7 +536,10 @@ namespace Vormas.Forms
             lblTax.Text = @"₱0.00";
             lblTotal.Text = @"₱0.00";
             lblDeposit.Text = @"₱0.00";
+            lblTotalPayments.Text = @"₱0.00";
+            lblTotalPaid.Text = @"₱0.00";
             lblBalanceDue.Text = @"₱0.00";
+            lblChange.Text = @"₱0.00";
             lblStatus.Text = "";
 
             btnPrint.Enabled = false;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Vormas.Interfaces;
 using Vormas.Models;
@@ -20,6 +21,9 @@ namespace Vormas.Forms
         private Rental _selectedRental;
         private readonly List<DamageClaimRequest> _pendingDamageClaims = new List<DamageClaimRequest>();
         
+        private ComboBox cmbSeverity;
+        private NumericUpDown numDamageCost;
+        
         private const decimal MaxDailyMileage = 200.00m;
         private const int LateReturnGraceMinutes = 30;
         
@@ -35,10 +39,198 @@ namespace Vormas.Forms
             _rentalBindingSource = new BindingSource();
             _damageBindingSource = new BindingSource();
 
+            // Rebuild UI for modern layout
+            SetupRedesignedLayout();
+
             ConfigureGrid();
             ConfigureDamageGrid();
             LoadData();
             LoadDamageTypes();
+        }
+        private void SetupRedesignedLayout()
+        {
+            // 1. Reset Root Container
+            this.Controls.Clear();
+            this.BackColor = SystemColors.Control;
+            this.Font = new Font("Segoe UI", 9F);
+
+            // 2. MAIN LAYOUT (Vertical Stack)
+            var tlpMain = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 1,
+                RowCount = 3,
+                Padding = new Padding(10)
+            };
+            tlpMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));  // Header
+            tlpMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 220F)); // Master Grid
+            tlpMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));  // Detail Workspace
+
+            // --- SECTION 1: HEADER ---
+            var pnlHeaderBar = new Panel { Dock = DockStyle.Fill };
+            var lblTitleMinimal = new Label { Text = "Vehicle Return Processing", Font = new Font("Segoe UI", 12F, FontStyle.Bold), AutoSize = true, Location = new Point(0, 5) };
+            
+            chkExpectedToday.AutoSize = true;
+            chkExpectedToday.Anchor = AnchorStyles.Right | AnchorStyles.Top;
+            chkExpectedToday.Location = new Point(780 - 180, 10); // Approximation, layout will position it
+            
+            pnlHeaderBar.Controls.Add(lblTitleMinimal);
+            pnlHeaderBar.Controls.Add(chkExpectedToday);
+            tlpMain.Controls.Add(pnlHeaderBar, 0, 0);
+
+            // --- SECTION 2: ACTIVE RENTALS ---
+            var grpRentalsMinimal = new GroupBox { Text = "Active Rentals", Dock = DockStyle.Fill, Font = new Font("Segoe UI", 9F, FontStyle.Bold) };
+            dgvRentals.Dock = DockStyle.Fill;
+            dgvRentals.BackgroundColor = Color.White;
+            dgvRentals.BorderStyle = BorderStyle.FixedSingle;
+            dgvRentals.RowHeadersVisible = false;
+            dgvRentals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvRentals.Font = new Font("Segoe UI", 9F);
+            grpRentalsMinimal.Controls.Add(dgvRentals);
+            tlpMain.Controls.Add(grpRentalsMinimal, 0, 1);
+
+            // --- SECTION 3: DETAIL WORKSPACE (2 Columns) ---
+            var tlpWorkspace = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 1 };
+            tlpWorkspace.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tlpWorkspace.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+
+            // -- COLUMN LEFT (Return & Damage) --
+            var tlpLeft = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2 };
+            tlpLeft.RowStyles.Add(new RowStyle(SizeType.Absolute, 180F)); // Return Details + Metrics
+            tlpLeft.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));  // Damage Assessment
+
+            // A: Return Details
+            var grpReturnMinimal = new GroupBox { Text = "Return Information", Dock = DockStyle.Fill, Font = new Font("Segoe UI", 9F, FontStyle.Bold), Padding = new Padding(8) };
+            var tlpReturnInput = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 3 };
+            tlpReturnInput.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
+            
+            Action<string, Control, int> addMinimalRow = (txt, ctrl, row) => {
+                tlpReturnInput.Controls.Add(new Label { Text = txt, AutoSize = true, Anchor = AnchorStyles.Left | AnchorStyles.Top, Padding = new Padding(0, 5, 0, 0), Font = new Font("Segoe UI", 9F) }, 0, row);
+                tlpReturnInput.Controls.Add(ctrl, 1, row);
+                ctrl.Dock = DockStyle.Top;
+                ctrl.Font = new Font("Segoe UI", 9F);
+                if (ctrl is NumericUpDown) ctrl.Width = 80;
+            };
+            addMinimalRow("Return Date:", dtpReturnDate, 0);
+            addMinimalRow("Odometer:", numOdometer, 1);
+            addMinimalRow("Fuel (0-1):", numFuelLevel, 2);
+
+            var flpMetricsMinimal = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 40, FlowDirection = FlowDirection.LeftToRight };
+            foreach (var lbl in new[] { lblDuration, lblMileage }) {
+                lbl.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+                lbl.AutoSize = true;
+                lbl.Margin = new Padding(0, 5, 15, 0);
+                flpMetricsMinimal.Controls.Add(lbl);
+            }
+            grpReturnMinimal.Controls.Add(tlpReturnInput);
+            grpReturnMinimal.Controls.Add(flpMetricsMinimal);
+            tlpLeft.Controls.Add(grpReturnMinimal, 0, 0);
+
+            // B: Damage Log
+            var grpDamageMinimal = new GroupBox { Text = "Damage Assessment", Dock = DockStyle.Fill, Font = new Font("Segoe UI", 9F, FontStyle.Bold), Padding = new Padding(8) };
+            var tlpDamageContent = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 3 };
+            tlpDamageContent.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); // Type selector
+            tlpDamageContent.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F)); // Buttons
+            tlpDamageContent.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // Grid
+
+            var pnlDamageType = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.LeftToRight, AutoSize = true };
+            pnlDamageType.Controls.Add(new Label { Text = "Type:", AutoSize = true, Margin = new Padding(0, 5, 2, 0), Font = new Font("Segoe UI", 9F) });
+            cmbDamageType.Width = 140;
+            cmbDamageType.DropDownStyle = ComboBoxStyle.DropDown;
+            cmbDamageType.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbDamageType.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cmbDamageType.SelectedIndexChanged += CmbDamageType_SelectedIndexChanged;
+            pnlDamageType.Controls.Add(cmbDamageType);
+
+            pnlDamageType.Controls.Add(new Label { Text = "Sev:", AutoSize = true, Margin = new Padding(5, 5, 2, 0), Font = new Font("Segoe UI", 9F) });
+            cmbSeverity = new ComboBox { Width = 80, DropDownStyle = ComboBoxStyle.DropDownList };
+            cmbSeverity.Items.AddRange(new[] { "Minor", "Moderate", "Major" });
+            cmbSeverity.SelectedIndex = 1; // Moderate
+            pnlDamageType.Controls.Add(cmbSeverity);
+
+            pnlDamageType.Controls.Add(new Label { Text = "Cost:", AutoSize = true, Margin = new Padding(5, 5, 2, 0), Font = new Font("Segoe UI", 9F) });
+            numDamageCost = new NumericUpDown { Width = 70, Maximum = 1000000, DecimalPlaces = 2 };
+            pnlDamageType.Controls.Add(numDamageCost);
+            
+            var pnlDamageBtnsMinimal = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.LeftToRight };
+            foreach (var btn in new[] { btnAddDamage, btnRemoveDamage }) {
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.Height = 26;
+                btn.Font = new Font("Segoe UI", 9F);
+                pnlDamageBtnsMinimal.Controls.Add(btn);
+            }
+
+            dgvDamages.Dock = DockStyle.Fill;
+            dgvDamages.BackgroundColor = Color.White;
+            dgvDamages.BorderStyle = BorderStyle.FixedSingle;
+            dgvDamages.RowHeadersVisible = false;
+            dgvDamages.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            tlpDamageContent.Controls.Add(pnlDamageType, 0, 0);
+            tlpDamageContent.Controls.Add(pnlDamageBtnsMinimal, 0, 1);
+            tlpDamageContent.Controls.Add(dgvDamages, 0, 2);
+            grpDamageMinimal.Controls.Add(tlpDamageContent);
+            tlpLeft.Controls.Add(grpDamageMinimal, 0, 1);
+            tlpWorkspace.Controls.Add(tlpLeft, 0, 0);
+
+            // -- COLUMN RIGHT (Comparison & Inspection) --
+            var tlpRight = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 3 };
+            tlpRight.RowStyles.Add(new RowStyle(SizeType.Absolute, 140F)); // Pickup Condition
+            tlpRight.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));  // Inspection Findings
+            tlpRight.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));  // Global Actions
+
+            // C: Pickup Comparison
+            var grpPickupMinimal = new GroupBox { Text = "Original Pickup Condition", Dock = DockStyle.Fill, Font = new Font("Segoe UI", 9F, FontStyle.Bold), Padding = new Padding(8) };
+            var flpPickupMinimal = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown, AutoScroll = true };
+            foreach (var lbl in new[] { lblPickupInfo, lblPickupOdometer, lblPickupFuel, lblPickupClean, lblPickupSmoked, lblPickupAccessories }) {
+                lbl.Font = new Font("Segoe UI", 9F);
+                lbl.AutoSize = true;
+                lbl.Margin = new Padding(0, 0, 0, 2);
+                flpPickupMinimal.Controls.Add(lbl);
+            }
+            grpPickupMinimal.Controls.Add(flpPickupMinimal);
+            tlpRight.Controls.Add(grpPickupMinimal, 0, 0);
+
+            // D: Inspection & Notes
+            var grpInspectMinimal = new GroupBox { Text = "Inspection Findings", Dock = DockStyle.Fill, Font = new Font("Segoe UI", 9F, FontStyle.Bold), Padding = new Padding(8) };
+            var tlpInspectContent = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2 };
+            tlpInspectContent.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F)); // Checkboxes
+            tlpInspectContent.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); // Notes
+
+            var flpCheckboxesMinimal = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.LeftToRight };
+            foreach (var chk in new[] { chkIsClean, chkIsSmokedIn , chkAccessoriesOk}) {
+                chk.Font = new Font("Segoe UI", 9F);
+                chk.AutoSize = true;
+                chk.Margin = new Padding(0, 0, 15, 0);
+                flpCheckboxesMinimal.Controls.Add(chk);
+            }
+            txtNotes.Dock = DockStyle.Fill;
+            txtNotes.Multiline = true;
+            txtNotes.Font = new Font("Segoe UI", 9F);
+            
+            tlpInspectContent.Controls.Add(flpCheckboxesMinimal, 0, 0);
+            tlpInspectContent.Controls.Add(txtNotes, 0, 1);
+            grpInspectMinimal.Controls.Add(tlpInspectContent);
+            tlpRight.Controls.Add(grpInspectMinimal, 0, 1);
+
+            // E: Global Actions
+            var flpActionsMinimal = new FlowLayoutPanel { Dock = DockStyle.Right, FlowDirection = FlowDirection.LeftToRight, Padding = new Padding(0, 10, 0, 0), AutoSize = true };
+            foreach (var btn in new[] { btnCompleteRental, btnClear }) {
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.Height = 32;
+                btn.Width = 120;
+                btn.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+                flpActionsMinimal.Controls.Add(btn);
+            }
+            btnCompleteRental.BackColor = Color.DodgerBlue;
+            btnCompleteRental.ForeColor = Color.White;
+            tlpRight.Controls.Add(flpActionsMinimal, 0, 2);
+
+            tlpWorkspace.Controls.Add(tlpRight, 1, 0);
+            tlpMain.Controls.Add(tlpWorkspace, 0, 2);
+
+            this.Controls.Add(tlpMain);
+            this.PerformLayout();
         }
         
         private void ConfigureGrid()
@@ -259,46 +451,86 @@ namespace Vormas.Forms
                 return;
             }
 
-            if (cmbDamageType.SelectedValue == null)
+            if (_sessionService.CurrentUser == null)
             {
-                MessageBox.Show(@"Please select a damage type.", @"Validation Error", 
+                MessageBox.Show(@"Session expired or user not logged in. Please log in again.", @"Session Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string damageText = cmbDamageType.Text.Trim();
+            if (string.IsNullOrEmpty(damageText))
+            {
+                MessageBox.Show(@"Please enter or select a damage type.", @"Validation Error", 
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var selectedDamageType = cmbDamageType.SelectedItem as DamageTypes;
-            var claim = new DamageClaimRequest
-            {
-                RentalId = _selectedRental.RentalId,
-                DamageId = (int)cmbDamageType.SelectedValue,
-                ReportedByUserId = _sessionService.CurrentUser.UserId,
-                PhotoPath = txtDamagePhotoPath.Text,
-                InitialChargeAmount = selectedDamageType?.EstimatedRepairCost ?? 0
-            };
+            var damageTypesList = cmbDamageType.DataSource as List<DamageTypes>;
+            var selectedType = damageTypesList?.FirstOrDefault(d => d.Description.Equals(damageText, StringComparison.OrdinalIgnoreCase));
+
+            var claim = new Vormas.Models.DamageClaimRequest();
+            claim.RentalId = _selectedRental.RentalId;
+            claim.DamageId = selectedType?.DamageId ?? 0;
+            claim.CustomDescription = selectedType == null ? damageText : null;
+            claim.Severity = cmbSeverity.Text;
+            claim.ReportedByUserId = _sessionService.CurrentUser.UserId;
+            claim.PhotoPath = txtDamagePhotoPath.Text;
+            claim.InitialChargeAmount = numDamageCost.Value > 0 ? numDamageCost.Value : (selectedType?.EstimatedRepairCost ?? 0m);
 
             _pendingDamageClaims.Add(claim);
             RefreshDamageGrid();
             
             cmbDamageType.SelectedIndex = -1;
+            cmbDamageType.Text = "";
+            cmbSeverity.SelectedIndex = 1;
+            numDamageCost.Value = 0;
             txtDamagePhotoPath.Text = "";
+        }
+
+        private void CmbDamageType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbDamageType.SelectedItem is DamageTypes selected)
+            {
+                cmbSeverity.Text = selected.Severity;
+                numDamageCost.Value = selected.EstimatedRepairCost ?? 0;
+            }
         }
 
         private void RefreshDamageGrid()
         {
-            var displayList = new List<dynamic>();
-            foreach (var claim in _pendingDamageClaims)
+            try
             {
-                var damageType = (cmbDamageType.DataSource as List<DamageTypes>)?.Find(d => d.DamageId == claim.DamageId);
-                displayList.Add(new
+                var displayList = new List<object>();
+                var sourceList = cmbDamageType.DataSource as List<DamageTypes>;
+
+                foreach (var claim in _pendingDamageClaims)
                 {
-                    DamageDescription = damageType?.Description ?? "Unknown",
-                    Severity = damageType?.Severity ?? "Unknown",
-                    EstimatedCost = claim.InitialChargeAmount
-                });
+                    var damageType = sourceList?.FirstOrDefault(d => d.DamageId == claim.DamageId);
+                    displayList.Add(new
+                    {
+                        DamageDescription = damageType?.Description ?? claim.CustomDescription ?? "Unknown",
+                        Severity = claim.Severity ?? damageType?.Severity ?? "Moderate",
+                        EstimatedCost = claim.InitialChargeAmount
+                    });
+                }
+                
+                if (_damageBindingSource != null)
+                {
+                    _damageBindingSource.DataSource = displayList;
+                    if (dgvDamages != null) dgvDamages.DataSource = _damageBindingSource;
+                }
+                
+                if (lblDamageCount != null)
+                {
+                    lblDamageCount.Text = $@"Damages: {_pendingDamageClaims.Count}";
+                }
             }
-            _damageBindingSource.DataSource = displayList;
-            dgvDamages.DataSource = _damageBindingSource;
-            lblDamageCount.Text = $@"Damages: {_pendingDamageClaims.Count}";
+            catch (Exception ex)
+            {
+                // Silently log or handle grid update errors to prevent app crash
+                Console.WriteLine(@"Error refreshing damage grid: " + ex.Message);
+            }
         }
 
         private void btnRemoveDamage_Click(object sender, EventArgs e)
@@ -359,6 +591,13 @@ namespace Vormas.Forms
 
             try
             {
+                if (_sessionService.CurrentUser == null)
+                {
+                    MessageBox.Show(@"You must be logged in to complete a rental.", @"Session Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 foreach (var damageClaim in _pendingDamageClaims)
                 {
                     _damageClaimsService.AddDamageClaim(damageClaim);
@@ -384,30 +623,25 @@ namespace Vormas.Forms
                 string damageMsg = _pendingDamageClaims.Count > 0 
                     ? $"\n{_pendingDamageClaims.Count} damage claim(s) submitted for review." 
                     : "";
-                
-                
-                var viewInvoiceResult = MessageBox.Show(
-                    $@"Rental completed successfully!{damageMsg}\n\nWould you like to view and print the invoice now?",
+
+                // Generate the invoice
+                try
+                {
+                    _billingService.GenerateInvoice(completedRentalId, _sessionService.CurrentUser.UserId);
+                }
+                catch { /* Invoice may already exist */ }
+
+                MessageBox.Show(
+                    $@"Rental completed successfully!{damageMsg}\n\nInvoice generated. Go to Invoice tab to view.",
                     @"Rental Completed",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 LoadData();
                 ClearForm();
-                
-                if (viewInvoiceResult == DialogResult.Yes)
-                {
-                    try
-                    {
-                        _billingService.GenerateInvoice(completedRentalId, _sessionService.CurrentUser.UserId);
-                    }
-                    catch { /* Invoice may already exist */ }
-                    
-                    _navigationService.Navigate(Routes.Billing, completedRentalId);
-                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($@"Error completing rental: {ex.Message}", @"Error", 
+                MessageBox.Show($@"Error completing rental: {ex.Message}{Environment.NewLine}{Environment.NewLine}Stack Trace:{Environment.NewLine}{ex.StackTrace}", @"Error", 
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

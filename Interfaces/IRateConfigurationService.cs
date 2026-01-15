@@ -11,5 +11,6 @@ namespace Vormas.Interfaces
         List<RateConfigurations> GetRateConfigurationByCategory(int categoryId);
         void AddRateConfiguration(RateConfigurations rateConfiguration);
         int UpdateRateConfigurations(RateConfigurations rateConfiguration);
+        void DeleteRateConfiguration(int rateConfigId);
     }
 }

@@ -29,6 +29,7 @@ namespace Vormas.Database
                 cmd.Parameters.AddWithValue("@pEmergencyContactPhone",
                     customer.EmergencyContactPhone ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
+                cmd.Parameters.AddWithValue("@pImagePathMain", customer.ImagePathMain ?? (object)DBNull.Value);
             });
 
             customer.CustomerId = customerId;
@@ -119,6 +120,7 @@ namespace Vormas.Database
                     cmd.Parameters.AddWithValue("@pEmergencyContactPhone",
                         customer.EmergencyContactPhone ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@pIsBlacklisted", customer.IsBlacklisted);
+                    cmd.Parameters.AddWithValue("@pImagePathMain", customer.ImagePathMain ?? (object)DBNull.Value);
                 }
             );
         }
